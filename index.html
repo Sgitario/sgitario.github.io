@@ -13,14 +13,14 @@ layout: default
         {{ post.excerpt }}
       </div>
 
-      <div class="notepad-index-post-tags">
-          {% for tag in post.tags %}
-           <a href="{{ site.url }}{{ site.baseurl }}/categories/index.html#{{ tag | capitalize }}" title="Other posts related with {{ tag | capitalize }} ">
-             {{ tag | capitalize }}</a>
-          {% endfor %}
-      </div>
+      <span>[
+        {% for tag in page.tags %}
+          {% capture tag_name %}{{ tag }}{% endcapture %}
+          <a href="/tag/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{ tag_name }}</nobr></code>&nbsp;</a>
+        {% endfor %}
+      ]</span>
 
-      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More</a>
+      <a href="{{ site.baseurl }}{{ post.url }}" class="read-more">Read More <i class="arrow right"></i></a>
     </article>
   {% endfor %}
 </div>

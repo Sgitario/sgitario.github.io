@@ -3,7 +3,7 @@
 #
 
 # Name of your site (displayed in the header)
-name: Mauricio Farache
+name: Jose Carvajal
 
 # Short bio or description (displayed in the header)
 description: software craftsman, surfer without waves, runner, guitar player (stuck on 90´s grunge)
@@ -33,7 +33,7 @@ footer-links:
 
 # Enter your Disqus shortname (not your username) to enable commenting on posts
 # You can find your shortname on the Settings page of your Disqus account
-disqus: mfarache
+disqus: sgitario
 
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
 google_analytics:
@@ -46,7 +46,7 @@ url:
 # (http://yourusername.github.io/repository-name)
 # and NOT your User repository (http://yourusername.github.io)
 # then add in the baseurl here, like this: "/repository-name"
-baseurl: "/mfarache"
+baseurl: "/sgitario"
 
 #
 # !! You don't need to change any of the configuration flags below !!

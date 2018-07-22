@@ -83,5 +83,5 @@ exclude:
   - LICENSE
   - README.md
   - CNAME
-
-theme: minima
+  
+theme: jekyll-theme-hacker

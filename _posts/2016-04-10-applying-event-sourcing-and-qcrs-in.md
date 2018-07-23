@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Applying Event Sourcing and CQRS in a legacy project
-date: 2017-04-10
+date: 2016-04-10
 tags: [ Architecture ]
 ---
 

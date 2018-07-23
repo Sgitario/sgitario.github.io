@@ -148,6 +148,7 @@ img {
 .wrapper-masthead {
   margin-bottom: 10px;
   background-color: $lightVibrant;
+  border-bottom: 1px solid $vibrant;
 }
 
 .masthead {
@@ -268,7 +269,6 @@ nav {
 
 .wrapper-footer {
   border-top: 1px solid $vibrant;
-  border-bottom: 1px solid $vibrant;
   background-color: $lightVibrant;
 }
 

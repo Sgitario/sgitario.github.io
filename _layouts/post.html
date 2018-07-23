@@ -14,7 +14,7 @@ layout: default
     {{ content }}
   </div>
 
-  <span>[{% for tag in page.tags %}{% capture tag_name %}{{ tag }}{% endcapture %}<a href="{{ site.url }}{{ site.baseurl }}/categories/index.html#{{ tag }}">{{ tag_name }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %}]</span>
+  <span>[ {% for tag in page.tags %}{% capture tag_name %}{{ tag }}{% endcapture %}<a href="{{ site.url }}{{ site.baseurl }}/categories/index.html#{{ tag }}">{{ tag_name }}</a>{% if forloop.last == false %}, {% endif %}{% endfor %} ]</span>
 
   {% include disqus.html %}
 </article>

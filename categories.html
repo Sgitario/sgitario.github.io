@@ -1,10 +1,8 @@
 ---
 layout: page
-title: Category Index 2
 permalink: /categories/index.html
-title: Category Index
-tags: [Categories]
-description: "An archive of posts sorted by categories."
+title: Tags
+description: "An archive of posts sorted by tags."
 ---
 
 {% assign first = true %}
@@ -34,8 +32,6 @@ description: "An archive of posts sorted by categories."
       <li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
       {% endif %}
     {% endfor %}
-
-
 
   {% endfor %}
 </ul>

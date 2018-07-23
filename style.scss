@@ -116,9 +116,10 @@ img {
 }
 
 .date {
-  font-style: italic;
+  border-bottom: 1px solid $lightGray;
+  margin: 0;
+  padding: .6em 0 .5em;
   color: $gray;
-  float: right;
 }
 
 // Specify the color of the selection

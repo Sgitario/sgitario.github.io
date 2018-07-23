@@ -4,8 +4,6 @@ title: Applying Event Sourcing and CQRS in a legacy project
 date: 2016-04-10
 tags: [ Architecture ]
 ---
-
-# Introduction
 We are told to work on a legacy project about a Bicycle management system which architecture looks quite like to:
 
 ![Legacy Architecture]({{ site.url }}{{ site.baseurl }}/images/qcrs_legacy_architecture.png)

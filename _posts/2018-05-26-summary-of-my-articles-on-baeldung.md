@@ -10,10 +10,10 @@ For now, I will focus on working at Piksel and I will try to make up some time t
 
 Finally, this is the final articles where I collaborated at Baeldung:
 
-- Migrating from JUnit 4 to JUnit 5: http://www.baeldung.com/junit-5-migration
-- Introduction to Spring Cloud Stream: http://www.baeldung.com/spring-cloud-stream
-- Introduction to Spring Cloud Consul: http://www.baeldung.com/spring-cloud-consul
-- Introduction to Apache Curator: http://www.baeldung.com/apache-curator
-- Mockito and JUnit 5: http://www.baeldung.com/mockito-junit-5-extension
-- A Guide to Multitenancy in Hibernate 5: http://www.baeldung.com/hibernate-5-multitenancy
-- Guide to the Diamond Operator in Java: http://www.baeldung.com/java-diamond-operator
+- [Migrating from JUnit 4 to JUnit 5](http://www.baeldung.com/junit-5-migration)
+- [Introduction to Spring Cloud Stream](http://www.baeldung.com/spring-cloud-stream)
+- [Introduction to Spring Cloud Consul](http://www.baeldung.com/spring-cloud-consul)
+- [Introduction to Apache Curator](http://www.baeldung.com/apache-curator)
+- [Mockito and JUnit 5](http://www.baeldung.com/mockito-junit-5-extension)
+- [A Guide to Multitenancy in Hibernate 5](http://www.baeldung.com/hibernate-5-multitenancy)
+- [Guide to the Diamond Operator in Java](http://www.baeldung.com/java-diamond-operator)

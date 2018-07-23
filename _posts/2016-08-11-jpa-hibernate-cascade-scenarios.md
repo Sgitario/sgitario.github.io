@@ -252,4 +252,4 @@ From Hibernate, the more popular JPA provider, there are some more options:
 # Conclusion
 Analyze the implications of using one cascade type or another. A wrong cascade type might cause lot of unnecessary queries in database.
 
-Source Code: https://github.com/Sgitario/Java-Hibernate-Examples
+Source Code in [GitHub](https://github.com/Sgitario/Java-Hibernate-Examples)

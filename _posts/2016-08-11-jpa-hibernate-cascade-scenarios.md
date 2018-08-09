@@ -4,9 +4,9 @@ title: JPA + Hibernate Cascade Scenarios
 date: 2016-08-11
 tags: [ JPA, Hibernate ]
 ---
-After playing with entity relationships in Hibernate, I wanted to write my notes about the Cascade options and the scenarios for each one. At the end of this post, find a table to match the Cascade Types in Hibernate to JPA and the link to the source code in github.
+After playing with entity relationships in Hibernate, I wanted to write my notes about the Cascade options and some scenarios for each one. At the end of this post, find a table to match the Cascade Types in Hibernate to JPA and the link to the source code in github.
 
-In the example, we only use a ManyToOne relationship (A role can have many users and an user can have only one role).
+In the example, we only use a ManyToOne relationship: a role can have many users and an user can have only one role.
 
 ```java
 package com.sgitario.hibernate.cascade.entities;

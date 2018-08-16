@@ -9,7 +9,7 @@ tags: [ Spring, Guice ]
 
 This post is purely a guide about how to migrate from Guice to Spring DI.
 
-# ComponentAutoScan exclude/include filters
+# How to Bind Components
 
 Both Guice and Spring DI works with @Inject annotations from Java. Nevertheless, the way to register your components in each framework is different. By default, Guice will scan all the classpath and inject as much as possible. In Spring, we can configure our application to scan your components driven by annotations (@Component, @Controller, @Repository, @Service, ...), but we can achieve the same as Guice in Spring just doing:
 
@@ -41,7 +41,7 @@ public class Application {
 
 We also can exclude components using the similar "excludeFilters" in the component scan element.
 
-# Modules to @Configuration
+# Pluggable Configuration
 
 In guice, we can split our application in modules. This concept is like pluggable configuration. In Spring, we use the @Configuration annotation to declare modules:
 
@@ -69,10 +69,10 @@ In Guice, we can use the bind() method to register our components and the @Provi
 ```java
 @Configuration
 public class MyModule {
-    @Bean
-    public MyInterface myInterface() {
+	@Bean
+	public MyInterface myInterface() {
 		return new MyImplementation();
-    }
+	}
 
 	@Bean
 	@Inject
@@ -97,7 +97,7 @@ public class MyModule {
 
 So, we configured our module to be registered if and only if there is a property "my.config.enaled" set to true. 
 
-# @Named to @Value
+# Bind Properties
 
 As far I know, Spring does not support the @Named annotation from Java as Guice does. In order to inject properties, we need to use the @Value annotation with SPel.
 
@@ -124,7 +124,7 @@ public class MyComponent {
 }
 ```
 
-# Interceptors to @Aspect
+# Interceptors
 
 The interceptors is a really nice feature in Guice where you can bind aspect interceptors to methods very easily using AspectJ:
 
@@ -162,6 +162,22 @@ public class MyMethodInterceptor {
 }
 ```
 
+# Working with Proxy classes
+Another important note for the migration is that Guice works quite well when working with proxy classes. A proxy class is a runtime class made by AspectJ / CGlib or by methods annotated with @Transactional. Also, it affects to methods annotated with @Cache and @Async. 
+
+This happens with we inject implementation classes rather than the interfaces. Spring does not allow this since we should work with interfaces instead (which is correct). However, we can make Spring to work with proxy classes as Guice does by:
+
+```java
+@SpringBootApplication
+@ComponentScan(basePackages = "my.package", /* ... */)
+@EnableAspectJAutoProxy(proxyTargetClass = true) // If we use @Aspect
+@EnableTransactionManagement(mode = AdviceMode.ASPECTJ, proxyTargetClass = true) // If we use @Transactional
+@EnableAsync(proxyTargetClass = true) // If we use @Async
+@EnableCaching(proxyTargetClass = true) // If we use @Cache
+public class Application {
+}
+```
+
 # @ImplementedBy to @Primary
 Guice also provides an annotation to specify a default implementation for an interface:
 
@@ -183,19 +199,3 @@ public MyImplementation implements MyInterface {
 ```
 
 I personally do not recommend using either the @ImplementedBy or the @Primary annotation. When we need it, it sounds like a code smell in the configuration that needs to be refactored.
-
-# Working with Proxy classes
-Another important note for the migration is that Guice works quite well when working with proxy classes. A proxy class is a runtime class made by AspectJ / CGlib or by methods annotated with @Transactional. Also, it affects to methods annotated with @Cache and @Async. 
-
-This happens with we inject implementation classes rather than the interfaces. Spring does not allow this since we should work with interfaces instead (which is correct). However, we can make Spring to work with proxy classes as Guice does by:
-
-```java
-@SpringBootApplication
-@ComponentScan(basePackages = "my.package", /* ... */)
-@EnableAspectJAutoProxy(proxyTargetClass = true) // If we use @Aspect
-@EnableTransactionManagement(mode = AdviceMode.ASPECTJ, proxyTargetClass = true) // If we use @Transactional
-@EnableAsync(proxyTargetClass = true) // If we use @Async
-@EnableCaching(proxyTargetClass = true) // If we use @Cache
-public class Application {
-}
-```

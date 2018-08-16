@@ -14,6 +14,7 @@ This post is purely a guide about how to migrate from Guice to Spring DI.
 Both Guice and Spring DI works with @Inject annotations from Java. Nevertheless, the way to register your components in each framework is different. By default, Guice will scan all the classpath and inject as much as possible. In Spring, we can configure our application to scan your components driven by annotations (@Component, @Controller, @Repository, @Service, ...), but we can achieve the same as Guice in Spring just doing:
 
 - Via configuration:
+
 ```xml
 <context:component-scan base-package="my.package" use-default-filters="true">
 	<context:include-filter type="regex" expression="my\.package\..*"/>
@@ -21,6 +22,7 @@ Both Guice and Spring DI works with @Inject annotations from Java. Nevertheless,
 ```
 
 - Via Spring Boot:
+
 ```java
 @SpringBootApplication
 @ComponentScan(basePackages = "my.package", includeFilters = @Filter(type = FilterType.REGEX, pattern="my\\.package\\..*"))
@@ -44,6 +46,7 @@ We also can exclude components using the similar "excludeFilters" in the compone
 In guice, we can split our application in modules. This concept is like pluggable configuration. In Spring, we use the @Configuration annotation to declare modules:
 
 - Guice:
+
 ```java
 public class MyModule extends AbstractModule {
     @Override
@@ -58,9 +61,11 @@ public class MyModule extends AbstractModule {
 	}
 }
 ```
+
 In Guice, we can use the bind() method to register our components and the @Provides annotation when there are dependencies. In Spring, we always use the @Bean annotation. 
 
 - Spring:
+
 ```java
 @Configuration
 public class MyModule {
@@ -76,7 +81,9 @@ public class MyModule {
 	}
 }
 ```
+
 Moreover, Spring provides lot of possibilities to configure your module to behave purely as auto pluggable component:
+
 ```java
 @Configuration
 @ConditionalOnProperty(prefix = "my.config", name = "enabled", matchIfMissing = false)
@@ -87,12 +94,15 @@ public class MyModule {
     }
 }
 ```
+
 So, we configured our module to be registered if and only if there is a property "my.config.enaled" set to true. 
 
 # @Named to @Value
 
 As far I know, Spring does not support the @Named annotation from Java as Guice does. In order to inject properties, we need to use the @Value annotation with SPel.
+
 - Guice:
+
 ```java
 public class MyComponent {
     @Inject
@@ -101,7 +111,9 @@ public class MyComponent {
     }
 }
 ```
+
 - Spring:
+
 ```java
 @Component
 public class MyComponent {
@@ -115,6 +127,7 @@ public class MyComponent {
 # Interceptors to @Aspect
 
 The interceptors is a really nice feature in Guice where you can bind aspect interceptors to methods very easily using AspectJ:
+
 ```java
 public class MyModule extends AbstractModule {
     @Override
@@ -132,6 +145,7 @@ public class MyModule extends AbstractModule {
 ```
 
 The alternative in Spring is to use the @Aspect annotation as:
+
 ```java
 @Component
 @Aspect
@@ -150,6 +164,7 @@ public class MyMethodInterceptor {
 
 # @ImplementedBy to @Primary
 Guice also provides an annotation to specify a default implementation for an interface:
+
 ```java
 @ImplmementedBy(MyImplementation.class)
 public interface MyInterface {

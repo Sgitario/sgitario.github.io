@@ -19,7 +19,7 @@ Istio has been developed by Google and other parties. For all your services, Ist
 
 We followed the instructions from [here](https://istio.io/docs/setup/kubernetes/quick-start/). This is:
 
-1. Download and Install:
+- Download and Install:
 
 ```bash
 curl -L https://git.io/getLatestIstio | sh -
@@ -27,13 +27,13 @@ cd istio-1.0.2
 export PATH=$PWD/bin:$PATH
 ````
 
-2. Install [Istio's Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions):
+- Install [Istio's Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions):
 
 ```bash
 kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 ```
 
-3. Install Istio Services:
+- Install Istio Services:
 
 ```bash
 kubectl apply -f install/kubernetes/istio-demo.yaml
@@ -41,11 +41,11 @@ kubectl apply -f install/kubernetes/istio-demo.yaml
 
 This script is to enable Istio without auth. There are more options. See the getting started page for more. 
 
-4. Verify Installation:
+- Verify Installation:
 
 Go to Kubernetes dashboard (minikube dashboard) and select the Istio-System namespace. We should see all the Istio services in the Deployment section.
 
-h1. Let's Write Our First App in Istio!
+# Let's Write Our First App in Istio!
 
 This is a hello world node.js app:
 

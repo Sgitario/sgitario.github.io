@@ -7,15 +7,15 @@ tags: [ Kubernetes, Istio ]
 
 This is a very simple introduction for Istio Service Mesh. 
 
-h1. Introduction
+# Introduction
 
 What is Istio? What is different from Kubernetes? Istio is the second evolution to microservices architectures. So far, all the solutions need to solve by its own the exactly same paradigms for service discovery, logging, configuration and a long etc. Istio is a service mesh that provides all these services for all your microservices. How to upgrade microservices, listen for the traces, routing, etc... All of this is now delegated to the Service Mesh. Istio uses kubernetes to deploy all its services.
 
-h2. Some Technical Context
+## Some Technical Context
 
 Istio has been developed by Google and other parties. For all your services, Istio adds a proxy [Envoy](https://www.envoyproxy.io/] inside the pod to sync with Istio
 
-h1. Installation
+# Installation
 
 We followed the instructions from [here](https://istio.io/docs/setup/kubernetes/quick-start/). This is:
 
@@ -125,7 +125,7 @@ kubectl create -n myappnamespace -f deployments.yaml
 
 The app should have started up now in localhost:8080.
 
-h1. What Can We do Now?
+# What Can We do Now?
 
 - We can install plugins or addons to Istio like [Grafana](https://grafana.com/), [Zipkin](https://zipkin.io/), [Prometheus](https://prometheus.io/)... See more in [here](https://github.com/saturnism/istio-by-example-java/tree/master/spring-boot-example). All these components will see our apps by doing nothing. 
 

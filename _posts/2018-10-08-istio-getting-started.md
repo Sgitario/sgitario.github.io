@@ -13,11 +13,11 @@ What is Istio? What is different from Kubernetes? Istio is the second evolution 
 
 h2. Some Technical Context
 
-Istio has been developed by Google and other parties. For all your services, Istio adds a proxy ([Envoy|https://www.envoyproxy.io/]) inside the pod to sync with Istio
+Istio has been developed by Google and other parties. For all your services, Istio adds a proxy [Envoy](https://www.envoyproxy.io/] inside the pod to sync with Istio
 
 h1. Installation
 
-We followed the instructions from [here|https://istio.io/docs/setup/kubernetes/quick-start/]. This is:
+We followed the instructions from [here](https://istio.io/docs/setup/kubernetes/quick-start/). This is:
 
 1. Download and Install:
 
@@ -27,7 +27,7 @@ cd istio-1.0.2
 export PATH=$PWD/bin:$PATH
 ````
 
-2. Install [Istio's Custom Resource Definition|https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions]:
+2. Install [Istio's Custom Resource Definition](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/#customresourcedefinitions):
 
 ```bash
 kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
@@ -127,7 +127,7 @@ The app should have started up now in localhost:8080.
 
 h1. What Can We do Now?
 
-- We can install plugins or addons to Istio like [Grafana|https://grafana.com/], [Zipkin|https://zipkin.io/], [Prometheus|https://prometheus.io/]... See more in [here|https://github.com/saturnism/istio-by-example-java/tree/master/spring-boot-example]. All these components will see our apps by doing nothing. 
+- We can install plugins or addons to Istio like [Grafana](https://grafana.com/), [Zipkin](https://zipkin.io/), [Prometheus](https://prometheus.io/)... See more in [here](https://github.com/saturnism/istio-by-example-java/tree/master/spring-boot-example). All these components will see our apps by doing nothing. 
 
 - We can define rules for routing or define test strategies for failures, just defining RouteRule in route-to-v2.yaml:
 

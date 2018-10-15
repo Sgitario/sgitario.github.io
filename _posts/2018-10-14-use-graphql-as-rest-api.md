@@ -47,7 +47,7 @@ Other features:
 
 # Getting started
 
-We followed the instructions in (here)[https://graphql.org/graphql-js/]:
+We followed the instructions in [here](https://graphql.org/graphql-js/):
 
 ```bash
 npm init
@@ -169,11 +169,11 @@ Highligths:
 In the above code snippet, we are using an in-memory dictionary to store our data. The only thing to note here is that we can use any other internal storage or even an API call. This is what the resolve method is for. 
 
 More resources I'll explore in the future:
-- (Mutations and Input Types)[https://graphql.org/graphql-js/mutations-and-input-types/]
-- (Constructors)[https://graphql.org/graphql-js/constructing-types/]
+- [Mutations and Input Types](https://graphql.org/graphql-js/mutations-and-input-types/)
+- [Constructors](https://graphql.org/graphql-js/constructing-types/)
 
 # Conclusion
 
-The source of this quick introduction is from (this InfoQ presentation)[https://www.infoq.com/presentations/rest-graphql].
+The source of this quick introduction is from [this InfoQ presentation](https://www.infoq.com/presentations/rest-graphql).
 
-Finally, feel free to checkout my  GitHub repo is (here)[https://github.com/Sgitario/graphql-as-rest].
+Finally, feel free to checkout my  GitHub repo is [here](https://github.com/Sgitario/graphql-as-rest).

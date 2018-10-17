@@ -1,6 +1,6 @@
 ---
 layout: post
-title: gRPC for Java Developpers Getting Started
+title: gRPC Getting Started for Java Developers 
 date: 2018-10-17
 tags: [ GRPC, REST, Spring Boot ]
 ---

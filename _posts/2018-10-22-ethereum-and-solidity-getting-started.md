@@ -169,6 +169,7 @@ contract Numbers{
 | dynamic array | int[] --> [1, 2, 3] |
 
 **- Mapping Type**
+
 This is like a key-value collection:
 
 ```

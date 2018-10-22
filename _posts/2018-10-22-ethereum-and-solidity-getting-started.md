@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Ethereum And Solidity Getting Started
-date: 2018-10-10
+date: 2018-10-22
 tags: [ Ethereum, Solidity ]
 ---
 

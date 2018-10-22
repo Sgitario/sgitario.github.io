@@ -5,7 +5,6 @@ date: 2018-10-14
 tags: [ GraphQL, REST ]
 ---
 
-# Introduction
 [GraphQL](https://graphql.org/) helps to define a structure or data model at server side and it brings by nature a set of features to query and modify this data (for clients). 
 
 This a quick example of GraphQL query language can do:

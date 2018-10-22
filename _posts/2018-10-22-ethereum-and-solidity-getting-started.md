@@ -5,8 +5,6 @@ date: 2018-10-22
 tags: [ Ethereum, Solidity ]
 ---
 
-# Introduction
-
 Ethereum networks are a set of nodes or machines mining transactions within [blockchains](https://anders.com/blockchain/). The purpose of each transaction is tied to a smart contract or business definition. Because the machines need power to work, this mining work has a cost or gast limit which is measured in ether (or units of ether like wei). This cost depends on the number of operations our smart contract has. 
 
 # Installation

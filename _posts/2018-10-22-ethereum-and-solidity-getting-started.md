@@ -687,5 +687,5 @@ onSubmit = async (event) => {
 
 # Source Code
 
-See [my Github repository](https://github.com/Sgitario/blockchain-full-guide/lottery-react) for a full example.
+See [my Github repository](https://github.com/Sgitario/blockchain-full-guide) for a full example.
 

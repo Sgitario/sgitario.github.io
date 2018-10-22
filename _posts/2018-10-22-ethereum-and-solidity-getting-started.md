@@ -27,7 +27,7 @@ The secret phrase is really like a mnemonic account and one mnemonic account can
 
 Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we can find it next to My account in Metamask plugin).
 
-**For testing, sometimes you'll need much more money. If so, go to [faucet.rinkeby](http://faucet.rinkeby.io)**
+**For testing, sometimes you'll need much more money. If so, go to [faucet.rinkeby](http://faucet.rinkeby.io).**
 
 **- What happened in between?**
 
@@ -157,15 +157,15 @@ contract Numbers{
 ```
 
 **- Types**
-    - string
-    - bool
-    - int or int256 (positive or negative non decimal numbers). Also, we can specify the range doing int8, int16, int32, ...
-    - uint (positive non decimal numbers)
-    - fixed (decimal numbers)
-    - address (example: 0x01ab1212... for accounts/clients)
-    - fixed array (int[3] --> [1, 2, 3])
-    - dynamic array (int[] --> [1, 2, 3])
-    - mapping ( mapping(string => string) )
+|string| |
+| bool | |
+| int or int256 | positive or negative non decimal numbers). Also, we can specify the range doing int8, int16, int32, ... |
+| uint | positive non decimal numbers |
+| fixed | decimal numbers |
+| address | example: 0x01ab1212... for accounts/clients |
+| fixed array | int[3] --> [1, 2, 3] |
+| dynamic array | int[] --> [1, 2, 3] |
+| mapping | mapping(string => string) |
 
 This is like a key-value collection:
 
@@ -183,8 +183,7 @@ contract MyContract {
     }
 }
 ```
-
-    - struct (custom types)
+| struct | custom types |
 
 ```
 contract MyContract {
@@ -270,9 +269,11 @@ modified mymodifier() {
 ```
 
 **- Other functions**
-    - now: current time
-    - block.difficulty: a level to resolve the current block
-    - random function:
+
+| function name | description |
+| now | current time |
+| block.difficulty | a level to resolve the current block |
+| random | example: |
 
 ```
 function random() private view returns (uint) {
@@ -500,14 +501,14 @@ Contract deployed to 0xF9b1a29BCc53517247cc35790b130f90C44431cF
 
 **Copy the contract address "0xdAf3aA08075E5eed4b323B87EA976B7DA27f0beC". And also the interface. We'll be using it later in this tutorial!**
 
-- Check your contract in: https://rinkeby.etherscan.io and use the contract address to look for. For the main network, use https://etherscan.io.
+- Check your contract in: [rinkeby.etherscan](https://rinkeby.etherscan.io) and use the contract address to look for. For the main network, use [etherscan](https://etherscan.io).
 - Also, we can use remix.ethereum.org to test our deployed contract. All we need is again the address.
 
 # Frontend Development
 
 We'll use React for the frontend which is very easy well integrated with web3 and metamask. 
 
-**-Install react in our project and create the react project**
+**- Install react in our project and create the react project**
 
 ```
 npm install -g create-react-app
@@ -518,13 +519,13 @@ npm start
 
 We'll see our UI in localhost:3000 directly in our browser.
 
-**-Install dependencies to connect with Ethereum**
+**- Install dependencies to connect with Ethereum**
 
 ```
 npm install --save web3@1.0.0-beta.35
 ```
 
-**-Configure web3**
+**- Configure web3**
 
 Web3 works as a provider of Ethereum network (Rinkeby, Main or any other). 
 
@@ -560,7 +561,7 @@ class App extends Component {
 export default App;
 ```
 
-**-Use the inbox contract**
+**- Use the inbox contract**
 
 We'll use the same contract that we used before (run: node deploy.js and see the interface and the address again). 
 
@@ -616,7 +617,7 @@ class App extends Component {
 export default App;
 ```
 
-**-Let's update the contract from UI:**
+**- Let's update the contract from UI:**
 
 ```js
 // ..

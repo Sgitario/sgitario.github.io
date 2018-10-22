@@ -18,18 +18,18 @@ In order to design/compile our custom smart contracts, we use [Solidity](https:/
 ## Metamask
 
 - Install Metamask [in Chrome](https://chrome.google.com/webstore/search/metamask).
-- Accept terms and create an account. *Save the secret phrase or mnemonic account in a safe place*. 
+- Accept terms and create an account. **Save the secret phrase or mnemonic account in a safe place.**
 - Use the correct network: for production: the "Main Ethereum" network, it costs real money!. For testing, we'll use the "Rinkeby Test Network" network.
 
 The secret phrase is really like a mnemonic account and one mnemonic account can have one or many accounts that we can create later on. Each account can have different money and works in a different purpose.
 
 ### How to receive Ether
 
-Go to http://rinkeby-faucet.com and fill the address input (we can find it next to My account in Metamask plugin).
+Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we can find it next to My account in Metamask plugin).
 
-**For testing, sometimes you'll need much more money. If so, go to http://faucet.rinkeby.io**
+**For testing, sometimes you'll need much more money. If so, go to [faucet.rinkeby](http://faucet.rinkeby.io)**
 
-- What happened in between?
+**- What happened in between?**
 
 1. Click 'submit' on form
 2. Address sent to Backend server
@@ -38,18 +38,17 @@ Go to http://rinkeby-faucet.com and fill the address input (we can find it next 
 5. Backend server waited for transaction to be confirmed. The transcation goes to one node in the network, the node groups this transaction with other transactions that are running at the same time into a 'block' and start validating (or mining!)
 6. Backend server sent success message back to the browser
 
-- What is a 'transaction'?
- 
-| nonce: how many times the sender has sent a transaction
-| to: address of account this money is going to
-| value: amount of ether to send to the target address
-| gasPrice: amount of ether the sender is willing to pay per unit gas to get this transaction processed
-| startGas/gasLimit: units of gas that this transaction can consume
-| v |
-| r | -> cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key.
-| s |
+**- What is a 'transaction'?**
+    - nonce: how many times the sender has sent a transaction
+    - to: address of account this money is going to
+    - value: amount of ether to send to the target address
+    - gasPrice: amount of ether the sender is willing to pay per unit gas to get this transaction processed
+    - startGas/gasLimit: units of gas that this transaction can consume
+    - v |
+    - r | -> cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key.
+    - s |
 
-But then, why we need Ether's for? Why this complexity about transactions? We are missing another concept: smart contracts. 
+But then, why do we need Ether's for? Why all this complexity about the transactions? We are missing another concept: smart contracts. 
 
 ## Smart Contracts
 
@@ -81,7 +80,7 @@ contract Inbox {
 }
 ```
 
-- Storage vs Memory
+**- Storage vs Memory**
 
 The *storage* keyword makes variables point out directly to input variable. It's like using reference addresses in the oriented programming language world.
 
@@ -157,7 +156,7 @@ contract Numbers{
 }
 ```
 
-- Types:
+**- Types**
     - string
     - bool
     - int or int256 (positive or negative non decimal numbers). Also, we can specify the range doing int8, int16, int32, ...
@@ -185,7 +184,7 @@ contract MyContract {
 }
 ```
 
-    - struct (struct Car { string make; string model; })
+    - struct (custom types)
 
 ```
 contract MyContract {
@@ -207,7 +206,7 @@ contract MyContract {
 }
 ```
 
-- Message Global Context
+**- Message Global Context**
 
 All the messages contain the account of the sender and the transaction itself. We can access to the sender account from the smart contract by doing:
 
@@ -218,7 +217,7 @@ All the messages contain the account of the sender and the transaction itself. W
 
 The msg instance is directly available in the smart contract constructor with doing nothing.
 
-- Payable Function Type
+**- Payable Function Type**
 
 Mark a public method as payable and use the require function inside as:
 
@@ -235,7 +234,7 @@ contract Inbox {
 }
 ```
 
-- How to send money to an address
+**- How to send money to an address**
 
 The current amount of money the contract has is in "this.balance":
 
@@ -251,7 +250,7 @@ contract Lottery {
 }
 ```
 
-- Modifiers
+**- Modifiers**
 
 The modifiers are used to reduce the duplicity of the code we use to write our smart contracts:
 
@@ -270,8 +269,7 @@ modified mymodifier() {
 }
 ```
 
-- Other functions
-
+**- Other functions**
     - now: current time
     - block.difficulty: a level to resolve the current block
     - random function:
@@ -311,6 +309,7 @@ Earlier we said we'll work using a test network Rinkeby, but how we deploy our s
 - Testing: we need to use mocha test runner and Ganache/TestRPC (local test network). Also web3 to have access to our contract in the local test network.
 - Deployment: we need a deploy script. We'll use Infura as provider.
 
+```
 Project Structure:
     inbox ->
         contracts ->
@@ -320,16 +319,17 @@ Project Structure:
         package.json
         compile.js
         deploy.js
+```
 
 Steps:
-1. Installation
+**- Installation**
 
 ```bash
 npm init
 npm install --save solc fs-extra
 ```
 
-2. Write compile.js:
+**- Write compile.js**
 
 ```js
 const path = require('path'); // for cross platform 
@@ -357,19 +357,19 @@ for (let contract in output) {
 }
 ```
 
-3. Run compile
+**- Run compile**
 
 ```bash
 node compile.js
 ```
 
-4. Prepare for testing:
+**- Prepare for testing**
 
 ```bash
 npm install --save mocha ganache-cli web3@1.0.0-beta.26
 ```
 
-5. Write test/inbox.test.js:
+**- Write test/inbox.test.js**
 
 ```js
 const assert = require('assert');
@@ -423,7 +423,7 @@ Change the package json file to use mocka as test runner:
 
 Run the test by doing: npm run test
 
-6. Preparing For Deployment
+**- Preparing For Deployment**
 
 We want to avoid somebody modify the contract code. The best solution is to create another contract as a factory:
 
@@ -448,7 +448,7 @@ contract Inbox {
 }
 ```
 
-7. Write deployment script:
+**- Write deployment script**
 
 We'll use Infura and our account that we created in Metamask. Infura will find the right node in the target ethereum network and will ease the smart contract transaction.
 
@@ -507,7 +507,7 @@ Contract deployed to 0xF9b1a29BCc53517247cc35790b130f90C44431cF
 
 We'll use React for the frontend which is very easy well integrated with web3 and metamask. 
 
-- Install react in our project and create the react project
+**-Install react in our project and create the react project**
 
 ```
 npm install -g create-react-app
@@ -518,13 +518,13 @@ npm start
 
 We'll see our UI in localhost:3000 directly in our browser.
 
-- Install dependencies to connect with Ethereum
+**-Install dependencies to connect with Ethereum**
 
 ```
 npm install --save web3@1.0.0-beta.35
 ```
 
-- Configure web3
+**-Configure web3**
 
 Web3 works as a provider of Ethereum network (Rinkeby, Main or any other). 
 
@@ -560,7 +560,7 @@ class App extends Component {
 export default App;
 ```
 
-- Use the inbox contract
+**-Use the inbox contract**
 
 We'll use the same contract that we used before (run: node deploy.js and see the interface and the address again). 
 
@@ -616,7 +616,7 @@ class App extends Component {
 export default App;
 ```
 
-- Let's update the contract from UI:
+**-Let's update the contract from UI:**
 
 ```js
 // ..

@@ -38,15 +38,14 @@ Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we
 5. Backend server waited for transaction to be confirmed. The transcation goes to one node in the network, the node groups this transaction with other transactions that are running at the same time into a 'block' and start validating (or mining!)
 6. Backend server sent success message back to the browser
 
-**- What is a 'transaction'?**
-    - nonce: how many times the sender has sent a transaction
-    - to: address of account this money is going to
-    - value: amount of ether to send to the target address
-    - gasPrice: amount of ether the sender is willing to pay per unit gas to get this transaction processed
-    - startGas/gasLimit: units of gas that this transaction can consume
-    - v |
-    - r | -> cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key.
-    - s |
+**- What is a transaction?**
+
+| nonce | how many times the sender has sent a transaction |
+| to | address of account this money is going to |
+| value | amount of ether to send to the target address |
+| gasPrice | amount of ether the sender is willing to pay per unit gas to get this transaction processed |
+| startGas/gasLimit | units of gas that this transaction can consume |
+| v / r / s | cryptographic pieces of data that can be used to generate the senders account address. Generated from the sender's private key |
 
 But then, why do we need Ether's for? Why all this complexity about the transactions? We are missing another concept: smart contracts. 
 
@@ -209,10 +208,10 @@ contract MyContract {
 
 All the messages contain the account of the sender and the transaction itself. We can access to the sender account from the smart contract by doing:
 
-    - msg.data
-    - msg.gas: amount of gas the current function invocation has available
-    - msg.sender: sender account address
-    - msg.value: amount of ether (in wei) that was sent along with the function invocation
+| msg.data | |
+| msg.gas | amount of gas the current function invocation has available |
+| msg.sender | sender account address |
+| msg.value | amount of ether (in wei) that was sent along with the function invocation |
 
 The msg instance is directly available in the smart contract constructor with doing nothing.
 

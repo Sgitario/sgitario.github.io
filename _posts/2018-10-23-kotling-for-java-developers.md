@@ -2,7 +2,7 @@
 layout: post
 title: Kotlin For Java Developers
 date: 2018-10-23
-tags: [ Kotlin ]
+tags: [ Kotlin, Java ]
 ---
 
 [Kotlin](https://kotlinlang.org/) is created by Jetbrains and is designed to cover some of the more painful aspects in Java: verbose, more concise and safety on exceptions. Also, it's intended to be simpler than Scala. 
@@ -276,8 +276,6 @@ public class Functions {
     }
 }
 ```
-
-In this example, we also can see 
 
 ## Overloading
 

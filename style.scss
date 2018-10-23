@@ -19,7 +19,7 @@ html {
 
 body {
 	background: $white;
-  font: 18px/1.4 $helvetica;
+  font: 14px/1.2 'sourceSansPro';
   color: $darkGray;
 }
 
@@ -39,7 +39,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: $helveticaNeue;
+  font-family: 'sourceSansProBold';
   color: $darkerGray;
   font-weight: bold;
 }
@@ -66,6 +66,7 @@ h4 {
 
 p {
   margin: 15px 0;
+  text-align: justify;
 }
 
 a {
@@ -217,7 +218,7 @@ img {
 nav {
   float: right;
   margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
+  font-family: 'sourceSansProBold';
   font-size: 18px;
 
   @include mobile {
@@ -229,7 +230,7 @@ nav {
 
   a {
     margin-left: 20px;
-    color: $white;
+    color: $black;
     text-align: right;
     font-weight: 300;
     letter-spacing: 1px;
@@ -245,7 +246,7 @@ nav {
 // .main
 //
 
-.posts {
+.posts, .container > .post {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 2em;
   margin-bottom: 1em;

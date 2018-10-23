@@ -243,7 +243,7 @@ public class LotteryClient {
 }
 ```
 
-We only need to use the ManagedChannelBuilder builder from gRPC and that's it. Again, this is the easiest approach.
+We only need to use the ManagedChannelBuilder builder from gRPC and that's it. Using *usePlaintext*, we instruct gRPC to not use SSL to encrypt the messages. Again, this is the easiest approach.
 
 gRPC provides a blocking and async approach to invoke the methods:
 

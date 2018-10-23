@@ -40,6 +40,8 @@ Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we
 
 **- What is a transaction?**
 
+| Field  | Description |
+| ------------- | ------------- |
 | nonce | how many times the sender has sent a transaction |
 | to | address of account this money is going to |
 | value | amount of ether to send to the target address |

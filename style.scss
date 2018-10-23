@@ -19,7 +19,7 @@ html {
 
 body {
 	background: $white;
-  font: 14px/1.2 'sourceSansPro';
+  font: 16px/1.3 'sourceSansPro';
   color: $darkGray;
 }
 
@@ -246,7 +246,7 @@ nav {
 // .main
 //
 
-.posts, .container > .post {
+.posts, .container > .post, .container > .page {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 2em;
   margin-bottom: 1em;
@@ -301,6 +301,33 @@ footer {
   -webkit-transform: rotate(-45deg);
 }
 
+//
+// Tables
+//
+
+.entry table {
+  display: block;
+  border-color: grey;
+  border-spacing: 0;
+  border-collapse: collapse;
+  line-height: 1.5;
+}
+
+.entry table > thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.entry table tbody tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+.entry table td, .entry table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
 
 // Settled on moving the import of syntax highlighting to the bottom of the CSS
 // ... Otherwise it really bloats up the top of the CSS file and makes it difficult to find the start

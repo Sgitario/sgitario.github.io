@@ -28,7 +28,14 @@ body {
   max-width: 740px;
   padding: 0 10px;
   width: 100%;
-  background-image: url(images/background.jpeg)
+}
+
+.background {
+  background: url(images/background.jpeg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -189,7 +196,7 @@ img {
 
 .site-name {
   margin: 0;
-  color: $white;
+  color: $black;
   cursor: pointer;
   font-family: $helveticaNeue;
   font-weight: 300;
@@ -199,7 +206,7 @@ img {
 
 .site-description {
   margin: -5px 0 0 0;
-  color: $white;
+  color: $black;
   font-size: 16px;
 
   @include mobile {
@@ -237,6 +244,12 @@ nav {
 //
 // .main
 //
+
+.posts {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 2em;
+  margin-bottom: 1em;
+}
 
 .posts > .post {
   padding-bottom: 2em;

@@ -25,7 +25,9 @@ The secret phrase is really like a mnemonic account and one mnemonic account can
 
 ### How to receive Ether
 
-Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we can find it next to My account in Metamask plugin).
+Go to [rinkeby-faucet](http://rinkeby-faucet.com) and fill the address input (we can find it next to My account in Metamask plugin):
+
+![Get Ethers for Testing]({{ site.url }}{{ site.baseurl }}/images/ethereum_rinkeby_getting_ethers.png)
 
 **For testing, sometimes you'll need much more money. If so, go to [faucet.rinkeby](http://faucet.rinkeby.io).**
 

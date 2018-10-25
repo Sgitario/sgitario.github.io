@@ -531,4 +531,6 @@ Let's test our skill end-to-end with the backend.
 
 We're been using the Alexa SDK v2 and there were lot of improvements in comparison to the v1. However, there are still lot of space for refactor in the SDK. I'll be attending to an Alexa workshop in Barcelona by one Alexa developer and stated that they are more focused on the Node.js SDK. 
 
+I didn't cover [the utterances or custom slot type](https://developer.amazon.com/es/docs/custom-skills/best-practices-for-sample-utterances-and-custom-slot-type-values.html) and some other advanced features in Alexa. I'll do in the future.
+
 See [my Github repository](https://github.com/Sgitario/skill-notes-java) for a full example.

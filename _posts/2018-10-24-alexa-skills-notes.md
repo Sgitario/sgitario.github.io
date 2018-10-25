@@ -7,6 +7,25 @@ tags: [ Alexa, Java ]
 
 Let's play with Alexa by adding a new simple skill to make notes. Though adding notes as skill is quite simple, it makes use of most of the features in Alexa. 
 
+First, these are two examples of what we can do with Alexa:
+
+"Alexa, open restaurant finder for breakfast"
+
+- *Alexa*: turn on the Alexa device
+- *Open*: the command (start, launch, begin, resume, ask, tell)
+- *Restaurant Finder*: Invocation name
+– *For Breakfast*: Utterance
+
+Slots:
+```
+"I want a {pet} that's {size}, {energy} energy, for my {temperament}"
+          -----        –-----  --------                -------------
+          dog          tiny
+          			   small
+          			   medium
+          			   large
+```
+
 This post is a summary of the tutorial in [Amazon Docs](https://developer.amazon.com/es/docs/sdk/alexa-skills-kit-sdk-for-java.html).
 
 # Create Amazon Accounts

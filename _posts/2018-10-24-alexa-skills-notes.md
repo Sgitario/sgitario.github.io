@@ -20,10 +20,10 @@ Slots:
 ```
 "I want a {pet} that's {size}, {energy} energy, for my {temperament}"
           -----        –-----  --------                -------------
-          dog          tiny
-          			   small
-          			   medium
-          			   large
+           dog         tiny
+                       small
+                       medium
+                       large
 ```
 
 This post is a summary of the tutorial in [Amazon Docs](https://developer.amazon.com/es/docs/sdk/alexa-skills-kit-sdk-for-java.html).

@@ -311,7 +311,7 @@ public class NotesHandlerInput {
 - Select as primary key "id": this is the user ID that Alexa provides
 - Click on "Create table"
 
-![Create DynamoDB Table]({{ site.url }}{{ site.baseurl }}/images/alexa-dynamodb-1)
+![Create DynamoDB Table]({{ site.url }}{{ site.baseurl }}/images/alexa-dynamodb-1.png)
 
 For more information about how the Alexa SDK works with DynamoDB, go to [its repository here](https://github.com/alexa/alexa-skills-kit-sdk-for-java/blob/2.7.2/ask-sdk-dynamodb-persistence-adapter/src/com/amazon/ask/attributes/persistence/impl/DynamoDbPersistenceAdapter.java).
 

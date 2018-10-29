@@ -472,7 +472,7 @@ We can run our application as an usual Spring Boot application. If you see the f
 **********************************************
 ```
 
-This message means we cannot connect with the Axon server. Double check the Axon server is up and running and browse the dashboard in the browser. 
+This message means we cannot connect with the Axon server. Double check the Axon server is up and running and/or go to the Axon dashboard in the browser. 
 
 - Add a library:
 

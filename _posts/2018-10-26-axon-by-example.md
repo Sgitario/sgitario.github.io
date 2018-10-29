@@ -511,7 +511,7 @@ GET: http://localhost:8080/api/library/1
 
 # Conclusion
 
-We have introduced some of the most important features in Axon and how Axon works. Axon Framework makes extremely easy to implement a CQRS architecture and is very well integrated to Spring and Spring Cloud (for doing the services discoverable). 
+We have introduced some of the most important features in Axon and how Axon works. Axon Framework makes extremely easy to implement a CQRS architecture and is very well integrated to Spring and Spring Cloud (for doing the services discoverable). Also, Axon is **VERY** customisable. We can refine until the most tiny component in your architecture which demostrates what a well designed the framework is. 
 
 On the other side, even when the documentation is quite extensive and good, I would have appreciated working examples for version 4 of basic functionality. It does not help either when the Axon documentation redirects to the first chapter when you search something in google. 
 

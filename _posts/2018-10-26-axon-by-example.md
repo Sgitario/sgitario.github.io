@@ -69,7 +69,7 @@ Also, Axon provides a very good tutorial or [recipe with Spring Boot](https://do
 
 Let's start coding! We'll write a library application where we can organize books into different libraries. 
 
-![Diagram]({{ site.url }}{{ site.baseurl }}/images/axon-bookstore-diagram.png)
+![Diagram]({{ site.url }}{{ site.baseurl }}/images/axon-bookstore-diagram.jpg)
 
 We need to start thinking on events. What is a library? In object oriented programming, a library is just a set of books. In event oriented programming, a library is: 
 

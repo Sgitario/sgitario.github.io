@@ -24,20 +24,12 @@ Add [the Spring Boot Cache dependency](https://mvnrepository.com/artifact/org.sp
 
 # Configuration
 
-Add *@EnableCaching* annotation in our main Spring Boot application:
-```java
-@SpringBootApplication
-@EnableCaching
-public class Application {
-  // ...
-}
-```
-
 Let's configure now the cache configuration as:
 
 ```java
 @Configuration
 @ConditionalOnProperty(name = "spring.cache.names")
+@EnableCaching
 public class CacheConfiguration {
 
     @Value("${spring.cache.names}")
@@ -60,8 +52,8 @@ public class CacheConfiguration {
     }
 }
 ```
-
-Note we're using the very simple cache ConcurrentMapCacheManager as Cache Manager. In case we want to use EhCache or Hazelcast, we would only need to change the CacheManager implementation bean here.
+Note the *@EnableCaching* annotation will make our Spring application listen the *@Cacheable* annotations. 
+Also, see we're using the very simple cache ConcurrentMapCacheManager as Cache Manager. In case we want to use EhCache or Hazelcast, we would only need to change the CacheManager implementation bean here.
 
 This configuration provides the next benefits:
 - Enable/Disable Cache by Configuration
@@ -70,6 +62,11 @@ This configuration will make the cache be enabled if and only if a property "spr
 
 ```
 spring.cache.names=cache1,cache2,cache3
+```
+
+This is equivalent to use the Spring native as:
+```
+spring.cache.type=none
 ```
 
 - Evict All Cache every X seconds
@@ -113,7 +110,7 @@ spring.cache.names=languages
 **And that's it!**
 
 # Metrics
-We can see the cache sizes via the metrics actuator. For example: http://myapp/metrics returns:
+We can see the cache sizes via the metrics actuator. For example: "http://myapp/metrics" returns:
 
 ```json
 {

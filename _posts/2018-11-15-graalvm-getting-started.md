@@ -5,7 +5,7 @@ date: 2018-11-15
 tags: [ Java, GraalVM ]
 ---
 
-"The world is polyglot". This is why GraalVM is here. There are many languages around. Many of these languages have a strong community behind. There is no a perfect language, but all of them has strongs and weaks. So, what about if we could run any language on the same machine without dealing to install anything else? This is [GraalVM](https://www.graalvm.org/)!
+"The world is polyglot". This is why GraalVM is here. There are many languages around. Many of these languages have a strong community behind. There is no a perfect language, but all of them have strengths and weaknesses. So, what about if we could run any language on the same machine without dealing to install anything else? This is [GraalVM](https://www.graalvm.org/)!
 
 GraalVM is a Java Virtual Machine that supports many other languages. It works as an interpreter for Java, Groovy, Scala, JS, Ruby, Python, C, C++ ... Therefore, we can run polyglot programs - programs written in multiple languages in only one environment. 
 

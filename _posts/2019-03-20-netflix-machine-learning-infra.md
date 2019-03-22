@@ -59,7 +59,7 @@ Titus is a container management platform that natively works with AWS. It manage
 
 [Meson](https://medium.com/netflix-techblog/meson-workflow-orchestration-for-netflix-recommendations-fc932625c1d9) is a workflow management tool to provide task isolation with Titus (and then [Apache Mesos](http://mesos.apache.org/)) and job scheduling:
 
-![Meson Architecture]({{ site.url }}{{ site.baseurl }}/images/meson-arch.png)
+![Meson Architecture]({{ site.url }}{{ site.baseurl }}/images/meson_arch.png)
 
 ## NTeract
 

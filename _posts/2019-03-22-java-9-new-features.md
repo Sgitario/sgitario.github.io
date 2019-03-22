@@ -99,7 +99,7 @@ stream.dropWhile(x -> x < 3).forEach(System.out::println);
 2
 ```
 
-## iterate()
+## - iterate()
 
 This intends to replace the *for* loops:
 
@@ -110,7 +110,7 @@ IntStream.iterate(0, x -> x < 3, x -> x++).forEach(System.out::println);
 2
 ```
 
-## ofNullable()
+## - ofNullable()
 
 This method now returns a sequancial Stream:
 

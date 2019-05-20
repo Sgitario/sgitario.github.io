@@ -1,7 +1,7 @@
 ---
 layout: post
 title: RabbitMQ vs Apache Kafka
-date: 2019-04-24
+date: 2019-04-23
 tags: [ RabbitMQ, Kafka ]
 ---
 

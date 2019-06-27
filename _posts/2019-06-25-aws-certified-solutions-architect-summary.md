@@ -276,3 +276,78 @@ CloudWatch is a monitoring service to monitor your AWS resources, as well as the
 AWS CloudTrail increases visibility into your user and resource activity by recording AWS Management Console actions and API calls. You can identify which users and accounts called AWS, the source IP address from which the calls were made, and when the calls occurred.
 
 - CloudTrail is about auditing.
+
+# RDS: Relational Database Service
+
+At the moment, RDS supports the next database engines: SQL Server, Oracle, MySQL, PostgreSQL, Aurora, MariaDB. The main features in RDS are:
+- Multi-AZ for disaster recovery. It's only supported for MySQL, Oracle, SQL Server, PostgreSQL, and MariaDB.
+- Read replicas for performance: we can configure our instances to point out to any other read replicas to spread out the connections. It's only supported for MySQL, PostgreSQL, MariaDB and Aurora; and **needs to have the backup policy turned on**. Each replica will have its own DNE endpoint and we can create read replicas of Multi-AZ source database. Read replicas can be promoted to be their own databases which breaks the replication. We can have a read replica in a second region.
+- For caching, we need to use [Amazon ElastiCache](https://en.wikipedia.org/wiki/Amazon_ElastiCache) that is implemented by memcached or redis. 
+- RDS runs on virtual machines (it's not serverless - but Aurora), but we cannot have access on them.
+- Encryption At Rest using AWS KMS. It's only supported for MySQL, Oracle, SQL Server, PostgreSQL, MariaDB and Aurora. Backups, replicas and snapshots will be encrypted as well.
+
+## Backups
+
+Automated backups allow you to recover your database to any point in time within a "retention period". The retention period can be between one and 35 days. Automated backups will take a full daily snapshot and will also store transaction logs throughout the day. When you do a recovery, AWS will first choose the most recent daily back up, and then apply transaction logs relevant to that day. This allows you to do a point in time recovery down to a second, within the retention period.
+
+Automated backups are enabled by default. The backup data is stored in S3 and you get free storage space equal to the size of your dabase. So if you have and RDS instance of 10GB, you will get 10GB worth of storage. 
+
+Backups are taken within a defined window, storage I/O may be suspended while your data is being backed up and you may experience elevated latency. 
+
+## Snapshots
+
+Database snapshots are done manually. They are stored even after you delete the original RDS instance, unlike automated backups. 
+
+## Restoring
+
+Whenever you restore either a backup or a snapshot, the restored version of the database will be a new RDS instance with a new DNS endpoint. 
+
+## Aurora
+
+Amazon Aurora is a MySQL-compatible relational database that combines the speed and availability of high-end commercial databases with the simplicity and cost-effectiveness of open source database. It provides up to five times better performance than MySQL at better price for similar performance.
+
+- Start with 10GB, scales in 10GB increments to 64TB (storage autoscaling).
+- Compute resources can scale up to 32vCPUs and 244GB of Memory. It is designed to transparently handle the loss of up to two copies of data without affecting database write availability and up to three copies without affecting read availability.
+- It always maintain 2 copies in each availability zone with a minimum of 3 availability zones. 6 copies of your data.
+- Aurora storage is also self-healing. Data blocks and disks are continuously scanned for errors and automatically repaired.
+- Backups are always enabled and do not impact on database performance. 
+- We can take snapshots and share them with other AWS accounts.
+- 2 types of replicas available: aurora replicas and MySQL replicas. Automated failover is only available with Aurora replicas.
+
+# DynamoDB: NoSQL database service
+
+Amazon DynamoDB is a fast and flexible NoSQL database service for all applications that need consistent, single-digit millisecond latency at any scale. It's a fully managed database and supports both document and key-value data models. Its flexible data model and reliable performance make it a great fit for mobile, web, gaming, ad-tech, IoT, and many other applications. 
+
+- Stored on SSD storage.
+- Spread across 3 geographically distinct data centres.
+- Eventual Consistent Reads: enabled by default. If applications need to have the read in less than one second, we need to enable "Strongly Consistent Reads" instead.
+
+# Redshift
+
+Amazon Redshift is a fast and powerful, fully managed, petabyte-scale [data warehouse](https://en.wikipedia.org/wiki/Data_warehouse) service in the cloud. Customers can start small for $0,25 per hour with no commitments or upfront costs and scale to a petabyte or more for $1,000 per terabyte per year, less than a tenth of most other data warehousing solutions. 
+
+- It can be configured in single node (160GB) or multi-node (leader node and up to 128 compute nodes).
+- Use advanced compression: it emplays multiple compression techniques and can often achieve signiticant compression relative to traditional relational data stores using row and column both levels compression. Redshift will select the most appropiate compression schema. 
+- It doesn't require indexes or materialized views, and so uses less space than traditional relational database systems. 
+- Massively Parallel Processing (MPP): it automatically distributes data and query load across all nodes. 
+- Backup: one day retention period by default. Max retention period is 35 days. It always attempts to maintain at least three copies or your data. Redshift can also asynchronously replicate your snapshots to S3 in another region for disaster recovery.
+- Pricing: in compute node hours (not for leader node hours) and for backups and data transfers.
+- Security: always SSL encrypted and about encrypted at rest the same as in EC2. 
+- Available only in one availability zone.
+
+# ElastiCache
+
+Amazon ElastiCache is a web service that makes it easy to deploy, operate, and scale an in-memory cache in the cloud. **This service must be used to increase database and web application performance. The service improves the performance of web applications by allowing you to retrieve information from fast, managed, in-memory caches, instead of relying entirely on slower disk-based databases.
+- It supports two open-sources in-memory caching engines: [memcached](https://memcached.org/) and [redis](https://redis.io/).
+
+| Requirement | Memcached | REDIS |
+| ------------- | ------------- | ------------- |
+| Simple Cache to offload DB | YES | YES |
+| Ability to scale horizontally | YES | NO |
+| **Multi-Threaded performance** | YES | NO |
+| Advanced data types | NO | YES |
+| Ranking/Sorting data sets | NO | YES |
+| Pub/Sub capabilities | NO | YES |
+| Persistence | NO | YES |
+| **Multi-AZ** | NO | YES |
+| **Backup & Restore Capabilities** | NO | YES |

@@ -17,7 +17,7 @@ AWS cloud stack is the most popular cloud infrastructure and since I've using AW
 - Results between 100 - 1000 with a passing score of 720
 - Qualification is valid for 2 years
 
-# 1. AWS - 10000 Foot Overview
+# AWS - 10000 Foot Overview
 
 ![AWS Stack]({{ site.url }}{{ site.baseurl }}/images/aws_stack.png)
 
@@ -29,7 +29,7 @@ Where the exam focuses on:
 - Databases: RDS, DynamoDB
 - Network & Content Delivery: CloudFront, Route 53, VPC
 
-## 1.a. The Basics: Regions, Availability Zones, Edge Locations
+## The Basics: Regions, Availability Zones, Edge Locations
 
 > Number of Edge Locations > Number of Availability zones > Number of regions
 
@@ -39,7 +39,7 @@ Where the exam focuses on:
 
 **An edge location** is where end users access services located at AWS. A site that CloudFront uses to cache copies of your content for faster delivery to users at any location. Edge locations serve requests for **CloudFront** and **Route 53**. Requests going to either one of these services will be routed to the nearest edge location automatically. 
 
-## 1.b. IAM: Identity Access Management
+## IAM: Identity Access Management
 
 Manage users and their level of access to AWS Console. The basics:
 
@@ -56,13 +56,6 @@ Manage users and their level of access to AWS Console. The basics:
 **Policy** is a set of JSON documents with the permissions. Policies can be grouped in **Roles**. We can create new roles as needed. 
 Then, either **Users** or **Groups** can be attached to **Policies** or **Roles**. 
 
-## Create a billing alarm
-
-1. Go to My Account > Billing Dashboard > Billing Preferences
-2. Enable Receive Billing Alarts
-3. Then, go to Services > Cloud Watch > Billing
-4. Fill the Billing alarm section (with the amount of dollars)
-
 ## Roles
 
 1. IAM > Roles > Create Role
@@ -73,6 +66,13 @@ Then, either **Users** or **Groups** can be attached to **Policies** or **Roles*
 - Roles are easier to manage.
 - Roles can be assigned to an EC2 instance after it is created using both the console & command line.
 - Roles are universal - you can use them in any region.
+
+## Create a billing alarm
+
+1. Go to My Account > Billing Dashboard > Billing Preferences
+2. Enable Receive Billing Alarts
+3. Then, go to Services > Cloud Watch > Billing
+4. Fill the Billing alarm section (with the amount of dollars)
 
 # AWS Command Line
 

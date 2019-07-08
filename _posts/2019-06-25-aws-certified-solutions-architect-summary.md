@@ -39,7 +39,7 @@ Where the exam focuses on:
 
 **An edge location** is where end users access services located at AWS. A site that CloudFront uses to cache copies of your content for faster delivery to users at any location. Edge locations serve requests for **CloudFront** and **Route 53**. Requests going to either one of these services will be routed to the nearest edge location automatically. 
 
-## IAM: Identity Access Management
+# IAM: Identity Access Management
 
 Manage users and their level of access to AWS Console. The basics:
 

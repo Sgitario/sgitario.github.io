@@ -7,7 +7,7 @@ tags: [ aws ]
 
 I've preparing [the AWS Certified Solutions Architect exam](https://aws.amazon.com/es/certification/certified-solutions-architect-associate/) running [the Udemy course](https://www.udemy.com/aws-certified-solutions-architect-associate) driven by [Ryan Kroonenburg](https://twitter.com/acloudguru).
 
-AWS cloud stack is the most popular cloud infrastructure and since I've using AWS stack for some years already, I decided to prepare myself this exam to go deeper my specialization. 
+AWS cloud stack is the most popular cloud infrastructure and since I've using AWS stack for some years already, I decided to prepare myself this exam to go deeper into my specialization. 
 
 # The exam composition
 
@@ -17,7 +17,7 @@ AWS cloud stack is the most popular cloud infrastructure and since I've using AW
 - Results between 100 - 1000 with a passing score of 720
 - Qualification is valid for 2 years
 
-# AWS - 10000 Foot Overview
+# 1. AWS - 10000 Foot Overview
 
 ![AWS Stack]({{ site.url }}{{ site.baseurl }}/images/aws_stack.png)
 
@@ -29,17 +29,17 @@ Where the exam focuses on:
 - Databases: RDS, DynamoDB
 - Network & Content Delivery: CloudFront, Route 53, VPC
 
-## Regions, Availability Zones, Edge Locations
+## 1.a. The Basics: Regions, Availability Zones, Edge Locations
 
-Number of Edge Locations > Number of Availability zones > Number of regions
+> Number of Edge Locations > Number of Availability zones > Number of regions
 
 **A region** is a physical location spread across globe to host your data to reduce latency. In each region there will be at least two **availability zones**.
 
 **An availability zone** is a datacenter that does not need to be separated by multiple kilometers physically but by meters with in a physical compound which are completely isolated from each other failure such as power, network in a given AZ.
 
-**An edge location** is where end users access services located at AWS. A site that CloudFront uses to cache copies of your content for faster delivery to users at any location. Edge locations serve requests for CloudFront and Route 53. Requests going to either one of these services will be routed to the nearest edge location automatically. This allows for low latency no matter where the end user is located. 
+**An edge location** is where end users access services located at AWS. A site that CloudFront uses to cache copies of your content for faster delivery to users at any location. Edge locations serve requests for **CloudFront** and **Route 53**. Requests going to either one of these services will be routed to the nearest edge location automatically. 
 
-# IAM: Identity Access Management
+## 1.b. IAM: Identity Access Management
 
 Manage users and their level of access to AWS Console. The basics:
 

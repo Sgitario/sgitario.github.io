@@ -441,7 +441,7 @@ Similar to simple routing but with health checks on each record set.
 
 # VPC: Virtual Private Cloud
 
-It lets us provision a logically isolated section of our infrastructure where we can launch AWS resources in a virtual network that we define. We have complete control over our virtual networking environment, including selection of our own IP address range, creation of subnets, and configuration or route tables and network gateways. Additionally, we can create a hardware VPN connection between our corporate datacenter and our VPC and leverage the AWS cloud as an extension of our corporative datacenter. 
+It lets us provision a logically isolated section of our infrastructure where we can launch AWS resources in a virtual network that we define. We have complete control over our virtual networking environment, including selection of our own IP address range, creation of subnets, and configuration of route tables and network gateways. Additionally, we can create a hardware VPN connection between our corporate datacenter and our VPC and leverage the AWS cloud as an extension of our corporative datacenter. 
 
 ![AWS VPN]({{ site.url }}{{ site.baseurl }}/images/aws-vpn-1.png)
 
@@ -552,7 +552,7 @@ In order to block IP Addresses, we need to use ACLs, not security groups.
 
 - A network ACL can be associated to N subnets, but 1 subnet can only be associated to 1 ACL. 
 - Network ACLs contain a numbered list of rules that is evaluated in order, starting with the lowest numbered rule.
-- Network ACLs have separate inbound and outbound rules, and each rule can either allow or denay traffic.
+- Network ACLs have separate inbound and outbound rules, and each rule can either allow or deny traffic.
 - Network ACLs are stateless; responses to allowed inbound traffic are subject to the rules for outbound traffic and vice versa. 
 
 ## VPC Flow Logs
@@ -562,7 +562,7 @@ Flow Logs is a feature that enables you to capture information about the IP traf
 - There are three levels of abstraction: VPC, subnet and network access level. 
 - You cannot enable flow logs for VPCs that are peered with your VPC unless the peer VPC is in your account.
 - You cannot tag a flow log. 
-- After you've created a flw log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log.
+- After you've created a flow log, you cannot change its configuration; for example, you can't associate a different IAM role with the flow log.
 - Not ALL IP Traffic is monitored: internal traffic done by AWS mostly.
 
 # Scripting

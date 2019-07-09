@@ -45,18 +45,17 @@ Manage users and their level of access to AWS Console. The basics:
 
 - Allow very granular permissions to leverage the user access.
 - Identify Federation (including Activate Directory, Facebook, Linkedin, etc).
-- Multifactor Authentication
+- The "root account" is simply the account created when first setup your AWS ccount. It has complete Admin access. 
+- Multifactor Authentication. We should setup the Multifactor authentication for "root account"s.
 - Password policies
 - IAM is universal. It does not apply to regions at this time. 
-- The "root account" is simply the account created when first setup your AWS ccount. It has complete Admin access. We should setup the Multifactor authentication here for security.
-- New Users have no premissions at the beginning.
-- New Users can be configured to access via web or programmatically or both. When programmatically, they need to be assigned an Access Key ID & Secret Access Keys.
+- New Users have no permissions at the beginning. These can be granted to access via web or programmatically or both. When programmatically, they need to be assigned an Access Key ID & Secret Access Keys.
 
 **Users** can be organised in **Groups** of people.
 **Policy** is a set of JSON documents with the permissions. Policies can be grouped in **Roles**. We can create new roles as needed. 
 Then, either **Users** or **Groups** can be attached to **Policies** or **Roles**. 
 
-## Roles
+## How to create a Role
 
 1. IAM > Roles > Create Role
 2. Choose the service that will use this role
@@ -64,7 +63,7 @@ Then, either **Users** or **Groups** can be attached to **Policies** or **Roles*
 
 - Roles are more secure than storing your access key and secret access key on individual EC2 instances.
 - Roles are easier to manage.
-- Roles can be assigned to an EC2 instance after it is created using both the console & command line.
+- Roles can be assigned to an EC2 instance after it is created using both the console and command line.
 - Roles are universal - you can use them in any region.
 
 ## Create a billing alarm
@@ -90,7 +89,8 @@ Default output format:
 # S3
 
 Secure, durable, highly-scalable object storage. The basics:
-- S3 is Object-based. An object is a key (the name), value (the content of the file in bytes) and a version ID (important for versioning), some metadata, other subresources (like access control lists and torrent).
+
+- S3 is Object-based. An object is a key (the name), value (the content of the file in bytes), a version ID (important for versioning), some metadata and other subresources (like access control lists and torrent).
 - Files can be from 0 Bytes to 5 TB.
 - There is unlimited storage.
 - The objects are organised in buckets, that are like folders. The bucket name must be unique globally. 
@@ -127,6 +127,8 @@ We can encrypt by:
 - Client Side Encryption
 
 ## Cross Region Replication
+
+In order to replicate your data in different regions.
 
 1. Create bucket
 2. Go to Management and Replication
@@ -253,9 +255,9 @@ EBS provides persistent block storage volumes for use with EC2 instances. EBS vo
 
 If the virtual machine’s hardware fails, the EBS volume can simply be moved to another virtual machine and re-launched. In theory, you won’t lose any data.
 
-Another benefit, is that EBS volumes can easily be backed up and duplicated. So you can take easy backup snapshots of your volumes, create new volumes and launch new EC2 instances based on those duplicate volumes.
-- EBS backed instances can be stopped. You'll not lose the data on this instance if it is stopped.
-- By default, both root volumes will be deleted on termination. However, with EBS volumes, you can tell AWS to keep the root device volume.
+Another benefit is that EBS volumes can easily be backed up and duplicated. So you can take easy backup snapshots of your volumes, create new volumes and launch new EC2 instances based on those duplicate volumes.
+- EBS backed instances can be stopped. You won't lose the data on this instance if it is stopped.
+- By default, both root volumes will be deleted on termination. However, with EBS volumes, you can tell AWS to keep the device volume.
 
 # EFS: Elastic File System
 
@@ -275,7 +277,7 @@ mount -t efs -o tls fs-xxxx:/ /target
 - Data is stored across multiple AZ's within a region.
 - Read After Write Consistency. (No eventual consistency)
 
-# CloudWatch
+# CloudWatch: Monitoring
 
 CloudWatch is a monitoring service to monitor your AWS resources, as well as the applications that you run on AWS. Metrics like CPU, network, disk, status check. 
 
@@ -288,11 +290,9 @@ CloudWatch is a monitoring service to monitor your AWS resources, as well as the
 - **Events:** Helps you to responde to state changes in your AWS resources.
 - **Logs:** Aggregates log data. 
 
-# CloudTrail
+# CloudTrail: Auditing
 
 AWS CloudTrail increases visibility into your user and resource activity by recording AWS Management Console actions and API calls. You can identify which users and accounts called AWS, the source IP address from which the calls were made, and when the calls occurred.
-
-- CloudTrail is about auditing.
 
 # RDS: Relational Database Service
 
@@ -307,7 +307,7 @@ At the moment, RDS supports the next database engines: SQL Server, Oracle, MySQL
 
 Automated backups allow you to recover your database to any point in time within a "retention period". The retention period can be between one and 35 days. Automated backups will take a full daily snapshot and will also store transaction logs throughout the day. When you do a recovery, AWS will first choose the most recent daily back up, and then apply transaction logs relevant to that day. This allows you to do a point in time recovery down to a second, within the retention period.
 
-Automated backups are enabled by default. The backup data is stored in S3 and you get free storage space equal to the size of your dabase. So if you have and RDS instance of 10GB, you will get 10GB worth of storage. 
+Automated backups are enabled by default. The backup data is stored in S3 and you get free storage space equal to the size of your database. So if you have and RDS instance of 10GB, you will get 10GB worth of storage. 
 
 Backups are taken within a defined window, storage I/O may be suspended while your data is being backed up and you may experience elevated latency. 
 
@@ -369,36 +369,41 @@ Amazon ElastiCache is a web service that makes it easy to deploy, operate, and s
 | **Multi-AZ** | NO | YES |
 | **Backup & Restore Capabilities** | NO | YES |
 
+
 # Route53
 
 - Elastic Load Balancers do not have pre-defined IPv4 addresses, you resolve to them using a DNS name. 
-- The CNAME record maps a name to another name. It should only be used when there are no other records on that name. Use a CNAME record if you want to alias one name to another name.
-- The ALIAS record maps a name to another name, but can coexist with other records on that name. Use an ALIAS record if you’re trying to alias the root domain (apex zone).
-- Commonly used DNS record types:
-A (Host address)
-AAAA (IPv6 host address)
-ALIAS (Auto resolved alias)
-CNAME (Canonical name for an alias)
-MX (Mail eXchange)
-NS (Name Server)
-PTR (Pointer)
-SOA (Start Of Authority)
-SRV (location of service)
-TXT (Descriptive text)
+- The **CNAME** record maps a name to another name. It should only be used when there are no other records on that name. Use a CNAME record if you want to alias one name to another name.
+- The **ALIAS** record maps a name to another name, but can coexist with other records on that name. Use an ALIAS record if you’re trying to alias the root domain (apex zone).
+- More commonly used DNS record types:
+
+| Record Type | Description |
+| ------------- | ------------- |
+| A | Host Address |
+| AAAA | IPv6 host address |
+| ALIAS | Auto resolved alias |
+| CNAME | Canonical name for an alias |
+| MX | Mail eXchange |
+| NS | Name Server |
+| PTR | Pointer |
+| SOA | Start Of Authority |
+| SRV | Location of service |
+| TXT | Descriptive text |
 
 ## Register a new domain:
-1.- Go to Route53 > Register Domain
-2.- Search for your domain
-3.- Fill out the registrant contact
-4.- Purchase your new domain
-(...).- It takes some time to register the domain... between a few hours up to 3 days. 
+1. Go to Route53 > Register Domain
+2. Search for your domain
+3. Fill out the registrant contact
+4. Purchase your new domain
+
+It takes some time to register the domain... between a few hours up to 3 days. 
 
 ## Routing Policies
 
 First, let's see how to configure routing policies:
-1.- Go to Route53 > Your domain
-2.- Create Record Set
-3.- Select the DNS record type.
+1. Go to Route53 > Your domain
+2. Create Record Set
+3. Select the DNS record type.
 
 Also, we can set health checks on individual record sets. If a record set fails a health check it will be removed from Route53 until it passes the health check. We can set SNS notifications to alert you if health check is failing.
 
@@ -464,35 +469,34 @@ Allows you to connect one VPC with another via a direct network route using priv
 
 ## How-To
 
-1.- Go To VPC service > Your VPCs > Create VPC
-2.- Fill IPv4 CIDR block and tenancy and click on create.
+1. Go To VPC service > Your VPCs > Create VPC
+2. Fill IPv4 CIDR block and tenancy and click on create.
 
-(...) no subnets and internet gateways have been created at this moment
-(...) route table, network ACLs and security groups have been created. Security groups can't span VPCs.
+No subnets and internet gateways have been created at this moment. Route table, network ACLs and security groups have been created. Security groups can't span VPCs.
 
-3.- Go to Subnets -> Create subnet
-4.- Name it, select our VPC, the availability zone and the IPv4 CIDR block. Finally, click on create.
+3. Go to Subnets -> Create subnet
+4. Name it, select our VPC, the availability zone and the IPv4 CIDR block. Finally, click on create.
 
-(...) by default, no subnet has public IP. In order to do this, select the subnet and click on actions and make it auto apply public IP. Amazon always reserve 5 IP addresses with your subnets. 
+By default, no subnet has public IP. In order to do this, select the subnet and click on actions and make it auto apply public IP. Amazon always reserve 5 IP addresses with your subnets. 
 
-5.- Go to Internet Gateways -> Create internet gateway
-6.- Name it and click on create.
-7.- Select it and with actions, attach the internet gateway to the VPC. (Only ONLY VPC can be attached to ONE internet gateway)
+5. Go to Internet Gateways -> Create internet gateway
+6. Name it and click on create.
+7. Select it and with actions, attach the internet gateway to the VPC. (Only ONLY VPC can be attached to ONE internet gateway)
 
-(...) at the moment, all our VPC are public because our routes allow it. Let's fix this:
+At the moment, all our VPC are public because our routes allow it. Let's fix this:
 
-8.- Go to Route Tables -> select our route table and select "Routes"
-9.- Edit routes
-10.- Fill destination (any IP) with target internet gateway
-11.- Go to Subnet Associations
-12.- Edit subnet associations in order to select the subnet that needs to be public.
+8. Go to Route Tables -> select our route table and select "Routes"
+9. Edit routes
+10. Fill destination (any IP) with target internet gateway
+11. Go to Subnet Associations
+12. Edit subnet associations in order to select the subnet that needs to be public.
 
-(...) now, we can't ssh-access to our private ec2 instance from our public subnet.
+Now, we can't ssh-access to our private ec2 instance from our public subnet.
 
-13.- Go to EC2 > Security Groups -> Create Security Group
-14.- Select our VPC, type "All ICMP" (protocol ICMP) and the source the public subnet. 
-15.- Select our VPC, type "SSH" and the source the private subnet. 
-16.- Change the security group of our ec2 instance. 
+13. Go to EC2 > Security Groups -> Create Security Group
+14. Select our VPC, type "All ICMP" (protocol ICMP) and the source the public subnet. 
+15. Select our VPC, type "SSH" and the source the private subnet. 
+16. Change the security group of our ec2 instance. 
 
 ## How to connect to our instances?
 

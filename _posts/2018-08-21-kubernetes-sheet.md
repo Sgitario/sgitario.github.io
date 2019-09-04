@@ -9,11 +9,11 @@ Credits to [Udemy course](https://www.udemy.com/kubernetes-from-a-devops-kuberne
 Github sources [here](https://github.com/Sgitario/kubernetes-demo).
 Cheat sheet by [Kubernetes official](https://kubernetes.io/docs/reference/kubectl/cheatsheet/).
 
-h1. Introduction
+# Introduction
 
 Let's give a very quick overview of main kubernetes concepts with some useful commands that really helped me a lot.
 
-h2. Pods
+## Pods
 
 Kubernetes works on Pods basis. A pod is a set of co-related containers. The most common scenario is running a single container per Pod. We can [label](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/) pods or add pods in [namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) to better organise them in logical units. 
 
@@ -27,7 +27,7 @@ kubectl logs -f <name> -c <containername> // see the logs of a container running
 kubectl delete pods --all // delete all the pods
 ```
 
-h2. Deployments
+## Deployments
 
 The pods are un-managed resources which means that if a pod is dead, Kubernete will do nothing to recover it back. In order to manage pods, we need to use **ReplicationControllers** or **ReplicaSets**. 
 
@@ -65,7 +65,7 @@ And eventually, we'll want to upgrade our applications. This resource manages th
 
 This is done transparently by Kubernetes when we update a Deployment template.
 
-h3. Using Private Docker Repository
+### Using Private Docker Repository
 
 This only works for docker images that are hosted in [dockerhub](https://hub.docker.com/). Most of the cases, we want to use a private docker repository. Let's see how to configure this. We need a **Secret** resource (we'll see more about this resource later in this tutorial) to provide the docker credentials:
 
@@ -105,7 +105,7 @@ spec:
       - name: dockerconfigjson
 ```
 
-h3. Resources
+### Resources
 Another important topic when deploying our apps is the server [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) we're using or we'll need:
 
 ```yaml
@@ -128,7 +128,7 @@ spec:
 
 The *resources.requests* field works like a minimum resources the application needs to work well. The *resources.limits* is the maximum resources that the application should consume.
 
-h3. Pods Ordering
+### Pods Ordering
 
 Sometimes, our apps need some services to start working, how can we deal with pods startup orderning? Let's introduce the init containers:
 
@@ -151,7 +151,7 @@ spec:
     name: ...
 ```
 
-h2. Services
+## Services
 
 How do we expose our endpoints? We need to use another resource called **Services**:
 - The default service type is "ClusterIP" which will expose the pods only within current node. 
@@ -185,7 +185,7 @@ kubectl get services
 
 All the resources we have introduced so far: **ReplicationControllers**, **ReplicaSets** and **Services**, select the pods via label selection. This is if our pod is labelled with "app=myApp", we can configure our **Service** to scope the pods with label "app=myApp" only. 
 
-h2. Volumes
+## Volumes
 
 Usually, our applications need paths to work. Either a folder where to put the logging files that eventually will be read by a third system like logstash or splunk. Or a folder where to locate temporal files we need to watch or import on demand. Or a folder where to read the configuration files from. 
 
@@ -225,11 +225,11 @@ The volume type *emptyDir* will create an empty folder. Then we'll mount this em
 
 Bear in mind, our pods should be node agnostic, so we should **NEVER* mount local folders in. This is a very bad practice. This is because the pod could work differently if it's deployed in a node where the data in its local folder is different from another node. 
 
-h2. Configuration
+## Configuration
 
 What about the configuration files? Do we need to upload these files into a volume in the cloud like S3 always for kubernetes? **NO**. Kubernetes provides a couple of special volumes for you.
 
-h3. ConfigMap
+### ConfigMap
 
 Let's see how looks like:
 ```yaml
@@ -275,12 +275,23 @@ spec:
         configMap:
           name: my-app-config
 ```
+### Create A Config Map from a file
 
-h3. Secrets
+```
+kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties
+```
+
+In order to see the output in yaml:
+
+```
+kubectl get configmap game-config-2 -o yaml
+```
+
+### Secrets
 
 For the secrets, it's almost the same as in ConfigMaps but it works differently internally. We edit the template using Base64 and this configuration is not stored in each node, but it keeps in memory. More about this in [here](https://kubernetes.io/docs/concepts/storage/volumes/#secret).
 
-h2. Dashboard Web UI
+## Dashboard Web UI
 
 ```bash
 kubectl proxy
@@ -292,8 +303,8 @@ Or:
 minikube dashboard
 ```
 
-h2. Appedix: More Commands
-h3. Scaling
+## Appedix: More Commands
+### Scaling
 
 ```bash
 kubectl scale —replicas=4 deployment/tomcat-deployment 
@@ -303,7 +314,7 @@ kubectl describe services tomcat-load-balancer
 kubectl describe services tomcat-load-balancer
 ```
 
-h3. Upgrading
+### Upgrading
 
 ```bash
 kubectl get deployments
@@ -312,7 +323,7 @@ kubectl set image
 kubectl rollout history
 ```
 
-h3. Secrets Commands
+### Secrets Commands
 
 ```bash
 kubectl create secret generic db-user-pass --from-file=./username.txt --from-file=./password.txt
@@ -324,7 +335,7 @@ kubectl apply -f wordpress-deployment.yaml
 minikube service wordpress --url
 ```
 
-h3. Usage & Resource Monitoring
+### Usage & Resource Monitoring
 
 ```bash
 minikube addons enable heapster
@@ -332,7 +343,7 @@ kubectl get pods --namespace=kube-system
 minikube addons open heapster
 ```
 
-h3. Namespaces & Resource Quotas 
+### Namespaces & Resource Quotas 
 
 ```bash
 kubectl create namespace <namespace name>
@@ -343,7 +354,7 @@ kubectl apply -f ./tomcat-deployment.yaml —namespace=cpu-limited-tomcat (from 
 kubectl describe deployment tomcat-deployment —namespace=cpu-limited-tomcat
 ```
 
-h3. Auto-Scaling
+### Auto-Scaling
 
 ```bash
 -- Terminal 1

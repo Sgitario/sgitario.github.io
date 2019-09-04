@@ -22,6 +22,7 @@ AWS cloud stack is the most popular cloud infrastructure and since I've using AW
 ![AWS Stack]({{ site.url }}{{ site.baseurl }}/images/aws_stack.png)
 
 Where the exam focuses on:
+
 - AWS Global Infrastructure
 - Security, Identity & Compliance
 - Compute: ec2, lambda
@@ -697,4 +698,3 @@ One lambda function can trigger other lambda functions.
 
 By number of requests: first 1 million requests are free. Then $0.20 per 1 million requests thereafter.
 By duration which is calculated from the time your code begins executing until it returns or otherwise terminates, rounded up to the nearest 100ms. The price depends on the amount of memory you allocate to your function. You are charged $0.00001667 for every GB-second used.
-

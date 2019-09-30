@@ -13,15 +13,13 @@ Let's start introducing how our architecture looks like at first:
 
 Responsabilities:
 
-- Producers: sends events or requests to our ESB layer via queue or HTTP.
-- Enrichments: listen messages from an IN (a queue), process the message using flow manipulations and outputs it to an OUT (another queue).
-- Gateway: Service in between a third party and enrichments.
+- **Producers**: sends events or requests to our ESB layer via queue or HTTP.
+- **Enrichments**: listen messages from an IN (a queue), process the message using flow manipulations and outputs it to an OUT (another queue).
+- **Gateway**: Service in between a third party and enrichments.
 
 Obviously, not all the architectures that use an ESB work the same way, but as a very summary, the esb layer listens messages, processes them and sends data to the output.
 
-## What the problem is
-
-Before starting a complete redesign of our architecture, we need to make clear what the problem/s we wnat to resolve here. It might sound obvious but I don't think it's in real life: most of the times we feel the needs to upgrade our architectures to the latest trendy solutions/frameworks/versions just because it's cool. So, what problems do we want to solve?
+Before starting a complete redesign of our architecture, we need to make clear what the problem/s we want to resolve here. It might sound obvious but I don't think it's in real life: most of the times we feel the needs to upgrade our architectures to the latest trendy solutions/frameworks/versions just because it's cool. So, what problems do we want to solve?
 
 ### Inefficient resources usage
 

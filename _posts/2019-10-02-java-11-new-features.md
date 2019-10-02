@@ -162,11 +162,11 @@ java FlightRecorderConsumerMain.java
 
 There is A LOT more about this feature, so if you want to know more, please go to [the Bealdung post](https://www.baeldung.com/java-flight-recorder-monitoring) that as usual provides really helpful information.
 
-[JEP 332: Transport Layer Security (TLS) 1.3](https://openjdk.java.net/jeps/332)
+## [JEP 332: Transport Layer Security (TLS) 1.3](https://openjdk.java.net/jeps/332)
 
 TLS 1.3 is now supported, however without 0-RTT data, Post-handshake authentication, and Signed certificate timestamps (SCT) (RFC 6962) support.
 
-[JEP 333: ZGC: A Scalable Low-Latency Garbage Collector (Experimental)](https://openjdk.java.net/jeps/333)
+## [JEP 333: ZGC: A Scalable Low-Latency Garbage Collector (Experimental)](https://openjdk.java.net/jeps/333)
 
 The Z Garbage Collector, also known as ZGC, is a scalable low-latency garbage collector.
 

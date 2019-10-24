@@ -129,7 +129,22 @@ The simpler the better. This consumer listens messages from our INPUT queue and 
 
 Internally, Spring Boot Cloud tags the message with a replyTo header, so the response will be handled only by the origin producer.
 
-### Producer
+Where the processor is configured as:
+
+```
+spring.rabbitmq.host=localhost
+spring.rabbitmq.username=guest
+spring.rabbitmq.password=guest
+spring.rabbitmq.automaticRecoveryEnabled=true
+spring.rabbitmq.virtual-host=/
+spring.rabbitmq.port=5672
+
+spring.cloud.stream.bindings.input.destination=requests
+spring.cloud.stream.bindings.input.group=requestsGroup
+spring.cloud.stream.bindings.output.destination=responses
+```
+
+### Producer using barrier locking
 
 ```java
 @Slf4j
@@ -168,6 +183,110 @@ The producer will produce *num* messages and will await until all these messages
 
 By design, the service will block the current request until all the responses have been fetch.
 
+### Producer using Gateway
+
+Recently, I found an easier approach to deal with the request-reply pattern. This is using [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway).
+
+The consumer remains as it is. In the other hand, for the producer, we need to define:
+
+- Our gateway channel:
+
+This is not strongly necessary, but the code is clearer with this:
+
+```java
+public interface GatewayChannels {
+	String REQUEST = "request";
+	String REPLY = "reply";
+
+	@Output(REQUEST)
+	MessageChannel request();
+
+	@Input(REPLY)
+	SubscribableChannel reply();
+}
+```
+
+With the properties:
+
+```
+spring.cloud.stream.bindings.request.destination=requests
+spring.cloud.stream.bindings.reply.destination=responses
+```
+
+Note that the request queue is the input for the consumer and the reply is the output.
+
+- The gateway definition:
+
+```java
+@MessagingGateway
+public interface QueueGateway {
+	@Gateway(requestChannel = IntegrationFlowDefinitions.HANDLER_FLOW, replyChannel = GatewayChannels.REPLY)
+	byte[] handle(@Payload Request payload);
+}
+```
+
+This is the entrypoint for our producer. We'll use this gateway to send a payload into the *requestChannel* channel. Note the **byte[]** response... I could not make this gateway to transform the response to a class in a more elegant way. Therefore, this transformation must be done in the producers manually, we'll see this later.
+
+Then, it will wait for a response in the *replyChannel*. Oh wait, but what is the *requestChanel*? Continue:
+
+- The integration flow:
+
+```java
+@Configuration
+public class IntegrationFlowDefinitions {
+
+	public static final String HANDLER_FLOW = "handlerFlow";
+
+	@Bean
+	public IntegrationFlow requestsFlow() {
+		return IntegrationFlows.from(HANDLER_FLOW).enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
+				.transform(new ObjectToJsonTransformer()).channel(GatewayChannels.REQUEST).get();
+	}
+}
+```
+
+This is the trick to send something onto the request channel in rabbitmq. Here, we can amend new headers and perform transformations in order to integrate with the above consumer.
+
+- Our producer:
+
+```java
+@Service
+@RequiredArgsConstructor
+public class RequestAndResponseGateway {
+
+	private final QueueGateway gateway;
+	private final ObjectMapper mapper;
+	private final ExecutorService threadPool = Executors.newCachedThreadPool();
+
+	public List<String> getMessages(int num) {
+		List<Future<byte[]>> responses = new ArrayList<>();
+		for (int index = 0; index < num; index++) {
+			responses.add(threadPool.submit(submitRequest(index)));
+		}
+
+		return responses.stream().map(this::getResponse).collect(Collectors.toList());
+	}
+
+	private Callable<byte[]> submitRequest(int index) {
+		return () -> {
+			Request request = Request.builder().origin(1).messageIndex(index).build();
+			return gateway.handle(request);
+		};
+	}
+
+	private String getResponse(Future<byte[]> future) {
+		try {
+			return mapper.readValue(future.get(), Response.class).getMessage();
+		} catch (IOException | InterruptedException | ExecutionException e) {
+			throw new RuntimeException("Error getting message", e);
+		}
+	}
+
+}
+```
+
+Our new producer will use the *QueueGateway* class to send request. This call is sync and will wait until any consumer process our request.
+
 ## Conclusions
 
 What about if the producer is shutdown? None will receive the message will be sent. Indeed, Spring will raise the next exceptions:
@@ -180,4 +299,6 @@ What about if the producer is shutdown? None will receive the message will be se
 
 What about if something goes wrong with the consumer and the message is lost? If something can go wrong, it will. The producer should not wait indefinitely.
 
-Do I recommend this kind of integrations to handle user requests? NO. I'm a big fan of [SAGA pattern](https://microservices.io/patterns/data/saga.html) where services/consumers/producers should be totally independently each other. In this guide, we coupled the producer with the consumer and we open the door for many things that can go wrong.
+Do I recommend this kind of integrations to handle user requests? NO. I think it breaks the sync nature of queues. Also, I'm a big fan of [SAGA pattern](https://microservices.io/patterns/data/saga.html) where services/consumers/producers should be totally independently each other. In this guide, we coupled the producer with the consumer and we open the door for many things that can go wrong.
+
+Source code [here](https://github.com/Sgitario/spring-request-response-pattern).

@@ -7,7 +7,7 @@ tags: [ Spring Data, Spring JPA, Hibernate ]
 In this guide we are going to map filters set via a REST API to Spring Data JPA repository. The filters via a REST API look like:
 
 ```
-../rest/items?filter=field1>10&field2=something
+../rest/items?filter=field1:>Sam&filter=field2:>Jaus
 ```
 
 Using this tutorial, you will be able to extend this framework so you can use any character to map it to any filter operator. In the above example, we are using only '>' and '='. See our Item controller:
@@ -25,9 +25,22 @@ public class ItemController {
 	}
 
 	@GetMapping
-	public List<Item> listItems(@RequestParam(value = "filter", defaultValue = "") List<String> filters) {
-		return itemService.getItems(filters);
-	}	
+	public List<ItemEntity> listItems(ItemCriteria criteria) {
+		return itemService.getItems(criteria);
+	}
+}
+```
+
+ItemCriteria.java:
+
+```java
+@Getter
+@Setter
+@NoArgsConstructor
+public class ItemCriteria {
+	private int page = 0;
+	private int size = 25;
+	private List<String> filter;
 }
 ```
 
@@ -38,19 +51,18 @@ Ideally, we should wrap the filters, sort settings and anything else within a si
 @Transactional
 public class ItemServiceImpl implements ItemService {
 
-	private final ItemRepository itemRepository;
+	private final ItemRepository repository;
 
 	@Autowired
-	public ItemServiceImpl(ItemRepository itemRepository) {
-		this.itemRepository = itemRepository;
+	public ItemServiceImpl(ItemRepository repository) {
+		this.repository = repository;
 	}
 
 	@Override
-	public List<Item> getItems(List<String> filters) {
+	public List<ItemEntity> getItems(ItemCriteria criteria) {
 		// @formatter:off
-		return FindAllBuilder.usingRepository(itemRepository)
-					.filterBy(request.getFilters())
-					.findAll(Page.FIRST, Limit.MAX_SIZE);
+		return FindAllBuilder.usingRepository(repository).filterBy(criteria.getFilter())
+			.findAll(criteria.getPage(), criteria.getSize());
 		// @formatter:on
 	}
 }
@@ -59,16 +71,16 @@ public class ItemServiceImpl implements ItemService {
 We are using a builder to make a enricher "findAll" call to any repository. See the implementation:
 
 ```java
-public class FindAllBuilder<T extends PagingAndSortingRepository<T,?> & JpaSpecificationExecutor<T> {
+public class FindAllBuilder<E, R extends PagingAndSortingRepository<E, ?> & JpaSpecificationExecutor<E>> {
 
 	private final R repository;
 
-	private Specifications<T> filters;
+	private Specification<E> filters;
 
 	private Sort sort = Sort.unsorted();
 
-	public static <T extends PagingAndSortingRepository<T,?> & JpaSpecificationExecutor<T>> FindAllBuilder<T,R> 
-usingRepository(R repository) {
+	public static <E, R extends PagingAndSortingRepository<E, ?> & JpaSpecificationExecutor<E>> FindAllBuilder<E, R> usingRepository(
+			R repository) {
 		return new FindAllBuilder<>(repository);
 	}
 
@@ -76,15 +88,15 @@ usingRepository(R repository) {
 		this.repository = repository;
 	}
 
-	public List<T> findAll(int page, int limit) {
-		return new LinkedList<T>(repository.findAll(filters, PageRequest.of(page, limit, sort)).getContent());
+	public List<E> findAll(int page, int limit) {
+		return new LinkedList<E>(repository.findAll(filters, PageRequest.of(page, limit, sort)).getContent());
 	}
 
-	public FindAllBuilder<T,R> filterBy(List<String> listFilters) {
-		Optional<Specification<T>> opFilters = EntitySpecificationBuilder.parse(listFilters);
+	public FindAllBuilder<E, R> filterBy(List<String> listFilters) {
+		Optional<Specification<E>> opFilters = EntitySpecificationBuilder.parse(listFilters);
 		if (opFilters.isPresent()) {
 			if (filters == null) {
-				filters = Specifications.where(opFilters.get());
+				filters = Specification.where(opFilters.get());
 			} else {
 				filters = filters.and(opFilters.get());
 			}
@@ -93,7 +105,7 @@ usingRepository(R repository) {
 		return this;
 	}
 
-	public FindAllBuilder<T,R> sortBy(String orderBy, String orderDir) {
+	public FindAllBuilder<E, R> sortBy(String orderBy, String orderDir) {
 		if (StringUtils.isNotEmpty(orderBy)) {
 			sort = Sort.by(Direction.fromOptionalString(orderDir).orElse(Direction.ASC), orderBy);
 		}
@@ -114,7 +126,8 @@ Key notes:
 ```java
 public class EntitySpecificationBuilder<T> {
 
-	public static <T> Optional<Specification> parse(List<String> filters) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static <T> Optional<Specification<T>> parse(List<String> filters) {
 		if (filters == null || filters.isEmpty()) {
 			return Optional.empty();
 		}
@@ -124,13 +137,14 @@ public class EntitySpecificationBuilder<T> {
 			return Optional.empty();
 		}
 
-		Specification<T> root = Specifications.where(criterias.get(0));
+		Specification<T> root = Specification.where(criterias.get(0));
 		for (int index = 1; index < criterias.size(); index++) {
-			root = Specifications.where(root).and(criterias.get(index));
+			root = Specification.where(root).and(criterias.get(index));
 		}
 		return Optional.of(root);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private static <T> List<Specification> mapSpecifications(List<String> filters) {
 		return filters.stream().map(str -> {
 			for (FilterOperation op : FilterOperation.values()) {
@@ -155,10 +169,9 @@ public enum FilterOperation {
 	// @formatter:off
 	LESS_EQUAL_THAN("<=", (b, k, v) -> b.lessThanOrEqualTo(k, v)),
 	GREATER_EQUAL_THAN(">=", (b, k, v) -> b.greaterThanOrEqualTo(k, v)),
-	CONTAINS(":", (b, k, v) -> b.like(k, b.literal("%" + v + "%"))),
-	GREATER_THAN(">", (b, k, v) -> b.greaterThan(k, v)),
-	LESS_THAN("<", (b, k, v) -> b.lessThan(k, v)),
-	EQUALS("=", (b, k, v) -> b.equal(k, v));
+	CONTAINS(":>", (b, k, v) -> b.like(k, b.literal("%" + v + "%"))),
+	GREATER_THAN(">", (b, k, v) -> b.greaterThan(k, v)), LESS_THAN("<", (b, k, v) -> b.lessThan(k, v)),
+	EQUALS("::", (b, k, v) -> b.equal(k, v));
 	// @formatter:on
 
 	private final String operationName;
@@ -173,7 +186,7 @@ public enum FilterOperation {
 		return operationName;
 	}
 
-	public Predicate build(CriteriaBuilder builder, Root entity, String key, Object value) {
+	public Predicate build(CriteriaBuilder builder, Root<?> entity, String key, Object value) {
 		return operation.predicate(builder, entity.get(key), value.toString());
 	}
 
@@ -205,3 +218,34 @@ Where "b" is a Spring Data CriteriaBuilder where we have lot of possible criteri
 As a summary, we mapped a REST API filter to a Spring Data criteria with no coding in our controllers, services or repositories. We isolated this mapping in an enum that we can easily understand, maintain and extend. Our framework is easily extensible to support sorting and paging thanks to builders patterns.
 
 If you need some working example or test examples, just ping me out.
+
+### How to test
+
+I'm using H2 in memory database for testing purposes only and I ingest data using the next service:
+
+```java
+@Component
+public class IngestSampleDataService {
+
+	@Autowired
+	private ItemRepository repository;
+
+	@PostConstruct
+	public void init() {
+		repository.save(item("Sam", "Jaus"));
+		repository.save(item("Jose", "Carvajal"));
+		repository.save(item("Samuel", "Ubu"));
+	}
+
+	private ItemEntity item(String field1, String field2) {
+		ItemEntity entity = new ItemEntity();
+		entity.setField1(field1);
+		entity.setField2(field2);
+		return entity;
+	}
+}
+```
+
+### Conclusion
+
+You can checkout the source code [here](https://github.com/Sgitario/Java-Spring-LAB).

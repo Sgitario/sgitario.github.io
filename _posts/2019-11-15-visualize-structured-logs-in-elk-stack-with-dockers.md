@@ -1,8 +1,8 @@
 ---
 layout: post
 title: Visualize structured logs in ELK stack
-date: 2019-10-9
-tags: [ Microservices, Patterns, Jaeger ]
+date: 2019-11-15
+tags: [ Microservices, Patterns, ELK ]
 ---
 
 ## Introduction

@@ -143,7 +143,7 @@ Now, we're sending writting traces in JSON format and logstash is reading these 
 
 ## Mastering Logs
 
-If we're building a services app, another really well-designed framework is [Logbook](https://github.com/zalando/logbook) by Zalando. This framework will output all the information about requests/responses done within our application. This means that every request made to our app or done by our app will be traced. This framework is really well integrated with Spring Boot and HTTP utilities like [RestRemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html), [HttpClient](https://hc.apache.org/httpcomponents-client-4.5.x/index.html) or [OkHttp](https://square.github.io/okhttp/) utilities to third parties.
+If we're building a services app, another really well-designed framework is [Logbook](https://github.com/zalando/logbook) by Zalando. This framework will output all the information about requests/responses done within our application. So, every request/response made to our app or done to a third party by our app will be traced. This framework is really well integrated with Spring Boot and HTTP utilities like [RestRemplate](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html), [HttpClient](https://hc.apache.org/httpcomponents-client-4.5.x/index.html) or [OkHttp](https://square.github.io/okhttp/) with minor tweaking.
 
 ```xml
 <dependency>

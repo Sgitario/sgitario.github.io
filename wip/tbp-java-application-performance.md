@@ -51,8 +51,25 @@ There are three sections:
 - Heap for complex data types. 
 - Method spaces
 
+## Memory Leaks
+
+The standard definition of a memory leak is a scenario that occurs when objects are no longer being used by the application, but the Garbage Collector is unable to remove them from working memory – because they’re still being referenced. As a result, the application consumes more and more resources – which eventually leads to a fatal OutOfMemoryError.
+
+- Soft leaks: when an object remains referenced when no longer needed.
+
+## Generate Heap Dump
+
+```bash
+-XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=somepath
+```
+
 # JVM Tuning - Flags
 
-## Spring pool tuning
+## String pool tuning
 - -XX:+PrintStringTableStatistics
 - -XX:StringTableSize=120121 (a prime number)
+
+# Garbage Collection
+
+- Mark and Sweep algorithm: Stop the world!
+- Generational Garbage Collection: Most objects don't live for long, if an object survives, it's likely to live forever. Young and old generation. 

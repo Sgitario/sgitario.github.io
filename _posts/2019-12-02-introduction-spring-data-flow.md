@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Visualize structured logs in ELK stack
+title: Introduction to Spring Cloud Data Flow
 date: 2019-12-02
 tags: [ Spring, DataFlow ]
 ---

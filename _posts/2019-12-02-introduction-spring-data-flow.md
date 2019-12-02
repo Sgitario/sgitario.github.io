@@ -429,4 +429,4 @@ Spring Cloud Data Flow is really well designed and ease to use, but from my poin
 
 Another topic that I didn't speak about, It's that apart from being a solution to write application without coding, it also deploys applications in cluster environments. But still I would rather use Rancher (if we need a cool and easy dashboard) or Kubernetes.
 
-All in all, I liked Spring Cloud Data Flow and as all Spring solutions this is really well done and works really fine.
+All in all, I liked Spring Cloud Data Flow and, as all Spring solutions, they are really well done and work really fine.

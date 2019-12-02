@@ -232,6 +232,8 @@ And now, we can see the new field available in Kibana:
 
 ![New Field]({{ site.url }}{{ site.baseurl }}/images/elk-json-logback-2.png)
 
+| Update: At latest version of the logstash encoder, you don't need to provide the provider in order to see the MDC attributes. By default, all the fields will be output.
+
 ## Conclusion
 
 In this tutorial, we learnt how to structure and master the traces so they can be easily processed by ELK stack and any other analytic tools. However, JSON has also some limitations like limited length size or typeless, and that's why [GELF](https://docs.graylog.org/en/3.1/pages/gelf.html) cames in to help. I never used GELF before and I think this would be good for a future post rather.

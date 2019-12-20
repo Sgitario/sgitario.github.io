@@ -97,6 +97,15 @@ curl http://localhost:8080/check/Jose
 > Jose is older than Felipe
 ```
 
+## What's next
+
+I will develop the next topics soon:
+
+- Rule bases modularization via Rule Units
+- Rule Units orchestration through jBPM workflows
+- Seamless integration with Camel routes, Kafka Streams, ...
+- Automatic REST endpoint generation returning result of DRL queries
+
 ## Conclusions
 
 This post is based on [this video](https://www.youtube.com/watch?v=tLz_aNLuCR0).

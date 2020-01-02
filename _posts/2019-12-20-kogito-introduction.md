@@ -21,7 +21,7 @@ Kogito translates the Drools rules into Java model in order to be adapted to the
 
 - The Drool rule:
 
-```drools
+```drl
 rule R when
         $r : Result()
         $p1 : Person(name == "Jose")

@@ -15,7 +15,7 @@ From [https://www.drools.org/](https://www.drools.org/)
 
 Basically, Drools allows to write business rules following this format:
 
-```drools
+```drl
 rule R when
         $r : Result()
         $p1 : Person(name == "Jose")
@@ -67,7 +67,6 @@ After having a set of business rules registered in the Drools Workbench - or ser
 </dependency>
 ```
 
-
 2.- Create the resource folders for your rules:
 
 ```plain
@@ -76,10 +75,11 @@ src/main/resources
     | rules
 ```
 
-3.- Create our rule:
+3.- Create our rule and module:
 
 - *resources/rules/older.drl*:
-```drools
+
+```drl
 package rules
 
 import com.sgitario.drools.model.Person

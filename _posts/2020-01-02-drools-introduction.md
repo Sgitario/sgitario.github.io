@@ -159,6 +159,6 @@ mvn clean package exec:java
 
 ## Conclusions
 
-This post was based on [this site](http://www.mastertheboss.com/jboss-jbpm/drools/drools-and-maven-example-project), so greetings to them. Also, we worked with the *Kie* dependencies which are useful for testint purposes, but in order to take fully advantage of Drools, the rules must be integrated to [Business Manager workbench](https://docs.jboss.org/drools/release/6.2.0.CR3/drools-docs/html/wb.Workbench.html).
+This post was based on [this site](http://www.mastertheboss.com/jboss-jbpm/drools/drools-and-maven-example-project), so greetings to them. Also, we worked with the *Kie* dependencies which are useful for testint purposes, but in order to take fully advantage of Drools, the rules must be integrated to [Business Manager workbench](https://docs.jboss.org/drools/release/6.2.0.CR3/drools-docs/html/wb.Workbench.html) (more in the next series in  [here](https://sgitario.github.io/jbpm-introduction/)).
 
 The source code can be found [here](https://github.com/Sgitario/drools_tutorial).

@@ -200,3 +200,7 @@ Personally it made me hard to start using all these applications. However, in or
 - Optional process repository to deploy your process (and other related knowledge).
 - History logging (for querying / monitoring / analysis).
 - Integration with various frameworks such as CDI/EJB, Spring(Boot), OSGi, etc.
+
+Credits to:
+- [mastertheboss](http://www.mastertheboss.com/jboss-jbpm/drools/getting-started-with-business-central-workbench)
+- [Red Hat Documentation](https://docs.jboss.org/jbpm/release/7.31.0.Final/jbpm-docs/html_single/index.html#_my_first_business_application)

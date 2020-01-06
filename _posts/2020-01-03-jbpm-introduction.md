@@ -86,7 +86,11 @@ Then, name the project "Older Age":
 
 And click on *Add*.
 
-We have created our project, so let's move on by defining our flowchart. The first thing, we'll be doing is adding a couple of assets:
+### Assets
+
+We have already created our project, now we need to introduce the assets. An asset is a versioned component of different kind: process, data object, test scenario, drool script, ... The important feature around assets is that they are versioned within an internal GIT repository and allow collaboration among different members in the team.
+
+For this example, we'll be adding a couple of assets:
 
 ![Add Asset]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-4.png)
 
@@ -120,7 +124,7 @@ Now, if we save and go back to the test scenario, if we click on the run scenari
 
 ### Deploy our Project
 
-Finally, we can build and deploy our Project in our execution server: 
+Finally, we can build and deploy our Project in our execution server, here we have another important concept: [kjar](https://docs.jboss.org/jbpm/release/7.31.0.Final/jbpm-docs/html_single/index.html#_maven). Basically, all the assets within our project will be packaged into the same Maven project. This maven project will contain a kmodule descriptor with all the information required for the executors to work with. The generated artifacts will be installed in an internal repository within the business manager and available for all the executors.
 
 ![Deploy Project]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-11.png)
 

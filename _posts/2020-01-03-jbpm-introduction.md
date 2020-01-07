@@ -186,17 +186,80 @@ Response:
 
 If we are using Postman, the parameter "-u" is the basic authentication.
 
-## BPMN
+## Process Definitions
 
-We have seen a very basic example so far. To take the full advantage of jBPM, we need to be familiar with BPMN modelling:
+So far, we have deployed our project and execute via REST against directly the kie server node. However, this is not the idea of jBPM though. We don't need to know each kie server node to execute our logic. 
+
+Instead, jBPM is designed with composing processes to trigger actions (including manual user actions):
+
+- processes can be started either manual (via REST or web form - yes!) or automatic (after receiving an event - email, queue, ...)
+- actions can be either manual (user tasks via either auto generated forms or custom forms) or an automatic process (a drool rule or master table decision)
+
+So, we'll be dealing with input and output variables and parameters all around. We orchestate these processes and actions using flowchart business processes. 
+
+### BPMN
+
+Before going forward, please take a look to BPMN modelling:
 
 <iframe src="https://drive.google.com/file/d/1lc6QE6M_afIEUzQNaDWbiyFIle9ahno6/preview" width="640" height="480"></iframe>
 
-And then, use the *Process* assets.
+### Business Process Asset
+
+Let's start designing our business process by selecting this asset:
+
+![Updated Rule]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-asset.png)
+
+And then we add a Start event, a business rule task and an end event:
+
+![Process flowchart]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-flowchart.png)
+
+Our business process needs a couple of variables: (1) the person which will play the role of Jose (to compare with) and (2) the person which will play the role of the other. So, select the business process properties and add these variables under the "Process Data" section:
+
+![Process Variables]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-variables.png)
+
+This is a very important step since jBPM will auto generate the forms based on these input variables. How can we customise this form? Adding a new type of asset called "Form":
+
+![Person Form asset]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-form.png)
+
+For example, we don't want the field "isOld" to appear in the form since our drool rule will manage this field.
+
+Going back to our business process asset, we need to configure a bit the business rule component by specifying:
+
+- the Data Assignments: we need the two variables that we added in the process properties in here:
+
+![Data Assignments]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-checkpersons-data.png)
+
+- the Implementation/Execute: we will select the DRL language and create a rule flow group called "checkolder"
+
+| Note we specified the rule flow group called "checkolder" which means that jBPM will execute all the DRL rules under this group. BUT our rule was not registed under this group... so we need to update our drool rule for doing this:
+
+![Drool Flow group]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-process-script.png)
+
+Now, we can build and deploy again our Project and that's all! We could add a log or to send a notification afterwards, but let's keep this the simpler the better.
+
+### Process Instance
+
+We have now our business process, but how can we execute it? When creating our business process, jBPM also creates a process definition. This process definition is used to create process instances. It's similar to methods: we have a process definition or a method and we invoke this method (creating a process instance). 
+
+![Project Definition Home]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-definition-home.png)
+
+Click on "process definitions" and we'll see the following:
+
+![Project Definition Item]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-definition-process.png)
+
+If we select the "Check Persons" project definition, now we can click on the "New Process Instance" button. Now, we'll be prompted with the person form as expected:
+
+![Project Instance Form]({{ site.url }}{{ site.baseurl }}/images/jbpm-bussiness-central-definition-form.png)
+
+After clicking on the "Run" button, we'll see our process worked fine and we should see our script trace in the logs:
+
+```
+kie-server_1  | 08:29:27,019 INFO  [stdout] (default task-1) Victor is older than Jose
+```
 
 ## Conclusions
 
-Personally it made me hard to start using all these applications. However, in order to take full advantage of these amazing tools, there are more features that were out of scope for this post and we'll revisit soon: 
+There are more features that were out of scope for this post and we'll revisit soon: 
 
 - Pluggable persistence and transactions based on JPA / JTA.
 - Pluggable human task service based on WS-HumanTask for including tasks that need to be performed by human actors.

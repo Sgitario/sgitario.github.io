@@ -1,15 +1,20 @@
-# Introduction Golang
+---
+layout: post
+title: Golang Basics
+date: 2020-02-13
+tags: [ golang ]
+---
 
-Designed by Google. 
-TODO: Add main language features.
-- There is not automatic conversion here
-- If a variable is not used, the compilation will fail
-- Types: integers, string, boolean, pointers, complex... that's it! TODO: ellaborate more
+This is a very basic post about some golang main concepts. 
 
-## Naming conventions
+[Golang](https://golang.org/) is a open source programming language, designed by Google. The core concepts around golang are:
 
-- Exportable functions are capital letters (when we're writing libraries)
-- Internal functions lowercase.
+- Developer Experience: golang aims for simplicity structure and syntax, based mainly on functions. It gets rid of dynamic types or automatic conversions among types, in order to gain performance and intuitive compiler errors (errors if a variable is not used as an example).
+- Types: integers, string, boolean, pointers, complex... that's it!
+- Concurrency: it supports concurrency using coroutines and channels. 
+- Cross-platform: the runtime program can be executed in all OS.
+- Garbage Collector
+- Strong naming conventions: Exportable functions are capital letters (when we're writing libraries) and Internal functions lowercase.
 
 ## First example
 

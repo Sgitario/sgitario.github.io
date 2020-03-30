@@ -134,7 +134,7 @@ Finally, run the Operator into Openshift:
 ```sh
 oc login youropenshiftinstance.com # login
 oc project mynamespace # select openshift project
-make install image=quay.io/jcarvaja/kogito-cloud-operator:0.9.0
+make deploy-operator-on-ocp image=quay.io/jcarvaja/kogito-cloud-operator:0.9.0
 ```
 
 6. Install Services

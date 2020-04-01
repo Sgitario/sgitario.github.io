@@ -13,6 +13,7 @@ Steps:
 - [Go 1.13](https://golang.org/)
 - [Node.JS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Quay](https://quay.io) account
+- [Docker](https://docker.io) (we can use also [Podman](https://podman.io/) using the parameter *image_builder* in scripts)
 - An Openshift instance and project
 
 1. Build [Kogito Runtimes](https://github.com/kiegroup/kogito-runtimes)

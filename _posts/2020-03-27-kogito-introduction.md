@@ -59,68 +59,137 @@ Find the github repository for each component:
 
 ## Learn by example
 
-- The Drool rule:
+For running our new Kogito business application, we first need to deploy our Kogito ecosystem (see [this post](https://sgitario.github.io/kogito-developer-guide/) as a guide to have Kogito running in Openshift).
+
+Then, let's create our first business application:
+
+```sh
+mvn io.quarkus:quarkus-maven-plugin:1.3.1.Final:create \
+    -DprojectGroupId=org.sgitario \
+    -DprojectArtifactId=kogito-persons-example \
+    -Dextensions="kogito"
+cd kogito-persons-example
+```
+
+| We're using Quarkus, however Spring Boot is also supported.
+
+Next, we create a rule file *person-age.drl* inside the src/main/resources/org/sgitario/kogito folder of the generated project:
 
 ```drl
+package org.sgitario.kogito
+
 rule R when
         $r : Result()
         $p1 : Person(name == "Jose")
         $p2 : Person(name != "Jose", age > $p1.age)
     then
-        $r.setValue($p2.getName() + "is older than " + $p1.getName());
+        $r.setOlder(true);
 end
 ```
 
-- The configuration in *META-INF/kmodule.xml*:
-
-```xml
-<?xml version="1.0" encoding="UTF-8">
-<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
-    <kbase name="simpleKS" packages="com.sgitario.simple">
-        <ksession name="simpleKS" default="true">
-    </kbase>
-</kmodule>
-```
-
-- The service:
+Also, as seen in the rule file, the *Person.java* and *Result.java*:
 
 ```java
-@ApplicationScoped
-public class CheckPersonRuleService {
+package org.sgitario.kogito;
 
-    @Named("simpleKS")
-    RuleUnit<SessionMmeory> ruleUnit;
+public class Person {
+	private String name;
+	private int age;
+	
+    // constructors
+	// getters and setters
+}
+```
 
-    public String run() {
-        Result result = new Result();
+```java
+package org.sgitario.kogito;
 
-        SessionMemory memory = new SessionMemory();
-        memory.add(result);
-        memory.add(new Person("Jose", 34));
-        memory.add(new Person("Antonio", 37));
-        memory.add(new Person("Felipe", 32));
+public class Result {
+	private boolean older;
+	
+	// getters and setters
+}
+```
 
-        ruleUnit.evaluate(memory);
+Add the kmodule in *META-INF/kmodule.xml*:
 
-        return result.toString();
+```xml
+<kmodule xmlns="http://www.drools.org/xsd/kmodule" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+```
+
+Define our REST endpoint:
+
+```java
+package org.sgitario.kogito;
+
+import org.kie.api.runtime.KieSession;
+import org.kie.kogito.rules.KieRuntimeBuilder;
+
+import javax.inject.Inject;
+import javax.ws.rs.Consumes;
+ 
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/check-age")
+public class CheckAgeResource {
+	
+	private static final Person JOSE = new Person("Jose", 18);
+ 
+    @Inject
+    KieRuntimeBuilder runtimeBuilder;
+ 
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean checkPerson(Person p) {
+    	Result result = new Result();
+        KieSession ksession = runtimeBuilder.newKieSession();
+        ksession.insert(JOSE);
+        ksession.insert(p);
+        ksession.insert(result);
+        ksession.fireAllRules();
+        return result.isOlder();
+ 
     }
 }
 ```
 
-- The endpoint:
+Add the tests to check our application is working fine:
 
 ```java
-@Path("/check/Jose")
-public class CheckPersonResource {
+package org.sgitario.kogito;
 
-    @Inject
-    CheckPersonRuleService service;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.core.Is.is;
+import org.junit.jupiter.api.Test;
+import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.http.ContentType;
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String checkPerson() {
-        return service.run();
-    }
+@QuarkusTest
+public class CheckAgeResourceTest {
+
+	@Test
+	public void testPass() {
+		given()
+			.body("{\"name\":\"Juan\", \"age\": " + 20 + "}")
+			.contentType(ContentType.JSON)
+			.when().post("/check-age")
+			.then().statusCode(200).body(is("true"));
+	}
+
+	@Test
+	public void testShouldFail() {
+		given()
+		.body("{\"name\":\"Juan\", \"age\": " + 15 + "}")
+		.contentType(ContentType.JSON)
+		.when().post("/check-age")
+		.then().statusCode(200).body(is("false"));
+	}
+
 }
 ```
 
@@ -130,12 +199,17 @@ Now, we can build and run our application by:
 mvn clean package quarkus:dev
 ```
 
-Then, we can call our endpoint:
+Finally, we can deploy our application into Openshift. We'll be doing this using the [Kogito CLI](https://github.com/kiegroup/kogito-cloud-operator#kogito-cli) (instructions about how to install it [here](https://sgitario.github.io/kogito-developer-guide/)). At the moment, Kogito CLI only supports deploying a service if the sources are available in a Git repository, so the first thing we need to do is to push our service into our GitHub account.
 
-```bash
-curl http://localhost:8080/check/Jose
-> Jose is older than Felipe
+| In the future release 1.0.0, it will be possible to deploy a service directly from our localhost using [S2I](https://docs.openshift.com/container-platform/3.6/creating_images/s2i.html) feature from OpenShift.
+
+For this example, the sources are in [my GitHub account](https://github.com/Sgitario/kogito-persons-example), so we can now deploy our service:
+
+```sh
+kogito deploy-service kogito-persons-example https://github.com/Sgitario/kogito-persons-example
 ```
+
+Now, our service is running internally in our cluster and we could make use of it in our businesses. However, this is not all. In this example, we have created a Kie Session and expose the service "manually", however Kogito is designed to do this for you in a cloud native approach. In my next post, I will provide a full example where we'll fully see all the advantages of Kogito. 
 
 ## What's next
 
@@ -148,4 +222,4 @@ I will develop the next topics soon:
 
 ## Conclusions
 
-This post is based on [this video](https://www.youtube.com/watch?v=tLz_aNLuCR0).
+We can find more information about Kogito in [the official site](https://kogito.kie.org/).

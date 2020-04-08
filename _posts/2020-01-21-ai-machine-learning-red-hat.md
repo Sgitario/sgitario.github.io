@@ -5,7 +5,7 @@ date: 2020-01-21
 tags: [ redhat, machine learning ]
 ---
 
-This talk has been presented by @sophwats and @willb. 
+This talk has been presented by [Sophie Watson](https://twitter.com/sophwats) and [William Benton](https://twitter.com/willb). 
 
 ## Roles
 - Data Engineers: Process and transform large data into a database

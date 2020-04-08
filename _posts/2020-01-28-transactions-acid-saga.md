@@ -1,9 +1,11 @@
-# Transactions: Another flavour by @xstefank
+---
+layout: post
+title: Transactions - ACID vs SAGA
+date: 2020-01-28
+tags: [ acid, saga ]
+---
 
-See the difference between ACID and SAGA. Then, MicroProfile LRA as an implementation of SAGA in Java microservices.
-
-## ACID
-Atomicy, consistency, isolation, durability 
+## ACID (Atomicy, consistency, isolation, durability 
 
 Consensus:
 - Two-phase commit protocol (2PC)
@@ -20,10 +22,7 @@ The issue is that the resources are blocked between the services are awaiting to
 
 ## SAGA
 
-Talk: GOTO 2015 by Caite
-Saga tries to undercome the above issue with:
-The transaction is sent to one service each and complete the transaction individually. 
-If a later service cannot process the transaction, it needs to cancel/compensate the transaction in the previous services.
+Saga tries to undercome the above issue by sending the transactions individually in each service. If a later service cannot process the transaction, it needs to cancel/compensate the transaction in the previous services.
 
 The issue is that when the state of the transaction is inconsistent until the last service is complete (or it's fully compensated).
 
@@ -34,9 +33,4 @@ Mapping from ACID:
 - Isolation -> Eventual consistency
 - Durability
 
-### MicroProfile LRA (Long Running Actions)
-
-The implementation of SAGA in Java microservices.
-Source: 
-
-Quarkus extension Nayarana LRA (or something like this)
+An implementation for SAGA transactions in Java is [MicroProfile LRA](https://github.com/eclipse/microprofile-lra).

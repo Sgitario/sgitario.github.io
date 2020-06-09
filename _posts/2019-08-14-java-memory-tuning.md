@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java Application Performance and Memory Management
-date: 2019-04-25
+date: 2019-08-14
 tags: [ java ]
 ---
 

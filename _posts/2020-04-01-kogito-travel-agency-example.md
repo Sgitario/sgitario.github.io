@@ -5,13 +5,13 @@ date: 2020-04-01
 tags: [ kogito ]
 ---
 
-The Travel Agency application is becaming the most relevant and complete example in the Kogito workshops and tutorials so far. This is because it makes use of every single component in the Kogito ecosystem since UI, to Data Index or Jobs Service. 
+The Travel Agency application is becaming the most relevant and complete example in the Kogito workshops and tutorials so far. This is because it makes use of most of the component in the Kogito ecosystem from UI to Data Index. 
 
 ![Architecture]({{ site.url }}{{ site.baseurl }}/images/kogito_travel_1.png)
 
 Basically, the application will check whether a person needs a VISA to travel. If so, the request will be on hold until the agency submit the VISA for this person. Then, it will book the hotel and the flight. Finally, it will require a user confirmation (somebody from the travel agency) to proceed.
 
-In this tutorial, we'll see how to create this example from zero using VS Code (so we can use the latest BMPN editor from [Kogito Tooling](https://github.com/kiegroup/kogito-tooling).
+In this tutorial, we'll see how to create the example from zero using VS Code (so we can use the latest BMPN editor from [Kogito Tooling](https://github.com/kiegroup/kogito-tooling) and then we'll deploy the example using [the Travel Agency github](https://github.com/kiegroup/kogito-examples/tree/master/kogito-travel-agency) source.
 
 ## Requirements
 - [Maven](https://maven.apache.org/)
@@ -32,6 +32,8 @@ Download the latest assets from https://github.com/kiegroup/kogito-tooling/relea
 | There is also a chrome extension where we can edit the diagrams directly from the browser.
 
 ## Let's start!
+
+We'll see an overview of how to design a Kogito application, but not all the components in this example. To see the whole source code, go to [the github repository from Kogito](https://github.com/kiegroup/kogito-examples/tree/master/kogito-travel-agency).
 
 1. Create the Maven project
 
@@ -269,8 +271,139 @@ public class HotelBookingService {
 
 These two services will be used in the subprocesses (second image).
 
-6.- Create subprocesses:
+## How to Deploy it in Openshift
 
-Create hotel.bpmn under src/main/resources/package../:
+Basically, the previous section explains how we can design the components in a Kogito Application. Now, we'll deploy this Kogito Travel Agency from [the official github repository](https://github.com/kiegroup/kogito-examples/tree/master/kogito-travel-agency) by Kogito community.
 
-TODO: More
+0. Requirements
+
+- [Openshift CLI](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html)
+- [Docker](https://docker.io)
+- [Kogito CLI](https://github.com/kiegroup/kogito-cloud-operator#kogito-cli-installation)
+- An Openshift instance and project
+
+1. Login to Openshift and Create project
+
+```
+oc login youropenshiftinstance.com # login
+oc new-project my-jch-travel-agency
+```
+
+2. Deploy the Kogito Operator
+
+```
+kogito use-project my-jch-travel-agency
+```
+
+3. Deploy Data Index
+
+```
+oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/data-index.yaml
+```
+
+This step is basically creating a new instance of the Kogito Data Index component and linking this component to the infrastructure components (using useKogitoInfra field). This is the content of the file:
+
+```yaml
+apiVersion: app.kiegroup.org/v1alpha1
+kind: KogitoDataIndex
+metadata:
+  name: data-index
+spec:
+  # For more information please read: https://docs.jboss.org/kogito/release/latest/html_single/#con_kogito-travel-agency
+  replicas: 1
+  kafka:
+    # will set this instance to auto provision an infra structure in the namespace
+    useKogitoInfra: true
+  infinispan:
+    # will set this instance to auto provision an infra structure in the namespace and attach Infinispan credentials to it
+    useKogitoInfra: true
+```
+
+| Note that this might change in the future
+
+4. Deploy Travels and Visa Kogito app
+
+Travels:
+
+```
+oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/travels.yaml
+```
+
+Content:
+
+```yml
+apiVersion: app.kiegroup.org/v1alpha1
+kind: KogitoApp
+metadata:
+  name: travels
+spec:
+  enableEvents: true
+  enablePersistence: true
+  build:
+    gitSource:
+      contextDir: kogito-travel-agency/travels
+      uri: "https://github.com/kiegroup/kogito-examples/"
+    # set your maven nexus repository to speed up the build time
+    #mavenMirrorURL: 
+```
+
+Visas:
+
+```
+oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/visas.yaml
+```
+
+Content:
+
+```yml
+apiVersion: app.kiegroup.org/v1alpha1
+kind: KogitoApp
+metadata:
+  name: visas
+spec:
+  enableEvents: true
+  enablePersistence: true
+  build:
+    gitSource:
+      contextDir: kogito-travel-agency/visas
+      uri: "https://github.com/kiegroup/kogito-examples/"
+    # set your maven nexus repository to speed up the build time
+    #mavenMirrorURL:
+```
+
+| Note that Openshift will use the GIT source from Github directly and build the app by us.
+
+5. Visit the Travel URL
+
+After the build of the above apps is finished, the routes will be exposed to be publicly accessed.
+
+```
+oc get routes
+```
+
+Output:
+
+```
+NAME         HOST/PORT                                                                          PATH      SERVICES     PORT      TERMINATION   WILDCARD
+data-index   data-index-my-jch-travel-agency.xxx             data-index   8080                    None
+travels      travels-my-jch-travel-agency.xxx                travels      http                    None
+visas        visas-my-jch-travel-agency.xxx                  visas        http                    None
+```
+
+And we're done! We can now browse to travels-my-jch-travel-agency.xxx and visit the page:
+
+![Travel Site]({{ site.url }}{{ site.baseurl }}/images/kogito_travel_website.png)
+
+And the Visa webpage:
+
+![Visa Site]({{ site.url }}{{ site.baseurl }}/images/kogito_visas_website.png)
+
+Play a bit with this example. Try to scale down and up the components and have fun!
+
+## Conclusions
+
+What have been done internally? Kogito is Cloud ready and there are images to build/deploy the apps that ease/hide some complexity. Let's explain a bit about this:
+
+- Build Kogito Apps: this will produces a JAR and also some proto files (in target/classes/persistence) to register the DTOs in Data Index and Infinispan
+- Inject proto files into the watched folder, so Data Index will register the new types into Infinispan
+- Deploy the Kogito App: at the moment, Kogito supports quarkus and spring boot applications :)

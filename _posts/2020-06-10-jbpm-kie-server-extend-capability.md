@@ -13,14 +13,13 @@ In this post, we're going to extend the BRM capability (Drools extension) using 
 /server/containers/instances/{containerId}/customksession/{ksessionId}
 ```
 
-
-1. Create Project
+## 1.- Create Project
 
 ```
 mvn archetype:generate -DgroupId=org.sgitario.jbpm -DartifactId=extend-capability -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
 ```
 
-2. Add kie server dependencies into the **pom.xml**
+## 2.- Add kie server dependencies into the **pom.xml**
 
 Depending on the Kie Server image, you might need to change [the kie server dependencies](https://search.maven.org/artifact/org.kie/kie-api). For Kie Server 7.8 image, the dependencies version is **7.38.0.Final**.
 
@@ -80,7 +79,7 @@ Depending on the Kie Server image, you might need to change [the kie server depe
 </dependencies>
 ```
 
-3. Implement **KieServerApplicationComponentsService** interface in order to filter out application resources depending on the caller extensions and transports
+## 3.- Implement **KieServerApplicationComponentsService** interface in order to filter out application resources depending on the caller extensions and transports
 
 ```java
 public class CustomKieServerApplicationComponentsService implements KieServerApplicationComponentsService {
@@ -110,7 +109,7 @@ public class CustomKieServerApplicationComponentsService implements KieServerApp
 }
 ```
 
-4. Make the service discoverable
+## 4.- Make the service discoverable
 
 To make the new endpoint discoverable, create a _src/main/resources/META-INF/services/org.kie.server.services.api.KieServerApplicationComponentsService_ file and add the fully qualified class name of the KieServerApplicationComponentsService implementation class within the file:
 
@@ -118,7 +117,7 @@ To make the new endpoint discoverable, create a _src/main/resources/META-INF/ser
 org.sgitario.jbpm.CustomKieServerApplicationComponentsService
 ```
 
-5. Build the project
+## 5.- Build the project
 
 ```
 mvn clean package
@@ -126,7 +125,7 @@ mvn clean package
 
 It will generate the file **target/extend-capability-1.0-SNAPSHOT.jar**.
 
-6. Create our own image of Kie Server
+## 6.- Create our own image of Kie Server
 
 Create a file called _Dockerfile_:
 
@@ -143,7 +142,7 @@ Then, build the image:
 docker build . --tag quay.io/jcarvaja/rhdm-kieserver-rhel8-extended-capability
 ```
 
-7. Prepare the KJAR example
+## 7.- Prepare the KJAR example
 
 We're going to create a pretty simple example in Drools (more about this topic in [this post](https://sgitario.github.io/drools-introduction/)). This example will only say hello to persons.
 
@@ -221,7 +220,7 @@ And finally, we build and publish the artifact into our Nexus instance:
 mvn --settings settings.xml clean install deploy
 ```
 
-8. Test it:
+## 8.- Test it:
 
 We first run our Kie Server image:
 
@@ -242,6 +241,12 @@ curl -X POST "http://admin:admin@localhost:8080/services/rest/server/containers/
 ```
 
 Where *ksession* is the name in the **kmodule.xml** of our KJAR module.
+
+In our server logs, as "john" is older than 21, we should see:
+
+```
+14:12:49,715 INFO  [stdout] (default task-1) Hello john
+```
 
 ## Conclusion
 

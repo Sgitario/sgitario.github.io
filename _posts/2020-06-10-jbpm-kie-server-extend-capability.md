@@ -7,7 +7,7 @@ tags: [ jbpm ]
 
 The Kie Server REST API enables you to interact with our business assets (such as business rules, processes, and solvers). The available REST endpoints are determined by the **capabilities** enabled in our Kie Server. We can extend an existing Kie Server capability with a custom REST API endpoint to further adapt our business needs.
 
-In this post, we're going to extend the BRM capability (Drools extension) using the Kie Server 7.8 image with the following custom REST API endpoint:
+In this post, we're going to extend the BRM capability (Drools extension) using the Kie Server 7.7.1 image with the following custom REST API endpoint:
 
 ```
 /server/containers/instances/{containerId}/customksession/{ksessionId}
@@ -21,7 +21,7 @@ mvn archetype:generate -DgroupId=org.sgitario.jbpm -DartifactId=extend-capabilit
 
 ## 2.- Add kie server dependencies into the **pom.xml**
 
-Depending on the Kie Server image, you might need to change [the kie server dependencies](https://search.maven.org/artifact/org.kie/kie-api). For Kie Server 7.8 image, the dependencies version is **7.38.0.Final**.
+Depending on the Kie Server image, you might need to change [the kie server dependencies](https://search.maven.org/artifact/org.kie/kie-api). For Kie Server 7.7.1 image, the dependencies version is **7.38.0.Final**.
 
 ```xml
 <packaging>jar</packaging>
@@ -130,7 +130,7 @@ It will generate the file **target/extend-capability-1.0-SNAPSHOT.jar**.
 Create a file called _Dockerfile_:
 
 ```
-FROM registry.redhat.io/rhdm-7/rhdm-kieserver-rhel8:7.8.0
+FROM registry.redhat.io/rhdm-7/rhdm-kieserver-rhel8:7.7.1
 COPY target/extend-capability-1.0-SNAPSHOT.jar /opt/eap/standalone/deployments/ROOT.war/WEB-INF/lib/
 ```
 
@@ -220,7 +220,7 @@ And finally, we build and publish the artifact into our Nexus instance:
 mvn --settings settings.xml clean install deploy
 ```
 
-## 8.- Test it:
+## 8.- Test it
 
 We first run our Kie Server image:
 

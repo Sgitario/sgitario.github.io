@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Blockchain using Custom Ethereum Network in Java
+title: Blockchain using Custom Ethereum Network in Spring Boot
 date: 2018-11-20
-tags: [ Blockchain, Ethereum, Solidity, Java ]
+tags: [ Blockchain, Ethereum, Solidity, Spring ]
 ---
 
 We already introduced Blockchain and Ethereum in [an earlier post](https://sgitario.github.io/ethereum-and-solidity-getting-started/). However, there were a couple of points we wanted to explore a bit further:
@@ -18,7 +18,7 @@ In [the previous article](https://sgitario.github.io/ethereum-and-solidity-getti
 We followed [this article](https://piotrminkowski.wordpress.com/2018/06/22/introduction-to-blockchain-with-java-using-ethereum-web3j-and-spring-boot/) where it uses the Go ethereum client [Geth](https://github.com/ethereum/go-ethereum) in order to connect to either the Main or Rinkeby network or to deploy a local network. We'll deploy a local ethereum network using the **--dev** parameter:
 
 ```
-> docker run -d --name ethereum -p 8545:8545 -p 30303:30303 ethereum/client-go --rpc --rpcaddr "0.0.0.0" --rpcapi="db,eth,net,web3,personal" --rpccorsdomain "*" --dev
+> docker run -d --name ethereum -p 8545:8545 -p 30303:30303 ethereum/client-go --rpc --rpcapi="db,eth,net,web3,personal" --dev --allow-insecure-unlock
 ```
 
 We can view what the container is doing as:
@@ -63,11 +63,12 @@ Let's create the account we'll use in the examples. First, we need to connect to
 > docker exec -it ethereum geth attach ipc:/tmp/geth.ipc
 ```
 
-Now, we can use the Go client to create an account with the mnemonic phrase 'ABC':
+Now, we can use the geth client to create an account with the mnemonic phrase 'ABC':
 
-```go
+```
 > personal.newAccount('ABC')
 "0xf4cffcaed2700b9a4e937036a044ea42ecd95e48"
+> personal.unlockAccount("0xf4cffcaed2700b9a4e937036a044ea42ecd95e48", "ABC")
 > eth.accounts
 ["0xb18b4450b90a21b20ec5ed45df5f1a500e0c476a", "0xf4cffcaed2700b9a4e937036a044ea42ecd95e48"]
 ```

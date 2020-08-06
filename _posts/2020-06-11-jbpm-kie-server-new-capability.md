@@ -321,7 +321,85 @@ Then, build the image:
 docker build . --tag quay.io/jcarvaja/rhdm-kieserver-rhel8-new-capability
 ```
 
-## 8.- Test it
+## 8.- Prepare the KJAR example
+
+We're going to create a pretty simple example in Drools (more about this topic in [this post](https://sgitario.github.io/drools-introduction/)). This example will only say hello to persons.
+
+First, we need a Maven repository to be accessible to push the KJar module and our Kie Server:
+
+```
+docker run -d -p 8081:8081 --name nexus sonatype/nexus
+```
+
+The default credentials is _admin_/_admin123_.
+
+Create the **pom.xml**:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.jbpm.test</groupId>
+  <artifactId>say-hello-kjar-example</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>kjar</packaging>
+  <name>say-hello-kjar-example</name>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-maven-plugin</artifactId>
+        <version>7.38.0.Final</version>
+        <extensions>true</extensions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <distributionManagement>
+   <snapshotRepository>
+      <id>nexus-snapshots</id>
+      <url>http://localhost:8081/nexus/content/repositories/snapshots</url>
+   </snapshotRepository>
+</distributionManagement>
+</project>
+```
+
+Then, the **Person.java* domain model:
+
+```java
+package org.jbpm.test;
+
+public class Person  implements java.io.Serializable {
+    
+    private Integer age;
+    private String name;
+
+    // constructors, getters and setters
+}
+```
+
+The **say-hello-person.drl** rule:
+
+```drl
+import org.jbpm.test.Person;
+
+rule SayHello
+  when
+	  $p : Person(age >= 21)
+  then
+	  System.out.println("Hello " + $p.getName());
+end
+```
+ 
+And finally, we build and publish the artifact into our Nexus instance:
+
+```
+mvn --settings settings.xml clean install deploy
+```
+
+## 9.- Test it
 
 We first run our Kie Server image:
 
@@ -364,4 +442,4 @@ Finally, we need to type "exit" to quit the connection with the Mina server.
 
 ## Conclusion
 
-All the source code can be found in [this repository](https://github.com/Sgitario/kie-server-new-capability).
+All the source code can be found in [this repository](https://github.com/Sgitario/kie-server-examples/tree/master/kie-server-new-capability).

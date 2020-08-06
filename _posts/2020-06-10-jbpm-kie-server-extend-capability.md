@@ -250,4 +250,4 @@ In our server logs, as "john" is older than 21, we should see:
 
 ## Conclusion
 
-All the source code can be found in [this repository](https://github.com/Sgitario/kie-server-extend-capability).
+All the source code can be found in [this repository](https://github.com/Sgitario/kie-server-examples/tree/master/kie-server-extend-capability).

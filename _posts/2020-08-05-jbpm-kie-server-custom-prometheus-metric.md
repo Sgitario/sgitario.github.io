@@ -193,16 +193,34 @@ mvn --settings settings.xml clean install deploy
 We first need to run our Kie Server image. The key point here is to enable the prometheus integration using the **PROMETHEUS_SERVER_EXT_DISABLED** parameter:
 
 ```
-docker run -it -p 8080:8080 -p 9123:9123 --rm --env KIE_ADMIN_USER=admin --env KIE_ADMIN_PWD=admin --env MAVEN_MIRROR_URL=http://localhost:8180/nexus/content/groups/public/ --env PROMETHEUS_SERVER_EXT_DISABLED=false quay.io/jcarvaja/rhdm-kieserver-rhel8-custom-metrics
+docker run -it -p 8080:8080 -p 9123:9123 --rm --env KIE_ADMIN_USER=admin --env KIE_ADMIN_PWD=admin --env MAVEN_MIRROR_URL=http://nexus:8081/nexus/content/groups/public/ --env PROMETHEUS_SERVER_EXT_DISABLED=false --link nexus --name kieserver quay.io/jcarvaja/rhdm-kieserver-rhel8-custom-metrics
 ```
 
 Then, we need to deploy the prometheus instance:
 
 ```
-docker-compose -f docker-prometheus-grafana.yml up
+docker run -it -p 9090:9090 -v ${PWD}/prometheus-config.yml:/etc/prometheus/prometheus.yml:z --link kieserver --name prometheus prom/prometheus:v2.8.0 --config.file=/etc/prometheus/prometheus.yml
 ```
 
-| Kie Server will try to connect to localhost:9090. In Openshift/Kubernetes, this is done by looking up the prometheus labels. If you are running into issues about how to integrate kie server with prometheus, go to [the official documentation](https://access.redhat.com/documentation/en-us/red_hat_decision_manager/7.4/html/managing_and_monitoring_decision_server/prometheus-monitoring-con_execution-server) or [this post](https://blog.kie.org/2019/06/jbpm-monitoring-using-prometheus-and-grafana.html).
+Where _prometheus-config.yml_ is:
+
+```yml
+scrape_configs:
+  - job_name: 'kie-server'
+
+    scrape_interval: 10s
+
+    metrics_path: /services/rest/metrics
+
+    basic_auth:
+      username: 'admin'
+      password: 'admin'
+
+    static_configs:
+      - targets: ['kieserver:8080']
+```
+
+Prometheus will collect the metrics by calling kieserver:8080/services/rest/metrics every 10s.
 
 Now, we're going to run the same KJAR example as in [this post](https://sgitario.github.io/jbpm-kie-server-extend-capability/) (step 9):
 

@@ -225,7 +225,7 @@ mvn --settings settings.xml clean install deploy
 We first run our Kie Server image:
 
 ```
-docker run -it -p 8080:8080 --rm --env KIE_ADMIN_USER=admin --env KIE_ADMIN_PWD=admin --env MAVEN_MIRROR_URL=http://localhost:8081/nexus/content/groups/public/ quay.io/jcarvaja/rhdm-kieserver-rhel8-extended-capability
+docker run -it -p 8080:8080 --rm --env KIE_ADMIN_USER=admin --env KIE_ADMIN_PWD=admin --env MAVEN_MIRROR_URL=http://nexus:8081/nexus/content/groups/public/ --link nexus quay.io/jcarvaja/rhdm-kieserver-rhel8-extended-capability
 ```
 
 Then, we deploy our KJAR example:

@@ -11,8 +11,8 @@ It supports debugging, repeat tests, headless mode and many more features just b
 
 ## Setting Up Cypress
 
-1. Install [NodeJS](https://nodejs.org/en/) higher than 8.x
-2. Create the _package.json_ file with content:
+**1.- Install [NodeJS](https://nodejs.org/en/) higher than 8.x**
+**2.- Create the _package.json_ file with content:**
 
 ```json
 {
@@ -21,8 +21,8 @@ It supports debugging, repeat tests, headless mode and many more features just b
   "description": "",
   "main": "index.js",
   "scripts": {
-    "cypress": "cypress open", // to enable cypress-npm integration: "npm run cypress"
-    "test": "cypress run" // to run tests headless mode: "npm test"
+    "cypress": "cypress open",
+    "test": "cypress run"
   },
   "keywords": [],
   "author": "",
@@ -30,7 +30,9 @@ It supports debugging, repeat tests, headless mode and many more features just b
 }
 ```
 
-3. Install Cypress:
+Using the above configuration, we can then run our tests using either "npm run cypress" or "npm test".
+
+**3.- Install Cypress:**
 
 ```sh
 npm install cypress
@@ -44,7 +46,7 @@ Cypress will create the folder structure:
 - cypress/plugins - to customise the Cypress behaviour (more in [here](https://docs.cypress.io/guides/tooling/plugins-guide.html#Use-Cases))
 - cypress/screenshots - to see the screenshots or recordings made by Cypress when running the tests
 
-4. Run cypress:
+**4.- Run cypress:**
 
 ```sh
 npx cypress open
@@ -56,8 +58,8 @@ This will open a browser to run the example tests.
 
 Let's write our first test in *cypress/integration/<name_of_test>.spec.js*. In Cypress, we can have either:
 
-- action or commands: cy.get(...)**.type** or **.click** or ...
-- validations or assertions: cy.get(...)**.should**
+- action or commands: "cy.get(...).type" or ".click" or ...
+- validations or assertions: "cy.get(...).should"
 
 For this test, we're going to visit a TODO app that is part of the installed Cypress examples:
 

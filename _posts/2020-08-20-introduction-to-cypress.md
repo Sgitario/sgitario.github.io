@@ -56,7 +56,7 @@ This will open a browser to run the example tests.
 
 ## First Test Case
 
-Let's write our first test in *cypress/integration/<name_of_test>.spec.js*. In Cypress, we can have either:
+Let's write our first test in _cypress/integration/<name_of_test>.spec.js_. In Cypress, we can have either:
 
 - action or commands: "cy.get(...).type" or ".click" or ...
 - validations or assertions: "cy.get(...).should"

@@ -284,21 +284,21 @@ Basically, the previous section explains how we can design the components in a K
 
 1. Login to Openshift and Create project
 
-```
-oc login youropenshiftinstance.com # login
-oc new-project my-jch-travel-agency
+```sh
+> oc login youropenshiftinstance.com # login
+> oc new-project my-jch-travel-agency
 ```
 
 2. Deploy the Kogito Operator
 
-```
-kogito use-project my-jch-travel-agency
+```sh
+> kogito use-project my-jch-travel-agency
 ```
 
 3. Deploy Data Index
 
-```
-oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/data-index.yaml
+```sh
+> oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/extended/operator/data-index.yaml
 ```
 
 This step is basically creating a new instance of the Kogito Data Index component and linking this component to the infrastructure components (using useKogitoInfra field). This is the content of the file:
@@ -325,60 +325,83 @@ spec:
 
 Travels:
 
-```
-oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/travels.yaml
+```sh
+> oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/extended/operator/travels.yaml
 ```
 
 Content:
 
 ```yml
 apiVersion: app.kiegroup.org/v1alpha1
-kind: KogitoApp
+kind: KogitoBuild
 metadata:
   name: travels
 spec:
-  enableEvents: true
-  enablePersistence: true
-  build:
-    gitSource:
-      contextDir: kogito-travel-agency/travels
-      uri: "https://github.com/kiegroup/kogito-examples/"
-    # set your maven nexus repository to speed up the build time
-    #mavenMirrorURL: 
+  type: RemoteSource
+  gitSource:
+    contextDir: kogito-travel-agency/extended/travels
+    uri: "https://github.com/kiegroup/kogito-examples/"
+  # set your maven nexus repository to speed up the build time
+  #mavenMirrorURL:
+---
+apiVersion: app.kiegroup.org/v1alpha1
+kind: KogitoRuntime
+metadata:
+  name: travels
+spec:
+  infinispan:
+    useKogitoInfra: true
+  kafka:
+    useKogitoInfra: true
 ```
 
 Visas:
 
-```
-oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/operator/visas.yaml
+```sh
+> oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/extended/operator/visas.yaml
 ```
 
 Content:
 
 ```yml
 apiVersion: app.kiegroup.org/v1alpha1
-kind: KogitoApp
+kind: KogitoBuild
 metadata:
   name: visas
 spec:
-  enableEvents: true
-  enablePersistence: true
-  build:
-    gitSource:
-      contextDir: kogito-travel-agency/visas
-      uri: "https://github.com/kiegroup/kogito-examples/"
-    # set your maven nexus repository to speed up the build time
-    #mavenMirrorURL:
+  type: RemoteSource
+  gitSource:
+    contextDir: kogito-travel-agency/extended/visas
+    uri: "https://github.com/kiegroup/kogito-examples/"
+  # set your maven nexus repository to speed up the build time
+  #mavenMirrorURL:
+---
+apiVersion: app.kiegroup.org/v1alpha1
+kind: KogitoRuntime
+metadata:
+  name: visas
+spec:
+  infinispan:
+    useKogitoInfra: true
+  kafka:
+    useKogitoInfra: true
+
 ```
 
 | Note that Openshift will use the GIT source from Github directly and build the app by us.
 
 5. Visit the Travel URL
 
-After the build of the above apps is finished, the routes will be exposed to be publicly accessed.
+We can watch the build status running:
 
+```sh
+> watch oc get build
 ```
-oc get routes
+
+After the build of the above apps is completed, the routes will be exposed to be publicly accessed.
+
+```sh
+> oc get routes
 ```
 
 Output:
@@ -404,6 +427,6 @@ Play a bit with this example. Try to scale down and up the components and have f
 
 What have been done internally? Kogito is Cloud ready and there are images to build/deploy the apps that ease/hide some complexity. Let's explain a bit about this:
 
-- Build Kogito Apps: this will produces a JAR and also some proto files (in target/classes/persistence) to register the DTOs in Data Index and Infinispan
+- Build Kogito Runtimes: this will produces a JAR and also some proto files (in target/classes/persistence) to register the DTOs in Data Index and Infinispan
 - Inject proto files into the watched folder, so Data Index will register the new types into Infinispan
 - Deploy the Kogito App: at the moment, Kogito supports quarkus and spring boot applications :)

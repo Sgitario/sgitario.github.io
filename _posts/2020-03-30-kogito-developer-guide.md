@@ -6,7 +6,8 @@ tags: [ kogito, operators ]
 ---
 
 0. Requirements
-- [Openjdk 11](https://tecadmin.net/install-java-on-fedora/) devel package:
+- [Java 11](https://openjdk.java.net/)
+- [Maven](https://maven.apache.org/)
 - [Openshift CLI](https://docs.openshift.com/container-platform/4.2/cli_reference/openshift_cli/getting-started-cli.html)
 - [Go 1.13](https://golang.org/)
 - [Node.JS](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)

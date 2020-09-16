@@ -16,3 +16,5 @@ Nowadays, Red Hat is making an effort to implement a new cloud-native solution o
 3. [Automation Manager](https://sgitario.github.io/automation-manager/)
 4. [Kogito - Overview](https://sgitario.github.io/kogito-introduction/): Take advantage of Quarkus and Cloud networking
 5. [Kogito - Developer Guide](https://sgitario.github.io/kogito-developer-guide/): Developer Guide to contribute in Kogito project
+6. [Kogito - Travel Agency Example](https://sgitario.github.io/kogito-travel-agency-example/): The most popular example for Kogito project
+7. [Kogito - Security #1](https://sgitario.github.io/kogito-security-in-services/): Enable Security in Services

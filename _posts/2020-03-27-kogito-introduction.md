@@ -24,21 +24,34 @@ The high level architecture of Kogito based application consists of:
 ![Architecture]({{ site.url }}{{ site.baseurl }}/images/kogito_architecture_1.png)
 
 Where:
-- Business Process
 
-This is our application (TBD).
+- [Kogito Runtime](https://docs.jboss.org/kogito/release/latest/html_single/#chap-kogito-deploying-on-openshift)
 
-- [Management Console](https://github.com/Sgitario/kogito-apps/blob/master/packages/management-console/README.md)
-- [Data Index](https://github.com/kiegroup/kogito-runtimes/wiki/Data-Index-Service)
+The Kogito Runtime applications keep our business logic. These are our Kogito services we are going to implement with our business logics.
 
-The Data Index consumes the Kafka events and *index* this information into the Infinispan as storage service. Technicallly, it is a Quarkus application based on [VertX](https://vertx.io/) and reactive messaging that exposes a [GraphQL](https://graphql.org/) endpoint.
+- [Management Console](https://docs.jboss.org/kogito/release/latest/html_single/#con-management-console_kogito-developing-process-services)
 
-- [Jobs Service](https://github.com/kiegroup/kogito-runtimes/wiki/Jobs-Service)
+The Kogito Management Console is a user interface for viewing the state of all available Kogito services and managing process instances.
+
+- [Data Index](https://docs.jboss.org/kogito/release/latest/html_single/#proc-kogito-travel-agency-enable-data-index_kogito-deploying-on-openshift)
+
+The Data Index consumes the Kafka [cloud events](https://cloudevents.io/) and *index* this information into the storage service. Technicallly, it is a Quarkus application based on [VertX](https://vertx.io/) and reactive messaging that exposes a [GraphQL](https://graphql.org/) endpoint.
+
+- [Jobs Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-jobs-service_kogito-deploying-on-openshift)
 
 The Jobs Service is responsible for scheduling jobs that aim to be fired at a given time. The service does not execute the job itself, it triggers a callback that could be an HTTP request on a given endpoint specified on the job request, or any other callback that could be supported by the service. Technically, it is a Quarkus application based on [VertX](https://vertx.io/). 
 
+- [Trusty Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-trusty-service_kogito-deploying-on-openshift)
+
+Kogito provides a Trusty Service that stores all Kogito tracing events related to decisions made in Kogito services. The Trusty Service uses the Kafka [cloud events](https://cloudevents.io/) from Kogito services, and then processes the tracing events and stores the data in the storage service.
+
+- [Explainability Service](https://docs.jboss.org/kogito/release/latest/html_single/#con-kogito-operator-with-explainability-service_kogito-deploying-on-openshift)
+
+The Explainability service is a complementary service for the Trusty Service to identify why the decision were made.
+
 - [Kafka](https://kafka.apache.org/)
 - [Infinispan](https://infinispan.org/)
+- [MongoDB](https://www.mongodb.com/)
 
 As said, Kogito is a cloud native solution and to ease the deployment, it's designed to be ruled by operators (supported by Openshift and Kubernetes):
 
@@ -52,7 +65,7 @@ To more information about how to get started with Kogito, go to [my next article
 
 Find the github repository for each component:
 - [Kogito Runtimes](https://github.com/kiegroup/kogito-cloud-operator): The framework
-- [Kogito Apps](https://github.com/kiegroup/kogito-apps): Management Console, Data Index, Jobs Service
+- [Kogito Apps](https://github.com/kiegroup/kogito-apps): Management Console, Data Index, Jobs Service, Trusty Service, Explainability Service, ...
 - [Kogito Cloud Operator](https://github.com/kiegroup/kogito-cloud-operator): Kogito Operator, Kogito CLI, Kogito Integration Tests
 - [Kogito Tooling](https://github.com/kiegroup/kogito-tooling): Useful tools like the BPMN editor in Visual Code and Web.
 - [Kogito Examples](https://github.com/kiegroup/kogito-examples): Kogito Examples

@@ -15,7 +15,7 @@ In this tutorial, we'll see how to create the example from zero using VS Code (s
 
 ## Requirements
 - [Maven](https://maven.apache.org/)
-- Java 11
+- [Java 11](https://openjdk.java.net/)
 - [VS Code](https://code.visualstudio.com/)
 
 ### Kogito Extension in VS Code
@@ -297,13 +297,10 @@ Basically, the previous section explains how we can design the components in a K
 
 3. Deploy Data Index
 
+This step is basically creating a new instance of the Kogito Data Index component and linking this component to the infrastructure components (using useKogitoInfra field):
+
 ```sh
-> oc apply -f https://raw.githubusercontent.com/kiegroup/kogito-examples/master/kogito-travel-agency/extended/operator/data-index.yaml
-```
-
-This step is basically creating a new instance of the Kogito Data Index component and linking this component to the infrastructure components (using useKogitoInfra field). This is the content of the file:
-
-```yaml
+> oc apply -n my-jch-travel-agency -f - <<EOF
 apiVersion: app.kiegroup.org/v1alpha1
 kind: KogitoDataIndex
 metadata:
@@ -317,9 +314,8 @@ spec:
   infinispan:
     # will set this instance to auto provision an infra structure in the namespace and attach Infinispan credentials to it
     useKogitoInfra: true
+EOF
 ```
-
-| Note that this might change in the future
 
 4. Deploy Travels and Visa Kogito app
 

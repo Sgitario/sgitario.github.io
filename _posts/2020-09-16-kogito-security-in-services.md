@@ -60,7 +60,44 @@ spec:
 
 ## Management Console
 
-TBD
+- Via Kogito CLI
+
+```
+kogito install mgmt-console \
+  --env quarkus.oidc.tenant-enabled=true \
+  --env quarkus.oidc.auth-server-url=https://our-keycloak-instance \
+  --env quarkus.oidc.client-id=kogito-client \
+  --env quarkus.http.auth.permission.unsecure.paths=/health/* \
+  --env quarkus.http.auth.permission.unsecure.policy=permit \
+  --env quarkus.http.auth.permission.secure.paths=/* \
+  --env quarkus.http.auth.permission.secure.policy=authenticated \
+  /
+```
+
+- Using Custom Resource:
+
+```yaml
+kind: KogitoMgmtConsole
+apiVersion: app.kiegroup.org/v1alpha1
+metadata:
+  name: management-console
+spec:
+  envs:
+  - name: quarkus.oidc.client-id
+    value: kogito-client
+  - name: quarkus.http.auth.permission.unsecure.paths
+    value: "/health/*"
+  - name: quarkus.http.auth.permission.unsecure.policy
+    value: permit
+  - name: quarkus.http.auth.permission.secure.paths
+    value: "/*"
+  - name: quarkus.http.auth.permission.secure.policy
+    value: authenticated
+  - name: quarkus.oidc.tenant-enabled
+    value: 'true'
+  - name: quarkus.oidc.auth-server-url
+    value: https://our-keycloak-instance
+```
 
 ## Trusty Service
 
@@ -102,10 +139,6 @@ spec:
   - name: quarkus.oidc.auth-server-url
     value: https://our-keycloak-instance
 ```
-
-## Explainability Service
-
-TBD
 
 ## Jobs Service
 

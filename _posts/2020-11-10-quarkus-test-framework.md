@@ -332,7 +332,7 @@ This example works fine, but using QuarkusProdModeTest, it's not working:
 
 ```java
 @RegisterExtension
-static final QuarkusDevModeTest config = new QuarkusDevModeTest()
+static final QuarkusProdModeTest config = new QuarkusProdModeTest()
         .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
             .addClasses(PongResource.class)
             .addAsResource("pong.properties", "application.properties"))

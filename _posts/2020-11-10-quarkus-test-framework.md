@@ -354,7 +354,8 @@ It fails because the `pong.properties` is ignored. Also, using `.withConfigurati
 static final QuarkusDevModeTest config = new QuarkusDevModeTest()
         .setArchiveProducer(() -> ShrinkWrap.create(JavaArchive.class)
             .addClasses(PongResource.class))
-        .setRun(true);
+        .setRun(true)
+        .setRuntimeProperties(PropertiesUtils.toMap("ping.properties"));
 
 @Test
 public void testPong() {

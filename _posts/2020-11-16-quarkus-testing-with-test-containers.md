@@ -11,10 +11,12 @@ In my [previous post](https://sgitario.github.io/quarkus-test-framework/), I cov
 
 Let's start with a multi-module project similar to:
 
+```bash
 ├── Parent
 │   ├── Quarkus App 1
 │   ├── Quarkus App 2
 │   └── Integration Tests
+```
 
 The goal is to have running Docker images at the Integration Tests stage, so we can use Testcontainers to start these images.
 
@@ -34,7 +36,6 @@ To enable this extension, we need to add it into the `pom.xml`:
 And configure the Docker image attributes in the `application.properties`:
 
 ```
-# Docker
 quarkus.container-image.build=true # This property will enable the extension to build the image into Docker
 quarkus.container-image.group=my-group
 quarkus.container-image.name=quarkus-app-one

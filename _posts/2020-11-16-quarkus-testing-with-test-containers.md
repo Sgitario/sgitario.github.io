@@ -11,10 +11,10 @@ In my [previous post](https://sgitario.github.io/quarkus-test-framework/), I cov
 
 Let's start with a multi-module project similar to:
 
-| Parent
--- | Quarkus App 1
--- | Quarkus App 2
--- | Integration Tests
+Parent
+└── Quarkus App 1
+└── Quarkus App 2
+└── Integration Tests
 
 The goal is to have running Docker images at the Integration Tests stage, so we can use Testcontainers to start these images.
 

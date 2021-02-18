@@ -152,11 +152,11 @@ Note that this dependency is intended to be only used by Quarkus extension devel
 
 Now, we have available these Quarkus extensions: 
 
-| Extensions | Can Be Used For Quarkus Apps | Hot Reload | Debug | Can Deploy Multiple Extensions | Documented |
+| Extensions | Can Be Used For Quarkus Apps | Reload | Debug | Can Deploy Multiple Extensions | Documented |
 | ------- | ----------- |
 | [QuarkusUnitTest](https://quarkus.io/guides/writing-extensions#testing-extensions) | No | No | Yes | Yes | Yes |
-| [QuarkusDevModeTest](https://quarkus.io/guides/writing-extensions#testing-hot-reload) | Yes | Yes | Yes | No | Yes |
-| QuarkusProdModeTest | Yes | No | No | Yes | No |
+| [QuarkusDevModeTest](https://quarkus.io/guides/writing-extensions#testing-hot-reload) | Yes | Hot reload (modify methods) | Yes | No | Yes |
+| QuarkusProdModeTest | Yes | Restart (start/stop methods) | No | Yes | No |
 
 The only extension that is fully focused for Quarkus extension development is QuarkusUnitTest, so I'll skip it as our purpose is to use it for testing several Quarkus Apps at once.
 

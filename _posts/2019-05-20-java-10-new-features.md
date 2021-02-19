@@ -2,7 +2,7 @@
 layout: post
 title: Java 10 New Features
 date: 2019-05-20
-tags: [ Java, Java 10 ]
+tags: [ Java ]
 ---
 
 After looking into [the new features in Java 9](https://sgitario.github.io/java-9-new-features/), I wanted to continue my series of Java new features with Java 10. 

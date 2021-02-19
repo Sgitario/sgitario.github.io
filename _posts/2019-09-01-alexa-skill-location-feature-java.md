@@ -2,7 +2,7 @@
 layout: post
 title: Location support for Alexa Skills in Java
 date: 2019-09-04
-tags: [ Alexa, Java ]
+tags: [ Alexa ]
 ---
 
 I wrote [my first tutorial](https://sgitario.github.io/alexa-skills-notes/) for creating a Skill in Alexa almost a year ago. Recently, I wanted to create a skill that provide the conditions of the most closest beach according to your current location. How can we get the user location? I found many sources but all of them were written in node.js. Let's use Java 8 here.

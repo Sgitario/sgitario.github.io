@@ -2,7 +2,7 @@
 layout: post
 title: Quarkus Test Framework
 date: 2020-11-10
-tags: [ quarkus, test ]
+tags: [ Quarkus ]
 ---
 
 [Quarkus](https://quarkus.io/) is the most recent popular framework for Java applications aimed to be the reference for cloud-native applications. Its competitor is none other than the all-powerful [Spring Boot](https://spring.io/projects/spring-boot). So, Quarkus has a long path to engage users and for achieving this, the developer experience that needs to be rather than excellence and joyful. In this direction, this post is covering how we can test Quarkus apps as developers.

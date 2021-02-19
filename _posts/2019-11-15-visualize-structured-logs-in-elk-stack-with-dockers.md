@@ -2,7 +2,7 @@
 layout: post
 title: Visualize structured logs in ELK stack
 date: 2019-11-15
-tags: [ Microservices, Patterns, ELK ]
+tags: [ Design Patterns, ELK ]
 ---
 
 By default, the logging frameworks outputs the traces in plain text and tools like ELK can't fully process these traces. We could workaround the issue by adapting the messages using Logstash, but if we are using another tool like Prometheus, we would need to workaround it there as well. Therefore, if we "structure" or send the traces in JSON format directly, all the tools can benefit of.

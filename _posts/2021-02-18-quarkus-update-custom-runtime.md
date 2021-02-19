@@ -2,7 +2,7 @@
 layout: post
 title: Update Custom Properties in Quarkus at Runtime
 date: 2021-02-18
-tags: [ java ]
+tags: [ Quarkus ]
 ---
 
 Recently, I wanted to update some custom properties in order to dynamically change some inner behaviours in my application. As an example, let's see a simple example:

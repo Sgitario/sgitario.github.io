@@ -2,7 +2,7 @@
 layout: post
 title: Adding Security using Istio
 date: 2020-09-04
-tags: [ security, keycloak, istio ]
+tags: [ Keycloak, Kubernetes, Istio ]
 ---
 
 In this post, we're going to use Istio to enable security to our applications deployed in the cloud (using K8S or Openshift).

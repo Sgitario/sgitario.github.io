@@ -2,7 +2,7 @@
 layout: post
 title: AI and Machine Learning at Red Hat
 date: 2020-01-21
-tags: [ redhat, machine learning ]
+tags: [ Machine Learning ]
 ---
 
 This talk has been presented by [Sophie Watson](https://twitter.com/sophwats) and [William Benton](https://twitter.com/willb). 

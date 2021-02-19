@@ -2,7 +2,7 @@
 layout: post
 title: Adding Cache Support to Spring Boot Application
 date: 2018-11-06
-tags: [ Spring Boot, Cache ]
+tags: [ Spring ]
 ---
 
 There are lot of tutorials about how to enable Cache in your Spring Boot application. These a couple of examples:

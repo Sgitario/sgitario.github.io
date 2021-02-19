@@ -2,7 +2,7 @@
 layout: post
 title: Add Git Hooks in Business Central
 date: 2020-06-22
-tags: [ jbpm ]
+tags: [ jBPM ]
 ---
 
 As we introduced the jBPM architecture in [this post], it mainly consists in two components:

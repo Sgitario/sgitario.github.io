@@ -2,7 +2,7 @@
 layout: post
 title: Kogito Introduction
 date: 2020-03-27
-tags: [ kogito, java, quarkus, drools ]
+tags: [ Kogito ]
 ---
 
 [Kogito](https://kogito.kie.org/) is the natural evalution of [Red Hat Automation Manager](https://sgitario.github.io/automation-manager/) to the cloud using [Quarkus](https://quarkus.io/) under [Graal VM](https://sgitario.github.io/graalvm-getting-started/).

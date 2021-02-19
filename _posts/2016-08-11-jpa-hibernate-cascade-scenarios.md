@@ -2,7 +2,7 @@
 layout: post
 title: JPA + Hibernate Cascade Scenarios
 date: 2016-08-11
-tags: [ JPA, Hibernate ]
+tags: [ Hibernate ]
 ---
 After playing with entity relationships in Hibernate, I wanted to write my notes about the Cascade options and some scenarios for each one. At the end of this post, find a table to match the Cascade Types in Hibernate to JPA and the link to the source code in github.
 

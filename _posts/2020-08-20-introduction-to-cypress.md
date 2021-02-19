@@ -2,7 +2,7 @@
 layout: post
 title: Introduction to Cypress
 date: 2020-08-20
-tags: [ cypress, javascript ]
+tags: [ Cypress, Javascript ]
 ---
 
 [Cypress](https://www.cypress.io/) is a lightweight framework made by frontend developers to test UI applications. Cypress is gaining popularity in a world where [Selenium](https://www.selenium.dev/) is the master because it's easy to use, it's fast and really user friendly. 

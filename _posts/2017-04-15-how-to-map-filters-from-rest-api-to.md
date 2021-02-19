@@ -2,7 +2,7 @@
 layout: post
 title: How to map filters from a REST API to a Spring Data JPA
 date: 2017-04-15
-tags: [ Spring Data, Spring JPA, Hibernate ]
+tags: [ Spring, Hibernate ]
 ---
 In this guide we are going to map filters set via a REST API to Spring Data JPA repository. The filters via a REST API look like:
 

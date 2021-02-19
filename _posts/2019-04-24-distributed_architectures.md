@@ -2,7 +2,7 @@
 layout: post
 title: Distributed Architectures
 date: 2019-04-24
-tags: [ Architecture, Kafka ]
+tags: [ Design Patterns, Kafka ]
 ---
 
 When thinking on distributed architecture solutions, we need to have many things in mind to choose the right one. Some of these are:

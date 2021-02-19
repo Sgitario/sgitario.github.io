@@ -2,7 +2,7 @@
 layout: post
 title: gRPC Getting Started for Java Developers 
 date: 2018-10-17
-tags: [ GRPC, REST, Spring Boot ]
+tags: [ gRPC, Spring, Java ]
 ---
 
 [gRPC](https://grpc.io) is a high performance RPC framework that works over HTTP/2. It's designed to "refactor" the REST api to fix some of its pitfalls and bring very many interesting features. 

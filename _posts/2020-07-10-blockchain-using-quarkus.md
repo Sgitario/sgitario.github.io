@@ -2,7 +2,7 @@
 layout: post
 title: Blockchain using Custom Ethereum Network in Quarkus
 date: 2020-07-10
-tags: [ Blockchain, Ethereum, Solidity, Quarkus ]
+tags: [ Blockchain, Quarkus ]
 ---
 
 We already introduced Blockchain and Ethereum in [an earlier post](https://sgitario.github.io/ethereum-and-solidity-getting-started/) and also introduced a simple Lottery example [in Spring Boot](https://sgitario.github.io/blockchain-using-springboot/). 

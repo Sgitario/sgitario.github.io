@@ -2,7 +2,7 @@
 layout: post
 title: Red Hat Automation Manager Sessions
 date: 19-12-19
-tags: [ java, jbpm, drools, kogito ]
+tags: [ jBPM, Kogito ]
 ---
 
 We'll be starting a session walkthrough about the Red Hat Automation Manager solution. This product allows to automate decisions and process using the [BPMN 2.0](https://www.omg.org/spec/BPMN/2.0/) standard through [Drools](https://sgitario.github.io/drools-introduction/) and/or [jBPM](https://sgitario.github.io/jbpm-introduction/). 

@@ -2,7 +2,7 @@
 layout: post
 title: Refactoring an ESB based architecture
 date: 2019-09-30
-tags: [ Architecture, ESB, Refactor ]
+tags: [ Design Patterns ]
 ---
 
 At [my previous post](https://sgitario.github.io/distributed_architectures/), I gave an introduction to some distributed architectures. Also, I confess that I'm not a big fan of ESB based architectures: these solutions only work fine in integrations with third parties and still I'm being generous. Let me explain why I dislike this kind of solutions.

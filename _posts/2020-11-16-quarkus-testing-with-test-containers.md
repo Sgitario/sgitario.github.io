@@ -2,7 +2,7 @@
 layout: post
 title: Quarkus Testing with Test Containers
 date: 2020-11-16
-tags: [ quarkus, test ]
+tags: [ Quarkus ]
 ---
 
 In my [previous post](https://sgitario.github.io/quarkus-test-framework/), I covered how to test several Quarkus applications using internal Quarkus tooling. This approach works perfectly fine specially when we only want to cope with a single module. However, if we are working in a multi-modular project, there is an easier approach using [Testcontainers](https://www.testcontainers.org/) and [Docker](https://www.docker.com/). Let's see how to do this!

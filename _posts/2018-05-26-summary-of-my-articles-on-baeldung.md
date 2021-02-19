@@ -2,7 +2,7 @@
 layout: post
 title: Summary of my articles on Baeldung
 date: 2018-05-26
-tags: [ Spring Cloud, Java, JUnit5, Mockito, Apache, Hibernate ]
+tags: [ Spring, JUnit, Mockito, Hibernate ]
 ---
 It cannot exist a start without an ending. A few months ago I stopped working at Baeldung and I wanted to thank Baeldung's team all the help they gave me. I would say that learnt a lot of this experience but indeed I think I learnt more than just "a lot".
 

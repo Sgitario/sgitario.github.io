@@ -2,7 +2,7 @@
 layout: post
 title: Applying Event Sourcing and CQRS in a legacy project
 date: 2016-04-10
-tags: [ Architecture ]
+tags: [ Design Patterns ]
 ---
 I was told to work on a legacy project, a mix between a management system and reporting tool. The high level picture of the architecture was:
 

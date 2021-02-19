@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Distributed tracing in microservices architectures
+title: Distributed tracing in Microservices architectures
 date: 2019-10-9
-tags: [ Microservices, Patterns, Jaeger ]
+tags: [ Design Patterns, Microservices, Jaeger ]
 ---
 
 Observability is the ability to:

@@ -2,7 +2,7 @@
 layout: post
 title: Axon - CQRS with Spring Boot by examples
 date: 2018-10-23
-tags: [ Axon, Java, Architecture ]
+tags: [ Axon, Spring, Design Patterns ]
 ---
 
 We already introduced [CQRS](https://martinfowler.com/bliki/CQRS.html) architectures a while ago [here](https://sgitario.github.io/applying-event-sourcing-and-qcrs-in/). The focus was to migrate a legacy monolith application into a CQRS architecture. However, we didn't go in deep by actually coding it. Let's do this using [Axon Framework](https://axoniq.io/) and Spring Boot. We'll create a library application from scratch.

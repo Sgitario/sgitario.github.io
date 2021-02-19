@@ -2,7 +2,7 @@
 layout: post
 title: Red Hat Automation Manager
 date: 2020-03-26
-tags: [ java, jbpm ]
+tags: [ jBPM ]
 ---
 
 The Automation Manager product from Red Hat consists of two versions:

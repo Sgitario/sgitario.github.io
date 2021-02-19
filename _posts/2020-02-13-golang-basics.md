@@ -2,7 +2,7 @@
 layout: post
 title: Golang Basics
 date: 2020-02-13
-tags: [ golang ]
+tags: [ Golang ]
 ---
 
 This is a very basic post about some golang main concepts. 

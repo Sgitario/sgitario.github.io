@@ -2,7 +2,7 @@
 layout: post
 title: Java EE Basics
 date: 2021-02-07
-tags: [ java ]
+tags: [ Java ]
 ---
 
 I've enrolled in a full course learning path that requires certifications to achieve. The first one is about `Programming in Java EE`. Moreover, sometimes, It's good to recap with some basics concepts around something you're already familiar with. In the end, you always will learn something you have missed or forgotten. 

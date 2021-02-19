@@ -2,7 +2,7 @@
 layout: post
 title: Kogito - Developer Guide
 date: 2020-03-30
-tags: [ kogito, operators ]
+tags: [ Kogito ]
 ---
 
 0. Requirements

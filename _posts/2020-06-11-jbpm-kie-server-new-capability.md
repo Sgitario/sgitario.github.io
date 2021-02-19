@@ -2,7 +2,7 @@
 layout: post
 title: New Custom Capability in Kie Server
 date: 2020-06-11
-tags: [ jbpm ]
+tags: [ jBPM ]
 ---
 
 By default, Kie Server extensions are exposed through REST or JMS data transports. We can extend Kie Server to support a custom data transport adding a new capability.

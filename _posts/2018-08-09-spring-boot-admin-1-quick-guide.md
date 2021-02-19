@@ -2,7 +2,7 @@
 layout: post
 title: Spring Boot Admin 1.X Quick Guide
 date: 2018-08-09
-tags: [ Spring Boot, Spring Boot Admin, JavaMelody ]
+tags: [ Spring, Java Melody ]
 ---
 This post introduces how to setup Spring Boot Admin 1.X according to my experience within a dockerized environment. 
 

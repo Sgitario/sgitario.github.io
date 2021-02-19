@@ -2,7 +2,7 @@
 layout: post
 title: Blockchain using Custom Ethereum Network in Spring Boot
 date: 2018-11-20
-tags: [ Blockchain, Ethereum, Solidity, Spring ]
+tags: [ Blockchain, Spring ]
 ---
 
 We already introduced Blockchain and Ethereum in [an earlier post](https://sgitario.github.io/ethereum-and-solidity-getting-started/). However, there were a couple of points we wanted to explore a bit further:

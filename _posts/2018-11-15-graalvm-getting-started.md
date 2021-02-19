@@ -2,7 +2,7 @@
 layout: post
 title: GraalVM Getting Started
 date: 2018-11-15
-tags: [ Java, GraalVM ]
+tags: [ GraalVM ]
 ---
 
 "The world is polyglot". This is why GraalVM is here. There are many languages around. Many of these languages have a strong community behind. There is no a perfect language, but all of them have strengths and weaknesses. So, what about if we could run any language on the same machine without dealing to install anything else? This is [GraalVM](https://www.graalvm.org/)!

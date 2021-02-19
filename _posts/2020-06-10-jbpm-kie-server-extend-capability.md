@@ -2,7 +2,7 @@
 layout: post
 title: Extend Capability in Kie Server
 date: 2020-06-10
-tags: [ jbpm ]
+tags: [ jBPM ]
 ---
 
 The Kie Server REST API enables you to interact with our business assets (such as business rules, processes, and solvers). The available REST endpoints are determined by the **capabilities** enabled in our Kie Server. We can extend an existing Kie Server capability with a custom REST API endpoint to further adapt our business needs.

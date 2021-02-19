@@ -2,7 +2,7 @@
 layout: post
 title: Request-Response pattern with Spring Cloud
 date: 2019-10-03
-tags: [ Spring Boot, Spring Cloud, RabbitMQ ]
+tags: [ Spring, RabbitMQ ]
 ---
 
 Let's write a hands on tutorial about how to implement the request-response message pattern with Spring Cloud. In this tutorial, I've used RabbitMQ but Kafka is also supported.

@@ -2,7 +2,7 @@
 layout: post
 title: Alexa Skill for Notes
 date: 2018-10-23
-tags: [ Alexa, Java ]
+tags: [ Alexa ]
 ---
 
 Let's play with Alexa by adding a new simple skill to make notes. Though adding notes as skill is quite simple, it makes use of most of the features in Alexa. 

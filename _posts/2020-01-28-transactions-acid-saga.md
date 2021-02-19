@@ -2,7 +2,7 @@
 layout: post
 title: Transactions - ACID vs SAGA
 date: 2020-01-28
-tags: [ acid, saga ]
+tags: [ Design Patterns ]
 ---
 
 ## ACID (Atomicy, consistency, isolation, durability 

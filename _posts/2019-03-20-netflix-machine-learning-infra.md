@@ -2,7 +2,7 @@
 layout: post
 title: The Netflix Machine Learning Infrastructure
 date: 2019-03-20
-tags: [ Netflix, Machine Learning, Metaflow ]
+tags: [ Netflix, Machine Learning ]
 ---
 
 When building machine learning models to work over different areas, data scientists usually need to deal with these two situations: 

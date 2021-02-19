@@ -2,7 +2,7 @@
 layout: post
 title: Drools Introduction
 date: 2020-01-02
-tags: [ java, drools ]
+tags: [ jBPM ]
 ---
 
 This post introduces a basic installation and example of [Drools](https://docs.jboss.org/drools/release/6.5.0.Final/drools-docs/html_single/). 

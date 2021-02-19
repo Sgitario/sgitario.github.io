@@ -2,7 +2,7 @@
 layout: post
 title: Login into a Docker Repository with an invalid certificate
 date: 2020-01-16
-tags: [ docker, podman ]
+tags: [ Containers ]
 ---
 
 I wanted to write a quick tutorial about how to push a docker image into an insecure Docker repository. By insecure Docker repository, I mean a site with SSL with either an expired or invalid certificate. In summary, if you try to do the next:

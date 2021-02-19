@@ -2,7 +2,7 @@
 layout: post
 title: jBPM Introduction
 date: 2020-01-03
-tags: [ java, jbpm ]
+tags: [ jBPM ]
 ---
 
 Following the Decision Manager series on my blog site, in this post we introduce the basics for [jBPM](https://www.jbpm.org/) (Java Business Process Management). jBPM allows to write our business logic using flow charts on the latest [BPMN 2.0](https://www.omg.org/spec/BPMN/2.0/) standard specification. We'll be doing the same example as our previous [post](https://sgitario.github.io/drools-introduction/).

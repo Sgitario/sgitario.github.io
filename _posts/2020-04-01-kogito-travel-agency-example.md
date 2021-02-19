@@ -2,7 +2,7 @@
 layout: post
 title: Kogito - Travel Agency Example
 date: 2020-04-01
-tags: [ kogito ]
+tags: [ Kogito ]
 ---
 
 The Travel Agency application is becaming the most relevant and complete example in the Kogito workshops and tutorials so far. This is because it makes use of most of the component in the Kogito ecosystem from UI to Data Index. 

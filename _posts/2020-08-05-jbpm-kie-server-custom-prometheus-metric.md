@@ -2,7 +2,7 @@
 layout: post
 title: Add Custom Prometheus Metrics in Kie Server
 date: 2020-08-05
-tags: [ jbpm, prometheus ]
+tags: [ jBPM ]
 ---
 
 Following up [this post](https://sgitario.github.io/jbpm-kie-server-extend-capability/) where we extend an existing capability of a Kie Server image. We're going to provide custom Prometheus metrics in Kie Server now.

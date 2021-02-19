@@ -2,7 +2,7 @@
 layout: post
 title: Java 11 New Features
 date: 2019-10-02
-tags: [ Java, Java 11 ]
+tags: [ Java ]
 ---
 
 After looking into [the new features in Java 10](https://sgitario.github.io/java-10-new-features/), I wanted to continue my series of Java new features with [Java 11](https://openjdk.java.net/projects/jdk/11/).

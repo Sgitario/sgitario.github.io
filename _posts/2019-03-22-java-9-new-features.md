@@ -2,7 +2,7 @@
 layout: post
 title: Java 9 New Features
 date: 2019-03-22
-tags: [ Java, Java 9 ]
+tags: [ Java ]
 ---
 
 Sorry for another post about the new features of Java 9. There are already tons of sites talking about this. As usual, I like to create a post as a notebook for me with useful tips when working on something. Moreover, this is how I like to learn about something! No more time to excuses.

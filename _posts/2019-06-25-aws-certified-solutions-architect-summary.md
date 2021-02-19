@@ -2,7 +2,7 @@
 layout: post
 title: AWS Certified Solutions Architect Summary
 date: 2019-06-25
-tags: [ aws ]
+tags: [ AWS ]
 ---
 
 I've preparing [the AWS Certified Solutions Architect exam](https://aws.amazon.com/es/certification/certified-solutions-architect-associate/) running [the Udemy course](https://www.udemy.com/aws-certified-solutions-architect-associate) driven by [Ryan Kroonenburg](https://twitter.com/acloudguru).

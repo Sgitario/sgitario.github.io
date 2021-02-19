@@ -2,7 +2,7 @@
 layout: post
 title: Quarkus App with React frontend secured with Keycloak
 date: 2020-09-09
-tags: [ security, keycloak, quarkus, react ]
+tags: [ Keycloak, Quarkus ]
 ---
 
 I remember those days when I was working as fully frontend developer, feeling really confident in CSS, JS, HTML, [jQuery](https://jquery.com/)... I'm aware of that it sounds really old nowadays! As backend developer, I always kept an eye in how the frontend frameworks evolved: [Angular](https://angular.io/), [React](https://reactjs.org/), [Vue.js](https://vuejs.org/)... Also I played a bit with Angular 2.x and 4.x, and indeed I quite enjoy it a lot. Now, let's do something with React! 

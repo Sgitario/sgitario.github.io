@@ -2,7 +2,7 @@
 layout: post
 title: Enable Security in Kogito using Keycloak
 date: 2020-09-16
-tags: [ security, kogito, keycloak ]
+tags: [ Kogito, Keycloak ]
 ---
 
 Security is an important topic when we want to have our business logic and services in the cloud. In this post, we'll see how to enable the security in every single component within [Kogito](https://sgitario.github.io/kogito-introduction/).

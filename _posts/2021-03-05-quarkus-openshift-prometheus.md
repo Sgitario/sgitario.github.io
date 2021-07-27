@@ -172,6 +172,7 @@ spec:
   endpoints:
   - interval: 30s
     targetPort: 8080
+    path: /q/metrics
     scheme: http
   selector:
     matchLabels:

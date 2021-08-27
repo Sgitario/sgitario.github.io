@@ -28,6 +28,19 @@ Basically, what Quarkus can do so far is summarized in the following table:
 
 Having clear what the Quarkus test framework copes with, I'll try to cover more advanced scenarios in this post. 
 
+If you are interested in more advanced features, you can use a new Quarkus Test Framework that the Quarkus QE team has released for:
+
+| Feature |
+| ------- |
+| Allow to deploy multiple Quarkus applications |
+| Allow to update build/runtime properties during the test case |
+| Support start/stop for Quarkus applications and third parties containers |
+| Allow to deploy scenarios into OpenShift and Kubernetes with zero changes |
+| Support verification of application logs and metrics |
+| Produce test execution traces and metrics |
+
+And much more! To know more about this framework, please visit [the GitHub site](https://github.com/quarkus-qe/quarkus-test-framework) and [my blog post](https://sgitario.github.io/quarkus-qe-test-framework/).
+
 ## Getting Started
 
 - Add the Quarkus JUnit 5 extension in your `pom.xml`:

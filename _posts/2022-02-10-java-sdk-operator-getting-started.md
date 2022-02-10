@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Getting started with Java Operator SDK
-date: 2020-02-10
+date: 2022-02-10
 tags: [ Java, Operator, Kubernetes ]
 ---
 

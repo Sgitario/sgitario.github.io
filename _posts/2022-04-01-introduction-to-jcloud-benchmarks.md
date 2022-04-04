@@ -35,7 +35,7 @@ To write this benchmark, we would first need to start/stop our application befor
 [jCloud](https://github.com/Sgitario/jcloud-unit/) is a JUnit 5 extension that I've been working in recently. This testing framework is the evolution of the [Quarkus QE Testing Framework](https://github.com/quarkus-qe/quarkus-test-framework) which much more features more focused on the cloud world rather than only [Quarkus](https://quarkus.io/). For example, using jCloud we can easily write test scenarios like:
 
 ```java
-@Scenario
+@JCloud
 public class KeycloakGreetingResourceIT {
     private static final String CLIENT_ID = "test-application-client";
     private static final String CLIENT_SECRET = "test-application-client-secret";
@@ -66,7 +66,7 @@ At this moment, jCloud supports deployments on local and Kubernetes of Quarkus, 
 After having introduced the jCloud testing framework, wouldn't it be great if we could use the services that we deploy as part of the test scenarios to run benchmarks? For example:
 
 ```java
-@Scenario
+@JCloud
 public class GreetingResourceIT {   
 
     @Quarkus
@@ -83,7 +83,7 @@ This is exactly what [the jCloud benchmark](https://github.com/Sgitario/jcloud-u
 For using it, after installing this dependency, you simply need to implement the `EnableBenchmark` interface:
 
 ```java
-@Scenario
+@JCloud
 public class GreetingResourceIT implements EnableBenchmark {   
 
     @Quarkus
@@ -171,7 +171,7 @@ jCloud also supports the deployment of services that are in other source locatio
 The source locations of our applications are [here](https://github.com/Sgitario/frameworks-benchmarks/tree/main/rest-benchmark), so let's start writing our benchmark:
 
 ```java
-@Scenario
+@JCloud
 public class ThroughputBenchmarks implements EnableBenchmark {
 
     @Quarkus(location = "../quarkus-resteasy-reactive")

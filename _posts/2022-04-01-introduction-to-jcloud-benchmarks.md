@@ -1,8 +1,8 @@
 ---
 layout: post
-title: Introduction to jCloud Benchmarks
+title: Introduction to Jester Benchmarks
 date: 2022-04-01
-tags: [ Java, jCloud, JMH, Benchmark ]
+tags: [ Java, Jester, JMH, Benchmark ]
 ---
 
 Nowadays, the [Java Microbenchmark Harness (JMH)](https://github.com/openjdk/jmh) tool is a very popular and well-known tool to write benchmarks in Java. Also, this tool is maintained by [OpenJDK](https://openjdk.java.net/projects/code-tools/jmh/) and you can find thousands of guides on the web about how to write all kinds of benchmarks - from throughput to memory benchmarks. For example, a very simple benchmark would look like as:
@@ -30,12 +30,12 @@ public String measureRest() {
 
 **Note**: Using REST endpoints to run benchmarks will indirectly add some lags due to the network layer. 
 
-To write this benchmark, we would first need to start/stop our application before and after running the benchmark to ensure we have a fresh run and hence have more realistic results. So, how can we do this in Java and that works fine with JMH? This is where [jCloud](https://github.com/Sgitario/jcloud-unit/) comes to play here to ease up these things.
+To write this benchmark, we would first need to start/stop our application before and after running the benchmark to ensure we have a fresh run and hence have more realistic results. So, how can we do this in Java and that works fine with JMH? This is where [Jester](https://github.com/Sgitario/jester/) comes to play here to ease up these things.
 
-[jCloud](https://github.com/Sgitario/jcloud-unit/) is a JUnit 5 extension that I've been working in recently. This testing framework is the evolution of the [Quarkus QE Testing Framework](https://github.com/quarkus-qe/quarkus-test-framework) which much more features more focused on the cloud world rather than only [Quarkus](https://quarkus.io/). For example, using jCloud we can easily write test scenarios like:
+[Jester](https://github.com/Sgitario/jester/) is a JUnit 5 extension that I've been working in recently. This testing framework is the evolution of the [Quarkus QE Testing Framework](https://github.com/quarkus-qe/quarkus-test-framework) which much more features more focused on the cloud world rather than only [Quarkus](https://quarkus.io/). For example, using Jester we can easily write test scenarios like:
 
 ```java
-@JCloud
+@Jester
 public class KeycloakGreetingResourceIT {
     private static final String CLIENT_ID = "test-application-client";
     private static final String CLIENT_SECRET = "test-application-client-secret";
@@ -57,16 +57,16 @@ public class KeycloakGreetingResourceIT {
 }
 ```
 
-**Note**: The above example can be found [here](https://github.com/Sgitario/jcloud-unit/blob/main/examples/quarkus-oidc/src/test/java/io/jcloud/examples/quarkus/oidc/KeycloakGreetingResourceIT.java).
+**Note**: The above example can be found [here](https://github.com/Sgitario/jester/blob/main/examples/quarkus-oidc/src/test/java/io/jester/examples/quarkus/oidc/KeycloakGreetingResourceIT.java).
 
-This test will start a Keycloak container using the `quay.io/keycloak/keycloak` image and also a Quarkus application which sources are placed in the current module. To run this test using Maven, we simply run `mvn verify -Dit.test=KeycloakGreetingResourceIT` and the container and the Quarkus application will be started locally. But the greatest feature in jCloud is that if we annotate the `KeycloakGreetingResourceIT` class with `RunOnKubernetes` or we provide the system property `-Dts.scenario.target=kubernetes` to the Maven command, the test will start the container and the Quarkus application in Kubernetes (you need to be logged into a Kubernetes cluster beforehand). 
+This test will start a Keycloak container using the `quay.io/keycloak/keycloak` image and also a Quarkus application which sources are placed in the current module. To run this test using Maven, we simply run `mvn verify -Dit.test=KeycloakGreetingResourceIT` and the container and the Quarkus application will be started locally. But the greatest feature in Jester is that if we annotate the `KeycloakGreetingResourceIT` class with `RunOnKubernetes` or we provide the system property `-Dts.scenario.target=kubernetes` to the Maven command, the test will start the container and the Quarkus application in Kubernetes (you need to be logged into a Kubernetes cluster beforehand). 
 
-At this moment, jCloud supports deployments on local and Kubernetes of Quarkus, Spring Boot and containers applications.
+At this moment, Jester supports deployments on local and Kubernetes of Quarkus, Spring Boot and containers applications.
 
-After having introduced the jCloud testing framework, wouldn't it be great if we could use the services that we deploy as part of the test scenarios to run benchmarks? For example:
+After having introduced the Jester testing framework, wouldn't it be great if we could use the services that we deploy as part of the test scenarios to run benchmarks? For example:
 
 ```java
-@JCloud
+@Jester
 public class GreetingResourceIT {   
 
     @Quarkus
@@ -79,11 +79,11 @@ public class GreetingResourceIT {
 }
 ```
 
-This is exactly what [the jCloud benchmark](https://github.com/Sgitario/jcloud-unit#jcloud-benchmarks) extension is for.
+This is exactly what [the Jester benchmark](https://github.com/Sgitario/jester#jester-benchmarks) extension is for.
 For using it, after installing this dependency, you simply need to implement the `EnableBenchmark` interface:
 
 ```java
-@JCloud
+@Jester
 public class GreetingResourceIT implements EnableBenchmark {   
 
     @Quarkus
@@ -102,7 +102,7 @@ The benchmark results are saved at target/benchmarks-results/GreetingResourceIT.
 
 ## Runtime Application Benchmarks
 
-In the previous section, we have seen how to implement JMH benchmarks and deploying services using the jCloud tool. 
+In the previous section, we have seen how to implement JMH benchmarks and deploying services using Jester. 
 
 Let's now write a benchmark to measure the performance of runtime frameworks like Spring Boot and Quarkus. The idea would be to compare the performance of the same applications written in Quarkus and Spring Boot.
 
@@ -167,11 +167,11 @@ You can find these implementations in [here](https://github.com/Sgitario/framewo
 
 Let's now measure the overall throughput (operations per second) of these applications: Quarkus using Resteasy Classic, Quarkus using Resteasy Reactive and Spring Boot Web.
 
-jCloud also supports the deployment of services that are in other source locations and this is what will be doing here. 
+Jester also supports the deployment of services that are in other source locations and this is what will be doing here. 
 The source locations of our applications are [here](https://github.com/Sgitario/frameworks-benchmarks/tree/main/rest-benchmark), so let's start writing our benchmark:
 
 ```java
-@JCloud
+@Jester
 public class ThroughputBenchmarks implements EnableBenchmark {
 
     @Quarkus(location = "../quarkus-resteasy-reactive")
@@ -209,7 +209,7 @@ public class ThroughputBenchmarks implements EnableBenchmark {
 **Note**: The `HttpService` implementation uses internally the new Java Http Client that is more suitable for performance testing than the RestAssured framework.
 
 The problem with the above benchmarks is that we're running the three applications at the same time, so the measurements might be compromised. 
-Thankfully, jCloud also supports auto-start of the services by using `.setAutoStart(false)`, so the services will be by default stopped and we can now use JMH states to start and stop the services before and after each benchmark by using the `ServiceState` implementation from jCloud:
+Thankfully, Jester also supports auto-start of the services by using `.setAutoStart(false)`, so the services will be by default stopped and we can now use JMH states to start and stop the services before and after each benchmark by using the `ServiceState` implementation from Jester:
 
 ```java
 @Quarkus(location = "../quarkus-resteasy-reactive")
@@ -272,6 +272,6 @@ After running the benchmark using the Maven command `mvn clean install`, the ben
 
 ## Conclusions
 
-The idea of the jCloud benchmark was to ease up the implementation of benchmarks for applications and this can be useful for other users as well. 
+The idea of the Jester benchmark was to ease up the implementation of benchmarks for applications and this can be useful for other users as well. 
 
 For the future, I will include more relevant and useful applications to measure and more different benchmarks in [https://github.com/Sgitario/frameworks-benchmarks](https://github.com/Sgitario/frameworks-benchmarks).

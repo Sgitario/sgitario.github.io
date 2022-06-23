@@ -12,17 +12,14 @@ So, every time you want to release a new version of your artifacts, you'd need t
 ## Context
 
 The artifacts cannot be pushed to Maven Central directly. They first need to be deployed to the Sonatype OSSRH (OSS Repository Hosting) staging repository. Releasing from OSSRH to the maven central can then be initiated via the Maven Release plugin. Before release, various checks are done against the project and artifacts to ensure they meet the standards of maven central. The artifacts are synced to maven central only if all the checks pass.
-
-## Steps
-
-#### 1. Request access to the Sonatype OSSRH JIRA
+### Step 1: Request access to the Sonatype OSSRH JIRA
 
 As we're going to be pushing artifacts to the OSSRH repository, we first need to request access. 
 To do so, you need to signup to [the OSSRH JIRA site](https://issues.sonatype.org/) and then create a ticket to request permission to publish your project. You can use [this ticket](https://issues.sonatype.org/browse/OSSRH-81782) as an example.
 
 **IMPORTANT:** The group-id must follow Maven naming conventions and be the reverse of a domain you own. For projects hosted on GitHub, it can start with com.github or io.github.
 
-### 2. Prepare your Maven configuration
+### Step 2: Prepare your Maven configuration
 
 Before continuing with the release process, let's start preparing the Maven profile we'll use to start the release. We will only need to add this profile in your pom.xml file:
 
@@ -88,7 +85,7 @@ And finally, let's add the distribution management configuration that will be ne
 
 See a full example of the pom.xml [here](https://github.com/yaml-path/YamlPath/blob/main/pom.xml).
 
-#### 3. Sign your artifacts
+### Step 3: Sign your artifacts
 
 One of the requirements is that the artifacts are signed with GPG.
 
@@ -147,7 +144,7 @@ And, finally, you need to append the GPG Maven plugin in the Maven release profi
     </profile>
 ```
 
-#### 4. Add the Source and the JavaDoc Maven plugins
+### Step 4: Add the Source and the JavaDoc Maven plugins
 
 Another requirement is to add the sources and the JavaDoc artifacts, so we need to add these two plugins as part of the Maven release profile as well:
 
@@ -189,7 +186,7 @@ Another requirement is to add the sources and the JavaDoc artifacts, so we need 
     </profile>
 ```
 
-#### 5. Configure the Maven Release plugin
+### Step 5: Configure the Maven Release plugin
 
 The GitHub job to perform the release will use the Maven release plugin to do the actual work. There are a lot of benefits of using the Maven Release plugin:
 - It ensures your artifact version conforms to the standards
@@ -246,7 +243,7 @@ So, let's add it to our Maven release profile as well:
 
 The Maven release plugin will invoke the Nexus staging plugin and also use the configuration under the `scm`.
 
-#### 6. Log In to the OSSRH repository
+### Step 6: Log In to the OSSRH repository
 
 Next, you need to configure Maven with the user you created in step 1. to connect with the OSSRH repository. To do so, you need to configure the Maven settings file called `maven-settings.xml` with:
 
@@ -275,7 +272,7 @@ This command will generate the encrypted file `maven-settings.xml.gpg`. Let's co
 
 **Note:** We can decrypt back this file using the command "gpg --quiet --batch --yes --decrypt --passphrase="YOUR PASSPHARSE from step 3" --output maven-settings.xml .github/release/maven-settings.xml.gpg".
 
-#### 7. GitHub Secrets
+### Step 7: GitHub Secrets
 
 We now need [to create the secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) we'll use during the release process:
 - GPG_PRIVATE_KEY
@@ -314,7 +311,7 @@ cbTV5RDkrlaYwm5yqlTIglvCv7o=
 
 The passphrase you used when creating your key-par in step 3.
 
-#### 8. The GitHub Release workflow
+### Step 8: The GitHub Release workflow
 
 At this point, we should have:
 - our OSSRH user,

@@ -20,7 +20,7 @@ The artifacts cannot be pushed to Maven Central directly. They first need to be 
 As we're going to be pushing artifacts to the OSSRH repository, we first need to request access. 
 To do so, you need to signup to [the OSSRH JIRA site](https://issues.sonatype.org/) and then create a ticket to request permission to publish your project. You can use [this ticket](https://issues.sonatype.org/browse/OSSRH-81782) as an example.
 
-**IMPORTANT:** The group-id should follow Maven naming conventions and be the reverse of a domain you own. For projects hosted on GitHub, it can start with com.github or io.github.
+**IMPORTANT:** The group-id must follow Maven naming conventions and be the reverse of a domain you own. For projects hosted on GitHub, it can start with com.github or io.github.
 
 ### 2. Prepare your Maven configuration
 

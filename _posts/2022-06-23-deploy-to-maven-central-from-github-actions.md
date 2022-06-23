@@ -9,9 +9,6 @@ It's the day you want to publish your framework/tool/API/library, to sum up, you
 
 So, every time you want to release a new version of your artifacts, you'd need to perform the steps from the link. But what about if we'd have a repetitive release process that anybody could start? Here we are! We'll explain how to achieve exactly this using Maven and the Maven Release Plugin, and how to trigger the release from GitHub actions.
 
-## Context
-
-The artifacts cannot be pushed to Maven Central directly. They first need to be deployed to the Sonatype OSSRH (OSS Repository Hosting) staging repository. Releasing from OSSRH to the maven central can then be initiated via the Maven Release plugin. Before release, various checks are done against the project and artifacts to ensure they meet the standards of maven central. The artifacts are synced to maven central only if all the checks pass.
 ### Step 1: Request access to the Sonatype OSSRH JIRA
 
 As we're going to be pushing artifacts to the OSSRH repository, we first need to request access. 

@@ -244,38 +244,19 @@ So, let's add it to our Maven release profile as well:
 
 The Maven release plugin will invoke the Nexus staging plugin and also use the configuration under the `scm`.
 
-### Step 6: Log In to the OSSRH repository
+### Step 6: GitHub Secrets
 
-Next, you need to configure Maven with the user you created in step 1. to connect with the OSSRH repository. To do so, you need to configure the Maven settings file called `maven-settings.xml` with:
 
-```xml
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
-  <servers>
-    <server>
-      <id>ossrh</id>
-      <username>YOUR OSSRH USER</username>
-      <password>YOUR OSSRH PASSWORD</password>
-    </server>
-  </servers>
-</settings>
-```
+Since you're not going to perform releases from your local machine, but from a GitHub job, you need somehow to provide the `YOUR OSSRH USER` and `YOUR OSSRH PASSWORD` values to login to the JIRA OSS site, and also the GPG private key and GPG passphrase to sign the artifacts. We'll provide these values via [GitHub secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets):
 
-Since you're not going to perform releases from your local machine, but from a GitHub job, you need somehow to provide the `YOUR OSSRH USER` and `YOUR OSSRH PASSWORD` values to be read by the GitHub job. 
+- OSS_SONATYPE_USERNAME
 
-Here, we could provide these values via repository or organization secrets. However, we decide to encrypt the Maven settings file we previously create using the key-par you generated in step 3.:
+The username you used to sign up into the Sonatype OSSRH JIRA (see step 1).
 
-```
-> gpg --sign --default-key YOUR_EMAIL maven-settings.xml
-```
+- OSS_SONATYPE_PASSWORD
 
-This command will generate the encrypted file `maven-settings.xml.gpg`. Let's copy it to `.github/release`. 
+The password you used to sign up into the Sonatype OSSRH JIRA (see step 1).
 
-**Note:** We can decrypt back this file using the command "gpg --quiet --batch --yes --decrypt --passphrase="YOUR PASSPHARSE from step 3" --output maven-settings.xml .github/release/maven-settings.xml.gpg".
-
-### Step 7: GitHub Secrets
-
-We now need [to create the secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) we'll use during the release process:
 - GPG_PRIVATE_KEY
 
 We can get the private key of the key-par you generated in step 3 using one of [these commands](https://github.com/crazy-max/ghaction-import-gpg#prerequisites).
@@ -312,7 +293,7 @@ cbTV5RDkrlaYwm5yqlTIglvCv7o=
 
 The passphrase you used when creating your key-par in step 3.
 
-### Step 8: The GitHub Release workflow
+### Step 7: The GitHub Release workflow
 
 At this point, we should have:
 - our OSSRH user,
@@ -338,46 +319,50 @@ jobs:
     if: ${{github.event.pull_request.merged == true}}
 
     steps:
+      - uses: actions/checkout@v2
+
       - uses: radcortez/project-metadata-action@master
         name: Retrieve project metadata
         id: metadata
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           metadata-file-path: '.github/project.yml'
-
-      - uses: actions/checkout@v2
-
-      - name: Import GPG key
-        id: import_gpg
-        uses: crazy-max/ghaction-import-gpg@v3
-        with:
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          local-file: true
 
       - name: Install JDK 11
         uses: joschi/setup-jdk@e87a7cec853d2dd7066adf837fe12bf0f3d45e52
         with:
           distribution: 'temurin'
           java-version: 11
-          check-latest: true
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_CENTRAL_TOKEN
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
       - name: Configure Git author
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
       - name: Maven release ${{steps.metadata.outputs.current-version}}
         run: |
-          gpg --quiet --batch --yes --decrypt --passphrase="${{secrets.GPG_PASSPHRASE}}" --output maven-settings.xml .github/release/maven-settings.xml.gpg
           git checkout -b release
-          mvn -X -Prelease -B release:clean release:prepare -DreleaseVersion=${{steps.metadata.outputs.current-version}} -DdevelopmentVersion=${{steps.metadata.outputs.next-version}} -s maven-settings.xml
+          mvn -X -Prelease -B release:clean release:prepare -DreleaseVersion=${{steps.metadata.outputs.current-version}} -DdevelopmentVersion=${{steps.metadata.outputs.next-version}}
           git checkout ${{github.base_ref}}
           git rebase release
-          mvn -X -Prelease -B release:perform -DskipTests -s maven-settings.xml
+          mvn -X -Prelease -B release:perform -DskipTests
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSS_SONATYPE_USERNAME }}
+          MAVEN_CENTRAL_TOKEN: ${{ secrets.OSS_SONATYPE_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
       - name: Push changes to ${{github.base_ref}}
         uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{github.base_ref}}
+          force: true
 
       - name: Push tags
         uses: ad-m/github-push-action@v0.6.0

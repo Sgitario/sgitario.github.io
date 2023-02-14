@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Quarkus App with React frontend secured with Keycloak
+title: Quarkus with React frontend secured with Keycloak
 date: 2020-09-09
 tags: [ Keycloak, Quarkus ]
 ---
@@ -11,7 +11,7 @@ To be honest, I don't really like the React development model with components mo
 
 ## Requirements:
 - [NodeJS](https://nodejs.org/en/) 12.x or later
-- [Java](https://openjdk.java.net/) 8 or later
+- [Java](https://openjdk.java.net/) 17 or later
 - [Maven](https://maven.apache.org/)
 
 ## 1.- Create Quarkus application
@@ -19,12 +19,12 @@ To be honest, I don't really like the React development model with components mo
 Let's create our Quarkus application using the [OIDC](https://quarkus.io/guides/security-openid-connect) extension in order to secure our application and [resteasy-jsonb](https://quarkus.io/guides/rest-json) extension to marshall our endpoints with JSON.
 
 ```sh
-mvn io.quarkus:quarkus-maven-plugin:1.7.0.Final:create \
+mvn io.quarkus:quarkus-maven-plugin:2.16.2.Final:create \
      -DprojectGroupId=org.sgitario.quarkus \
      -DprojectArtifactId=quarkus-react \
      -DclassName="org.sgitario.quarkus.GreetingResource" \
      -Dpath="/hello" \
-     -Dextensions="oidc, resteasy-jsonb"
+     -Dextensions="oidc, resteasy-reactive-jsonb"
 cd quarkus-react
 ```
 
@@ -127,7 +127,7 @@ mvn clean compile quarkus:dev
 
 Then, when you browse to [http://localhost:8080/api/user/me](http://localhost:8080/api/user/me), you will be get redirected to login in Keycloak (remember the credentials are admin/admin), and then see the user data:
 
-```
+```json
 {"roles":["create-realm","offline_access","admin","uma_authorization"],"userName":"admin"}
 ```
 
@@ -140,63 +140,20 @@ We're going to create the React application using the npx npm plugin:
 > npx create-react-app .
 ```
 
-This will create all the React structure, but now, we need to integrate the build in Maven, and for this, we'll be using the [frontend-maven-plugin](https://github.com/eirslett/frontend-maven-plugin) Maven plugin, so add it in the **pom.xml**:
+Next, we need to integrate the React webapp with Quarkus and Maven, so everytime we build our Quarkus application, the React webpage is packaged as well. For doing this, we can use [the Quinoa Quarkus](https://quarkiverse.github.io/quarkiverse-docs/quarkus-quinoa/dev/#getting-started) extension, let's add it into our pom.xml file:
 
 ```xml
-<plugin>
-  <groupId>com.github.eirslett</groupId>
-  <artifactId>frontend-maven-plugin</artifactId>
-  <version>1.10.0</version> 
-  <configuration>
-    <workingDirectory>${project.basedir}/src/main/webapp</workingDirectory>
-    <installDirectory>target</installDirectory>
-  </configuration>
-  <executions>
-    <execution>
-      <id>install node and npm</id>
-      <goals>
-        <goal>install-node-and-npm</goal>
-      </goals>
-      <configuration>
-        <nodeVersion>v12.16.3</nodeVersion>
-        <npmVersion>6.14.4</npmVersion>
-      </configuration>
-    </execution>
-    <execution>
-      <id>npm install</id>
-      <goals>
-        <goal>npm</goal>
-      </goals>
-      <configuration>
-        <arguments>install</arguments>
-      </configuration>
-    </execution>
-    <execution>
-      <id>npm run build</id>
-      <goals>
-        <goal>npm</goal>
-      </goals>
-      <configuration>
-        <arguments>run build</arguments>
-      </configuration>
-    </execution>
-  </executions>
-</plugin>
+<dependency>
+    <groupId>io.quarkiverse.quinoa</groupId>
+    <artifactId>quarkus-quinoa</artifactId>
+    <version><!-- use compatible version with your Quarkus version --></version>
+</dependency>
 ```
 
-And the **src/main/webapp/package.json** file with the scripts:
+And configure the webpage directory that we have used which is "src/main/webapp" with the Quinoa extension by adding this property:
 
-```json
-{
-  ...
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build --dest && rm -rf ../resources/META-INF/resources && mkdir -p ../resources/META-INF/resources && mv build/* ../resources/META-INF/resources",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  ...
-}
+```
+quarkus.quinoa.ui-dir=src/main/webapp
 ```
 
 Now, if we run again our Quarkus application and browse to [http://localhost:8080/](http://localhost:8080/), we are redirected to Keycloak to authenticate ourselves and then we'll see our React application.

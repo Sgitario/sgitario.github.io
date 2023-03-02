@@ -182,8 +182,8 @@ mvn quarkus:add-extension -Dextensions='container-image-docker'
 And let's configure the final image that will be built using the following property:
 
 ```
-quarkus.container.image.image=<REGISTRY>/<GROUP>/<NAME>:<TAG>
-# example: quarkus.container.image.image=quay.io/user/app:1.0
+quarkus.container-image.image=<REGISTRY>/<GROUP>/<NAME>:<TAG>
+# example: quarkus.container-image.image=quay.io/user/app:1.0
 ```
 
 And let's push the built image into the registry using the property `quarkus.container-image.push=true`.

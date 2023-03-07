@@ -59,9 +59,9 @@ We'll need also to fulfill some information that Sonatype requires:
   <!-- The list of maintainers -->
   <developers>
     <developer>
-      <id>github user</id>
-      <name>user name</name>
-      <email>user email</email>
+      <id>OSSRH JIRA user id</id>
+      <name>OSSRH JIRA user name</name>
+      <email>OSSRH JIRA user email</email>
     </developer>
   </developers>
 
@@ -298,7 +298,6 @@ The passphrase you used when creating your key-par in step 3.
 At this point, we should have:
 - our OSSRH user,
 - our OSSRH JIRA ticket should have been resolved
-- the `.github/release/maven-settings.xml.gpg` file created with our OSSRH user credentials
 - the `pom.xml` file properly updated
 
 Let's now add the GitHub Release workflow that will do the actual release!

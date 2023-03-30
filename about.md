@@ -3,7 +3,7 @@ layout: page
 title: About
 permalink: /about/
 ---
-Passionate software engineer with more than 10 years now. I enjoy looking for optimal and comprehensive solutions while always keeping in mind the long term effects, and applying design principles like KISS, TDD, and Agile. My passion is learning new technologies and methodologies, meeting challenges and making useful frameworks.
+I have over 15 years of experience as a passionate software engineer. My specialty is finding optimal and comprehensive solutions while keeping long-term effects in mind and applying design principles such as KISS, TDD, and Agile. I am highly motivated to stay up-to-date with new technologies and methodologies, and am driven to meet challenges and create useful frameworks.
 
 # CV:
 

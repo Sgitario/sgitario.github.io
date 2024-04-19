@@ -7,4 +7,4 @@ I have over 15 years of experience as a passionate software engineer. My special
 
 # CV:
 
-<iframe src="https://drive.google.com/file/d/13qUkXGDQHi8eZ-npBEC-HVqaMGpJt-OS/preview" width="640" height="480"></iframe>
+<iframe src="https://drive.google.com/file/d/1KwZd5x37WiP2TNMuXhf0KyHFuhLoBuIw/preview" width="640" height="480"></iframe>

@@ -378,3 +378,5 @@ Finally, the retry settings will use this configuration and we will be able to c
 # Concusion
 
 We have seen how ease is to implement the Exponential Backoff Retry resillience pattern in Quarkus thanks to the Smallrye Fault Tolerance extension and also its limitations when using the annotations API. I've proposed a solution to address all the limitations by using one annotation interceptor and the Smallrye Config to bind the properties. 
+
+You can find the full source code of the example [here](https://github.com/Sgitario/quarkus-exponential-backoff-retry-example).

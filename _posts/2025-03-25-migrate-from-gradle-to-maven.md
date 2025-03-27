@@ -22,6 +22,7 @@ If you're coming from Gradle, you're probably used to working with files like `d
 
 Relies heavily on a multi-module setup, with a parent `pom.xml` and submodules in designated directories that inherit its configuration from the parent:
 
+```
 project/
 ├── pom.xml (Parent POM)
 ├── module-one/
@@ -29,6 +30,7 @@ project/
 ├── module-two/
 │   └── pom.xml
 └── ...
+```
 
 ### Migration
 
@@ -84,7 +86,7 @@ To Maven `pom.xml` Parent POM:
 
 ```go
 ext {
-    springVersion='3.4.4'
+    springVersion="3.4.4"
     libraries = [:]
     plugins = []
 }
@@ -150,10 +152,12 @@ To Maven `pom.xml` Parent POM:
 
 In our project, we used this folder to build custom plugins that we could apply in modules to shame common dependencies and configuration:
 
+```
 buildSrc/
 ├── build.gradle
 ├── src/main/groovy/
 │   └── project.common-spring-boot-conventions.gradle
+```
 
 Where `build.gradle`:
 
@@ -300,7 +304,7 @@ These dependencies are available to the module itself but it behaves differently
 
 From Gradle:
 ```go
-implementation 'com.google.guava:guava:30.1-jre'
+implementation "com.google.guava:guava:30.1-jre"
 ```
 
 To Maven:
@@ -318,7 +322,7 @@ For dependencies needed only during runtime, not during compilation.
 
 From Gradle:
 ```go
-runtimeOnly 'org.postgresql:postgresql:42.2.18'
+runtimeOnly "org.postgresql:postgresql:42.2.18"
 ```
 
 To Maven:
@@ -337,7 +341,7 @@ For dependencies needed only during testing.
 
 From Gradle:
 ```go
-testImplementation 'junit:junit:4.13.2'
+testImplementation "junit:junit:4.13.2"
 ```
 
 To Maven:
@@ -378,17 +382,19 @@ To Maven using the `maven-compiler-plugin`:
 
 ## Command Line Equivalents: Gradle vs. Maven
 
-* **`./gradlew clean`** to **`./mvnw clean`**: Deletes the build directory.
-* **`./gradlew build`** to **`./mvnw package`**: Builds the project and creates the artifact.
-* **`./gradlew test`** to **`./mvnw test`**: Runs the unit tests.
-* **`./gradlew install`** to **`./mvnw install`**: Installs the artifact into the local repository.
-* **`./gradlew assemble`** to **`./mvnw compile`**: Compiles the source code.
-* **`./gradlew dependencies`** to **`./mvnw dependency:tree`**: Displays the dependency tree.
-* **`./gradlew bootRun`** to **`./mvnw spring-boot:run`**: Run a Spring Boot application.
-* **`./gradlew :module-rest:bootRun`** to **`./mvnw -pl module-rest -am spring-boot:run`**: Run the module-rest Spring Boot application.
-* **`./gradlew quarkusDev`** to **`./mvnw quarkus:dev`**: Run a Quarkus application in Dev mode.
-* **`./gradlew :module-rest:quarkusDev`** to **`./mvnw -pl module-rest -am quarkus:dev`**: Run the module-rest Quarkus application in Dev mode.
-* **`./gradlew tasks`** to **`mvn help:describe -Dplugin=org.apache.maven.plugins:maven-help-plugin -Ddetail`**: Lists available tasks/plugins.
+| Gradle Command                          | Maven Command                                                                           | Description                                        |
+|------------------------------------------|-----------------------------------------------------------------------------------------|----------------------------------------------------|
+| **`./gradlew clean`**                    | **`./mvnw clean`**                                                                      | Deletes the build directory.                      |
+| **`./gradlew build`**                    | **`./mvnw package`**                                                                    | Builds the project and creates the artifact.      |
+| **`./gradlew test`**                     | **`./mvnw test`**                                                                       | Runs the unit tests.                              |
+| **`./gradlew install`**                  | **`./mvnw install`**                                                                    | Installs the artifact into the local repository.  |
+| **`./gradlew assemble`**                 | **`./mvnw compile`**                                                                    | Compiles the source code.                         |
+| **`./gradlew dependencies`**             | **`./mvnw dependency:tree`**                                                            | Displays the dependency tree.                     |
+| **`./gradlew bootRun`**                  | **`./mvnw spring-boot:run`**                                                            | Run a Spring Boot application.                    |
+| **`./gradlew :module-rest:bootRun`**     | **`./mvnw -pl module-rest -am spring-boot:run`**                                        | Run the module-rest Spring Boot application.      |
+| **`./gradlew quarkusDev`**               | **`./mvnw quarkus:dev`**                                                                | Run a Quarkus application in Dev mode.            |
+| **`./gradlew :module-rest:quarkusDev`**  | **`./mvnw -pl module-rest -am quarkus:dev`**                                            | Run the module-rest Quarkus application in Dev mode. |
+| **`./gradlew tasks`**                    | **`mvn help:describe -Dplugin=org.apache.maven.plugins:maven-help-plugin -Ddetail`**    | Lists available tasks/plugins.                    |
 
 ## Plugins
 

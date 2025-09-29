@@ -1,7 +1,7 @@
 ---
 layout: post
 title: How to develop a RAG application with Podman AI Lab
-date: 2025-10-28
+date: 2025-09-28
 tags: [ AI, Podman ]
 ---
 
